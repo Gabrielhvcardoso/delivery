@@ -1,7 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Modal, Image, Dimensions, Animated, StatusBar, TouchableWithoutFeedback } from 'react-native';
 
-const Showcase = ({ visible, dismiss, image }) => {
+import GeneralContext from '../../context';
+
+const Showcase = () => {
+  const { isShowcaseVisible, dismissShowcase, showcaseImage } = useContext(GeneralContext)
+
   let screenWidth = Dimensions.get('window').width;
   let animation = useRef(new Animated.Value(0));
 
@@ -10,18 +14,18 @@ const Showcase = ({ visible, dismiss, image }) => {
   }
 
   useEffect(() => {
-    if (visible) {
+    if (isShowcaseVisible) {
       Animated.timing(animation.current, {
         toValue: 100,
         duration: 5000,
         useNativeDriver: true
       }).start(onAnimationEnd);
     }
-  }, [visible]);
+  }, [isShowcaseVisible]);
 
   const onDismiss = () => {
     animation.current.setValue(0);
-    dismiss();
+    dismissShowcase();
   }
   
   const translateX = animation.current.interpolate({
@@ -43,7 +47,7 @@ const Showcase = ({ visible, dismiss, image }) => {
   }
 
   return (
-    <Modal visible={visible} onDismiss={onDismiss}>
+    <Modal visible={isShowcaseVisible} onDismiss={onDismiss}>
       <StatusBar backgroundColor="#000" barStyle="light-content" />
       <Animated.View style={{
         zIndex: 1,
@@ -61,7 +65,7 @@ const Showcase = ({ visible, dismiss, image }) => {
           onPressOut={continueAnimation}
         >
           <Image
-            source={{ uri: image }}
+            source={{ uri: showcaseImage }}
             style={{
               width: Dimensions.get('window').width,
               height: Dimensions.get('window').height,
