@@ -1,32 +1,22 @@
-import React, { useContext, useEffect, useRef } from 'react';
-import { Modal, Image, Dimensions, Animated, StatusBar, TouchableWithoutFeedback } from 'react-native';
+import React, { useContext, useRef } from 'react';
+import {
+  Animated,
+  Dimensions,
+  Image,
+  ImageBackground,
+  Modal,
+  StatusBar,
+  TouchableOpacity,
+} from 'react-native';
 
 import GeneralContext from '../../context';
 
 const Showcase = () => {
   const { isShowcaseVisible, dismissShowcase, showcaseImage } = useContext(GeneralContext)
 
-  let screenWidth = Dimensions.get('window').width;
-  let animation = useRef(new Animated.Value(0));
-
-  let onAnimationEnd = ({ finished }) => {
-    if (finished === true) onDismiss();
-  }
-
-  useEffect(() => {
-    if (isShowcaseVisible) {
-      Animated.timing(animation.current, {
-        toValue: 100,
-        duration: 5000,
-        useNativeDriver: true
-      }).start(onAnimationEnd);
-    }
-  }, [isShowcaseVisible]);
-
-  const onDismiss = () => {
-    animation.current.setValue(0);
-    dismissShowcase();
-  }
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
+  const animation = useRef(new Animated.Value(0));
   
   const translateX = animation.current.interpolate({
     inputRange: [0, 100],
@@ -34,22 +24,35 @@ const Showcase = () => {
     extrapolate: "clamp"
   });
 
+  const onAnimationEnd = ({ finished }) => {
+    if (finished === true) {
+      animation.current.setValue(0);
+      dismissShowcase();
+    }
+  }
+
   const stopAnimation = () => {
     animation.current.stopAnimation();
   }
 
-  const continueAnimation = () => {
-    Animated.timing(animation.current, {
-      toValue: 100,
-      duration: 5000,
-      useNativeDriver: true
-    }).start(onAnimationEnd);
+  const startAnimation = () => {
+    if (isShowcaseVisible) {
+      Animated.timing(animation.current, {
+        toValue: 100,
+        duration: 5000,
+        useNativeDriver: true
+      }).start(onAnimationEnd);
+    }
   }
 
   return (
-    <Modal visible={isShowcaseVisible} onDismiss={onDismiss}>
+    <Modal
+      visible={isShowcaseVisible}
+      onRequestClose={dismissShowcase}
+      onShow={startAnimation}
+    >
       <StatusBar backgroundColor="#000" barStyle="light-content" />
-      <Animated.View style={{
+      <Animated.View style={{ 
         zIndex: 1,
         position: 'absolute',
         left: 0,
@@ -59,20 +62,29 @@ const Showcase = () => {
         height: 5,
         transform: [{ translateX }],
       }} />
-        <TouchableWithoutFeedback
-          onPress={onDismiss}
+      <ImageBackground
+        source={{ uri: showcaseImage }}
+        style={{ width: screenWidth, height: screenHeight }}
+        blurRadius={20}
+        fadeDuration={0}
+      >
+        <TouchableOpacity
+          activeOpacity={1}
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          onPress={dismissShowcase}
           onPressIn={stopAnimation}
-          onPressOut={continueAnimation}
+          onPressOut={startAnimation}
         >
           <Image
             source={{ uri: showcaseImage }}
             style={{
-              width: Dimensions.get('window').width,
-              height: Dimensions.get('window').height,
+              width: screenWidth,
+              height: screenWidth,
               resizeMode: 'cover'
             }} 
           />
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
+      </ImageBackground>
     </Modal>
   );
 }

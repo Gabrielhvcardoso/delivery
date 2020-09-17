@@ -1,13 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Container, CategoryScrollView } from './styles';
 
-import HorizontalList from '../../components/HorinzontalList';
+import data from '../../data';
+import { StatusBar } from 'expo-status-bar';
 
 const Home = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <HorizontalList size="md" />
-    </View>
+    <Container>
+      <StatusBar style="ligth" />
+      <CategoryScrollView categories={data.categories} />
+    </Container>
   );
 }
 

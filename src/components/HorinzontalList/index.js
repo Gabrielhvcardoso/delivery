@@ -1,6 +1,5 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
-import Image from '../Image';
+import { ScrollView, View, Image } from 'react-native';
 
 const HorinzontalList = ({ images, size = 'sm' }) => {
   if (!images) {
@@ -16,7 +15,6 @@ const HorinzontalList = ({ images, size = 'sm' }) => {
     ];
   }
   
-
   return (
     <ScrollView
       horizontal
@@ -25,8 +23,11 @@ const HorinzontalList = ({ images, size = 'sm' }) => {
     >
       {
         images.map(item => (
-          <View style={{ marginHorizontal: 5 }}>
-            <Image uri={item} size={size} />
+          <View key={Math.random() * Math.random()} style={{ marginHorizontal: 5 }}>
+            <Image
+              style={{ width: 120, height: 120, borderRadius: 12 }}
+              source={{ uri: item }}
+            />
           </View>
         ))
       }
