@@ -1,17 +1,22 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from './pages/Home';
 import Category from './pages/Category';
 import Product from './pages/Product';
+import Cart from './pages/Cart';
+import Options from './pages/Options';
 
-const Stack = createStackNavigator();
-
-import data from './data';
-import { Image, ImageBackground } from 'react-native';
+import { Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icon } from 'react-native-elements';
+
+import data from './data';
+
+const Stack = createStackNavigator();
+const Tabs = createBottomTabNavigator();
 
 const Routes = () => {
   const { horizontalLogo } = data;
@@ -22,7 +27,7 @@ const Routes = () => {
 
         <Stack.Screen
         name="Home" 
-        component={Home}
+        component={BottomTabs}
         options={{
           headerTitle: '',
           
@@ -71,6 +76,29 @@ const Routes = () => {
 
       </Stack.Navigator>
     </NavigationContainer>
+  );
+}
+
+const BottomTabs = () => {
+  return (
+    <Tabs.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          switch (route.name) {
+            case 'Home':
+              return <Icon name={'home'} size={size+5} color={color} type="material-community" />;
+            case 'Cart':
+              return <Icon name={'cart-outline'} size={size+5} color={color} type="material-community" />;
+            case 'Options':
+              return <Icon name={'menu'} size={size+5} color={color} type="material-community" />;
+          }
+        }
+      })}
+    >
+      <Tabs.Screen name="Home" component={Home} options={{ title: 'Principal' }} />
+      <Tabs.Screen name="Cart" component={Cart} options={{ title: 'Pedidos' }} />
+      <Tabs.Screen name="Options" component={Options} options={{ title: 'Menu' }} />
+    </Tabs.Navigator>
   );
 }
 
