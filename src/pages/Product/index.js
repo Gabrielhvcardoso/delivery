@@ -16,7 +16,6 @@ const Product = ({ navigation, route }) => {
   return (
     <ProductContextProvider>
       <Container image={product.image} favorite={product.favorite}>
-        <StatusBar style="light" />
 
         <View style={{ flexDirection: 'row', marginBottom: 20 }}>
           <Button

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { Animated, StatusBar, Dimensions, View, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 
@@ -6,11 +6,8 @@ import { BlurView } from 'expo-blur'
 
 const Container = ({ children, image, favorite }) => {
   const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
 
   const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
-  const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
-
 
   // Header Animation
 
@@ -26,33 +23,22 @@ const Container = ({ children, image, favorite }) => {
 
   const headerBlur = scrollYAnimatedValue.interpolate({
     inputRange: [0, headerMaxHeight],
-    outputRange: [0, 100],
+    outputRange: [0, 120],
     extrapolate: 'clamp'
   });
 
   // Header Buttons Animation
 
-  const buttonsOpacity = new Animated.Value(0);
-
-  scrollYAnimatedValue.addListener(({ value }) => {
-    if (value >= 50) {
-      Animated.timing(buttonsOpacity, {
-        toValue: 1,
-        duration: 100,
-        useNativeDriver: true
-      }).start();
-    } else {
-      Animated.timing(buttonsOpacity, {
-        toValue: 0,
-        duration: 100,
-        useNativeDriver: true
-      }).start();
-    }
+  const buttonsOpacity = scrollYAnimatedValue.interpolate({
+    inputRange: [0, 50],
+    outputRange: [0, 1],
+    extrapolate: 'clamp'
   });
+
 
   const buttonsTransform = buttonsOpacity.interpolate({
     inputRange: [0, 1],
-    outputRange: [-5, 0],
+    outputRange: [-15, 0],
     extrapolate: 'clamp'
   });
 
@@ -101,9 +87,9 @@ const Container = ({ children, image, favorite }) => {
         transform: [{ translateY: buttonsTransform }],
         opacity: buttonsOpacity
       }}>
-        <AnimatedTouchable style={{
+        <Animated.View style={{
           height: 100 - StatusBar.currentHeight - 10,
-          width: 100,
+          width: 70,
           alignItems: "center",
           justifyContent: "center"
         }}>
@@ -113,7 +99,7 @@ const Container = ({ children, image, favorite }) => {
             color="white"
             size={26}
           />
-        </AnimatedTouchable>
+        </Animated.View>
       </Animated.View>
 
     </View>    
