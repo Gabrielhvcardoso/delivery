@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import CartContext from '../../context/CartContext';
+import BasketContext from '../../context/BasketContext';
 
 const ProductContext = createContext({
   price: 0,
@@ -14,7 +14,7 @@ const ProductContext = createContext({
 });
 
 export const ProductContextProvider = ({ children }) => {
-  const { increaseItem } = useContext(CartContext);
+  const { increaseItem } = useContext(BasketContext);
   const navigation = useNavigation();
 
   const [product, setProduct] = useState({});

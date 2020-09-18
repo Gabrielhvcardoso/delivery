@@ -4,12 +4,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button, Divider, Dialog, Portal, Paragraph } from 'react-native-paper';
 
 import { Container } from './styles';
-import CartContext from '../../../context/CartContext';
+import BasketContext from '../../../context/BasketContext';
 
 const Section = ({ product }) => {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
-  const { decreaseItem } = useContext(CartContext);
+  const { decreaseItem } = useContext(BasketContext);
   const price = product.price + product.options.reduce((acumulador, item) => acumulador + item.price, 0);
 
   return (

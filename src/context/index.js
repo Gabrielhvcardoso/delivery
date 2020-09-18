@@ -1,18 +1,21 @@
 import React from 'react';
 import Showcase from '../components/Showcase';
+import Basket from '../components/Basket';
 
 import { ShowcaseContextProvider } from './ShowcaseContext';
-import { CartContextProvider } from './CartContext';
+import { BasketContextProvider } from './BasketContext';
 
 const ContextProvider = ({ children }) => {
   return (
-    <ShowcaseContextProvider>
-      <Showcase />
+    <BasketContextProvider>
+      <Basket />
 
-      <CartContextProvider>
-        { children }
-      </CartContextProvider>
-    </ShowcaseContextProvider>
+      <ShowcaseContextProvider>
+        <Showcase />
+
+          { children }
+      </ShowcaseContextProvider>
+    </BasketContextProvider>
   );
 }
 
