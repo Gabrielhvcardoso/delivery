@@ -1,5 +1,4 @@
 import React, { createContext, useState } from 'react';
-import Showcase from '../components/Showcase';
 
 const ShowcaseContext = createContext({
   // Showcase functions and states
@@ -26,7 +25,6 @@ export const ShowcaseContextProvider = ({ children }) => {
       isShowcaseVisible,
       dismissShowcase: () => setIsShowcaseVisible(false)
     }}>
-      <Showcase />
       { children }
     </ShowcaseContext.Provider>
   );

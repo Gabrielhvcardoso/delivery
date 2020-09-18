@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View } from 'react-native';
 
-import { Header, Option } from './styles';
+import Option from './Option';
+import { Header } from './styles';
 
-const Options = ({ options }) => {
+const Options = ({ options, initialPrice }) => {
+
+  if (!options) return <View />;
+
   return (
     <View>
       {

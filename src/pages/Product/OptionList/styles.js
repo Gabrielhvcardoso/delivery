@@ -26,30 +26,3 @@ const HeaderText = styled.Text`
   font-size: 16px;
   font-weight: bold;
 `;
-
-export const Option = ({ option }) => (
-  <OptionContainer>
-    <OptionText>
-      { option.name }
-    </OptionText>
-    <OptionText>
-      {
-        option.addValue ? (
-          `R$ ${option.addValue.toFixed(2).toString().replace('.', ',')}`
-        ) : '-'
-      }
-    </OptionText>
-  </OptionContainer>
-);
-
-const OptionContainer = styled.View`
-  align-items: center;
-  flex-direction: row;
-  height: 70px;
-  justify-content: space-between;
-  padding: 0px 20px;
-`;
-
-const OptionText = styled.Text`
-
-`;
