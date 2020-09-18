@@ -5,8 +5,8 @@ import ProductContext from '../../context';
 
 export const Option = ({ option }) => {
   const [isSelected, setIsSelected] = useState(false);
-  const { increasePrice, decreasePrice } = useContext(ProductContext);
-  const { addValue: price } = option;
+  const { increaseOption, decreaseOption } = useContext(ProductContext);
+  const { addValue: price, name } = option;
 
   const OptionContainer = styled.TouchableOpacity`
     background-color: ${isSelected ? '#fafafa' : 'white'}
@@ -23,16 +23,16 @@ export const Option = ({ option }) => {
 
   useEffect(() => {
     if (isSelected) {
-      increasePrice(price);
+      increaseOption({ name, price });
     } else {
-      decreasePrice(price);
+      decreaseOption({ name, price });
     }
   }, [isSelected])
 
   return (
     <OptionContainer isSelected={isSelected} onPress={() => setIsSelected(!isSelected)}>
       <OptionText>
-        { option.name }
+        { name }
       </OptionText>
       <OptionText>
         {

@@ -1,29 +1,45 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 
 const ProductContext = createContext({
   price: 0,
-  increasePrice: () => {},
-  decreasePrice: () => {}
+  options: [],
+  setInitialPrice: () => {},
+  increaseOption: () => {},
+  decreaseOption: () => {}
 });
 
 export const ProductContextProvider = ({ children }) => {
-  const [price, setPrice] = useState(0);
+  const [initialPrice, setInitialPrice] = useState(0);
+  const [options, setOptions] = useState([]);
 
-  const increasePrice = (arg1, onEnd = () => {}) => {
-    setPrice(price + arg1);
-    onEnd();
+  const price = useMemo(() => {
+    let value = initialPrice
+    
+    if (options[0]) {
+      value += options.reduce((obj, item) => obj + item.price, 0);
+    }
+
+    return value;
+  }, [initialPrice, options]);
+
+  const increaseOption = (arg1) => {
+    setOptions([...options, arg1]);
+
+    console.log(options)
   };
 
-  const decreasePrice = (arg1, onEnd = () => {}) => {
-    setPrice(price - arg1);
-    onEnd();
+  const decreaseOption = (arg1) => {
+    let array = options.filter(item => item.name !== arg1.name);
+    setOptions(array);
   };
 
   return (
     <ProductContext.Provider value={{
       price,
-      increasePrice,
-      decreasePrice,
+      options,
+      setInitialPrice,
+      increaseOption,
+      decreaseOption,
     }}>
       { children }
     </ProductContext.Provider>

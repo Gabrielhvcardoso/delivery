@@ -10,7 +10,7 @@ import Footer from './Footer';
 import { ProductContextProvider } from './context';
 import { Title, Subtitle } from './styles';
 
-const Product = ({ route }) => {
+const Product = ({ navigation, route }) => {
   const { product } = route.params;
 
   return (
@@ -20,6 +20,7 @@ const Product = ({ route }) => {
 
         <View style={{ flexDirection: 'row', marginBottom: 20 }}>
           <Button
+            onPress={() => navigation.push('StackCart')}
             style={{ marginRight: 5, flex: 1 }}
             mode="outlined"
             icon="cart-outline"

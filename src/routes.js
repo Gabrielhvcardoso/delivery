@@ -63,14 +63,18 @@ const Routes = () => {
         <Stack.Screen
           name="Product"
           component={Product}
-          options={({ route }) => {
-            const { product } = route.params;
+          options={{
+            headerTintColor: 'white',
+            headerTitle: '',
+            headerTransparent: true
+          }}
+        />
 
-            return ({
-              headerTintColor: 'white',
-              headerTitle: '',
-              headerTransparent: true
-            });
+        <Stack.Screen
+          name="StackCart"
+          component={Cart}
+          options={{
+            title: 'Carrinho'
           }}
         />
 
