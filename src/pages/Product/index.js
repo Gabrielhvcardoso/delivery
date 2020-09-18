@@ -41,7 +41,7 @@ const Product = ({ navigation, route }) => {
         <Subtitle>{ product.details }</Subtitle>
         
         <OptionList options={product.options} />
-        <Footer initialPrice={product.price} />
+        <Footer product={product} />
 
       </Container>
     </ProductContextProvider>

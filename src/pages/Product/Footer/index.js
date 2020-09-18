@@ -6,10 +6,13 @@ import { Title } from '../styles';
 
 import ProductContext from '../context';
 
-const Footer = ({ initialPrice }) => {
-  const { price, options, setInitialPrice } = useContext(ProductContext);
+const Footer = ({ product }) => {
+  const { price, options, setProduct, addToCart } = useContext(ProductContext);
 
-  useEffect(() => setInitialPrice(initialPrice), []);
+  useEffect(() => setProduct({
+    name: product.name,
+    price: product.price
+  }), []);
 
   return (
     <View>
@@ -58,6 +61,7 @@ const Footer = ({ initialPrice }) => {
       </View>
 
       <Button
+        onPress={addToCart}
         style={{ marginTop: 20, elevation: 0, paddingVertical: 10 }}
         mode="contained"
         icon="cart"

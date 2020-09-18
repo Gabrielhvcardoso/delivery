@@ -1,46 +1,52 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import CartContext from '../../context/CartContext';
 
 const ProductContext = createContext({
   price: 0,
   options: [],
-  setInitialPrice: () => {},
+  setProduct: () => {},
   increaseOption: () => {},
-  decreaseOption: () => {}
+  decreaseOption: () => {},
+  addToCart: () => {},
 });
 
 export const ProductContextProvider = ({ children }) => {
-  const [initialPrice, setInitialPrice] = useState(0);
+  const { increaseItem } = useContext(CartContext);
+  const navigation = useNavigation();
+
+  const [product, setProduct] = useState({});
   const [options, setOptions] = useState([]);
 
   const price = useMemo(() => {
-    let value = initialPrice
-    
-    if (options[0]) {
-      value += options.reduce((obj, item) => obj + item.price, 0);
-    }
-
+    let value = product.price ?? 0; 
+    if (options[0]) value += options.reduce((obj, item) => obj + item.price, 0);
     return value;
-  }, [initialPrice, options]);
+  }, [product, options]);
 
-  const increaseOption = (arg1) => {
-    setOptions([...options, arg1]);
+  const increaseOption = (arg1) => setOptions([...options, arg1]);
+  const decreaseOption = (arg1) => setOptions(options.filter(item => item.name !== arg1.name));
 
-    console.log(options)
-  };
+  const addToCart = () => {
+    increaseItem({
+      ...product,
+      options,
+    });
 
-  const decreaseOption = (arg1) => {
-    let array = options.filter(item => item.name !== arg1.name);
-    setOptions(array);
-  };
+    navigation.popToTop();
+  } 
 
   return (
-    <ProductContext.Provider value={{
-      price,
-      options,
-      setInitialPrice,
-      increaseOption,
-      decreaseOption,
-    }}>
+    <ProductContext.Provider
+      value={{
+        price,
+        options,
+        setProduct,
+        increaseOption,
+        decreaseOption,
+        addToCart,
+      }}
+    >
       { children }
     </ProductContext.Provider>
   )
