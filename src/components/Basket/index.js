@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
-import { View, Dimensions, Modal, Text } from 'react-native';
+import { View, Dimensions, Modal, Text, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { Divider } from 'react-native-paper';
+import { Button, Divider } from 'react-native-paper';
 
 import { Container } from './styles';
 import Section from './Section';
 
 import BasketContext from '../../context/BasketContext';
 import { Icon } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Basket = () => {
   const { products, isBasketVisible, dismissBasket } = useContext(BasketContext);
@@ -27,24 +28,43 @@ const Basket = () => {
           </Text>
         </View>
         <Divider style={{ marginVertical: 10 }} />
-        
-        {
-          products[0] ? (
-            <>
-              {
-                products.map((product) => {
-                  return (
-                    <Section product={product} key={Math.random() * Math.random()} />
-                  );
-                })
-              }
-            </>
-          ) : (
-            <Text
-              style={{ textAlign: 'center', marginTop: Dimensions.get('window').height / 2 - 50 }}
-            >Parece que não há nada aqui ainda</Text>
-          )
-        }
+
+        <View style={{ flex: 1 }}>
+          {
+            products[0] ? (
+              <>
+                <TouchableOpacity style={{ padding: 10, marginBottom: 15, flexDirection: 'row' }}>
+                  <Image
+                    source={require('../../../assets/images/map.jpg')}
+                    style={{ width: 65, height: 65, borderRadius: 10, resizeMode: 'contain'}}
+                  />
+                  <View style={{ flex: 1, marginLeft: 12, justifyContent: 'space-between' }}>
+                    <Text style={{ fontSize: 17, color: '#666' }}>Entregar em <Text style={{ fontWeight: 'bold' }}>Casa</Text></Text>
+                    <Text numberOfLines={1} style={{ fontSize: 15, flex: 1 }}>Rua Affonso Nicoluzzi, 2515 - Rau - Jaraguá do Sul - SC</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontSize: 13, color: '#666' }}>ALTERAR </Text>
+                      <Icon name="chevron-right" type="material-community" color="#666" size={15} />
+                    </View>
+                  </View>
+                </TouchableOpacity>
+
+                {
+                  products.map((product) => {
+                    return (
+                      <Section product={product} key={Math.random() * Math.random()} />
+                    );
+                  })
+                }
+              </>
+            ) : (
+              <Text
+                style={{ textAlign: 'center', marginTop: Dimensions.get('window').height / 2 - 50 }}
+              >Parece que não há nada aqui ainda</Text>
+            )
+          }
+        </View>
+
+        <Button>Escolher forma de pagamento</Button>
       </Container>
     </Modal>
   );
