@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Divider } from 'react-native-paper';
 
 import { Container } from './styles';
+import Section from './Section';
 
 import BasketContext from '../../context/BasketContext';
 import { Icon } from 'react-native-elements';
@@ -21,14 +22,15 @@ const Basket = () => {
         <StatusBar style="dark" />
         <View style={{ flexDirection: 'row' }}>
           <Icon name="close" type="material-community" onPress={dismissBasket} />
+          <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 10 }}>
+            Sua sacola
+          </Text>
         </View>
+        <Divider style={{ marginVertical: 10 }} />
+        
         {
           products[0] ? (
             <>
-              <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 10 }}>
-                Seu pedido
-              </Text>
-              <Divider style={{ marginVertical: 10 }} />
               {
                 products.map((product) => {
                   return (

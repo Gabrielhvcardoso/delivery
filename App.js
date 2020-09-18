@@ -16,11 +16,11 @@ export default function App() {
   }
   
   return (
-    <ContextProvider>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <ContextProvider>
         <StatusBar style="inverted" />
         <Routes />
-      </ThemeProvider>
-    </ContextProvider>
+      </ContextProvider>
+    </ThemeProvider>
   );
 }
