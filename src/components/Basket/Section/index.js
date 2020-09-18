@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Animated, Image, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Button, Divider, Dialog, Portal, Paragraph } from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 
-import { Container } from './styles';
 import BasketContext from '../../../context/BasketContext';
 
 const Section = ({ product }) => {
@@ -12,8 +11,43 @@ const Section = ({ product }) => {
   const { decreaseItem } = useContext(BasketContext);
   const price = product.price + product.options.reduce((acumulador, item) => acumulador + item.price, 0);
 
+  const deleteAnimation = new Animated.Value(0);
+
+  const onDelete = () => {
+    Animated.timing(deleteAnimation, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true
+    }).start(() => {
+      decreaseItem(product.id);
+    })
+  }
+
+  const translateX = deleteAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 200],
+    extrapolate: 'clamp'
+  })
+
+  const opacity = deleteAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+    extrapolate: 'clamp'
+  })
+
+
   return (
-    <Container>
+    <Animated.View style={{
+      backgroundColor: '#fff',
+      borderRadius: 8,
+      elevation: 2,
+      marginTop: 15,
+      padding: 15,
+      opacity,
+      transform: [{
+        translateX: translateX
+      }]
+    }}>
       <View style={{ flexDirection: 'row' }}>
         <Image
           source={{ uri: product.image }}
@@ -56,7 +90,7 @@ const Section = ({ product }) => {
         <TouchableOpacity style={{ padding: 5 }}>
           <Text
             style={{ fontSize: 13, color: '#F00' }}
-            onPress={ deleteTouch ? () => decreaseItem(product.id) : () => setDeleteTouch(true)}  
+            onPress={ deleteTouch ? () => onDelete() : () => setDeleteTouch(true)}  
           >
             { deleteTouch ? 'CLIQUE PARA CONFIRMAR' : 'REMOVER' }
           </Text>
@@ -67,7 +101,7 @@ const Section = ({ product }) => {
         </Text>
       </View>
       
-    </Container>
+    </Animated.View>
   );
 }
 

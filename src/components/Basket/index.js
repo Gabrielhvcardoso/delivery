@@ -34,7 +34,11 @@ const Basket = () => {
 
         <View style={{ flex: 1 }}>
           {
-            products[0] ? (
+            !products[0] ? (
+              <Text
+                style={{ textAlign: 'center', marginTop: Dimensions.get('window').height / 2 - 50 }}
+              >Parece que não há nada aqui ainda</Text>
+            ) : (
               <>
                 <TouchableOpacity style={{ padding: 10, marginBottom: 15, flexDirection: 'row' }}>
                   <Image
@@ -58,27 +62,24 @@ const Basket = () => {
                     );
                   })
                 }
+
+                <View style={{ marginTop: 30 }}>
+                  <Text
+                    style={{ fontSize: 19, marginHorizontal: 10 }}
+                  >Escolha também</Text>
+                  <HorizontalList style={{ marginHorizontal: -15 }} />
+                </View>
+        
+                <Button
+                  mode="contained"
+                  style={{ marginTop: 20, paddingVertical: 10 }}
+                >Escolher forma de pagamento</Button>
               </>
-            ) : (
-              <Text
-                style={{ textAlign: 'center', marginTop: Dimensions.get('window').height / 2 - 50 }}
-              >Parece que não há nada aqui ainda</Text>
             )
           }
         </View>
 
-        <View style={{ marginTop: 30 }}>
-          <Text
-            style={{ fontSize: 19, marginHorizontal: 10 }}
-          >Escolha também</Text>
-          <HorizontalList style={{ marginHorizontal: -15 }} />
-        </View>
-        
-        <Button
-          mode="contained"
-          style={{ marginTop: 20, paddingVertical: 10 }}
-        >Escolher forma de pagamento</Button>
-      </Container>
+      </Container>        
     </Modal>
   );
 }
