@@ -4,8 +4,10 @@ import CartContext from '../../context/CartContext';
 
 const ProductContext = createContext({
   price: 0,
+  quantity: 1,
   options: [],
   setProduct: () => {},
+  setQuantity: () => {},
   increaseOption: () => {},
   decreaseOption: () => {},
   addToCart: () => {},
@@ -17,6 +19,7 @@ export const ProductContextProvider = ({ children }) => {
 
   const [product, setProduct] = useState({});
   const [options, setOptions] = useState([]);
+  const [quantity, setQuantity] = useState(1);
 
   const price = useMemo(() => {
     let value = product.price ?? 0; 
@@ -30,6 +33,7 @@ export const ProductContextProvider = ({ children }) => {
   const addToCart = () => {
     increaseItem({
       ...product,
+      quantity,
       options,
     });
 
@@ -40,8 +44,10 @@ export const ProductContextProvider = ({ children }) => {
     <ProductContext.Provider
       value={{
         price,
+        quantity,
         options,
         setProduct,
+        setQuantity,
         increaseOption,
         decreaseOption,
         addToCart,
