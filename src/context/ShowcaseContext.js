@@ -1,14 +1,15 @@
 import React, { createContext, useState } from 'react';
 
-const GeneralContext = createContext({
+const ShowcaseContext = createContext({
+  // Showcase functions and states
+
   showcaseImage: null,
   showImage: () => {},
-
   isShowcaseVisible: false,
-  dismissShowcase: () => {}
+  dismissShowcase: () => {},
 });
 
-export const GeneralContextProvider = ({ children }) => {
+export const ShowcaseContextProvider = ({ children }) => {
   const [isShowcaseVisible, setIsShowcaseVisible] = useState(false);
   const [showcaseImage, setShowcaseImage] = useState("");
 
@@ -18,15 +19,15 @@ export const GeneralContextProvider = ({ children }) => {
   }
 
   return (
-    <GeneralContext.Provider value={{
+    <ShowcaseContext.Provider value={{
       showcaseImage,
       showImage,
       isShowcaseVisible,
       dismissShowcase: () => setIsShowcaseVisible(false)
     }}>
       { children }
-    </GeneralContext.Provider>
+    </ShowcaseContext.Provider>
   );
 }
 
-export default GeneralContext;
+export default ShowcaseContext;

@@ -5,7 +5,7 @@ import { DefaultTheme, Provider as ThemeProvider } from 'react-native-paper';
 import Routes from './src/routes';
 import Showcase from './src/components/Showcase';
 
-import { GeneralContextProvider } from './src/context';
+import { ShowcaseContextProvider } from './src/context/ShowcaseContext';
 
 export default function App() {
   const theme = {
@@ -18,13 +18,13 @@ export default function App() {
   }
   
   return (
-    <GeneralContextProvider>
+    <ShowcaseContextProvider>
       <StatusBar style="inverted" />
       <Showcase />
   
       <ThemeProvider theme={theme}>
         <Routes />
       </ThemeProvider>
-    </GeneralContextProvider>
+    </ShowcaseContextProvider>
   );
 }

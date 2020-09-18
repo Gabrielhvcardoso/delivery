@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Options from '.';
 
 export const Header = ({ required, title }) => {
   return (

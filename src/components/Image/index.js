@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Image as ReactNativeImage, TouchableOpacity } from 'react-native';
 
-import GeneralContext from '../../context';
+import ShowcaseContext from '../../context/ShowcaseContext';
 
 const Image = ({ uri, size = 'sm' }) => {
-  const { showImage } = useContext(GeneralContext)
+  const { showImage } = useContext(ShowcaseContext)
   
   // Criar valor default
   const image = uri;

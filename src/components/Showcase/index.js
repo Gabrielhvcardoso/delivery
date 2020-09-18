@@ -9,10 +9,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import GeneralContext from '../../context';
+import ShowcaseContext from '../../context/ShowcaseContext';
 
 const Showcase = () => {
-  const { isShowcaseVisible, dismissShowcase, showcaseImage } = useContext(GeneralContext)
+  const { isShowcaseVisible, dismissShowcase, showcaseImage } = useContext(ShowcaseContext)
 
   const screenWidth = Dimensions.get('window').width;
   const screenHeight = Dimensions.get('window').height;
