@@ -3,6 +3,8 @@ import { View, Dimensions, Modal, Text, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Button, Divider } from 'react-native-paper';
 
+import HorizontalList from '../HorinzontalList';
+
 import { Container } from './styles';
 import Section from './Section';
 
@@ -27,6 +29,7 @@ const Basket = () => {
             Sua sacola
           </Text>
         </View>
+        
         <Divider style={{ marginVertical: 10 }} />
 
         <View style={{ flex: 1 }}>
@@ -64,7 +67,17 @@ const Basket = () => {
           }
         </View>
 
-        <Button>Escolher forma de pagamento</Button>
+        <View style={{ marginTop: 30 }}>
+          <Text
+            style={{ fontSize: 19, marginHorizontal: 10 }}
+          >Escolha também</Text>
+          <HorizontalList style={{ marginHorizontal: -15 }} />
+        </View>
+        
+        <Button
+          mode="contained"
+          style={{ marginTop: 20, paddingVertical: 10 }}
+        >Escolher forma de pagamento</Button>
       </Container>
     </Modal>
   );

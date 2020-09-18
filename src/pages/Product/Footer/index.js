@@ -11,7 +11,8 @@ const Footer = ({ product }) => {
 
   useEffect(() => setProduct({
     name: product.name,
-    price: product.price
+    price: product.price,
+    image: product.image
   }), []);
 
   return (

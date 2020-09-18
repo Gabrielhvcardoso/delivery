@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, View, Image } from 'react-native';
 
-const HorinzontalList = ({ images, size = 'sm' }) => {
+const HorinzontalList = ({ style = {}, images, size = 'sm' }) => {
   if (!images) {
     images = [
       'https://julestillman.com/wp-content/uploads/2016/10/10Jesse.jpg',
@@ -17,6 +17,7 @@ const HorinzontalList = ({ images, size = 'sm' }) => {
   
   return (
     <ScrollView
+      style={style ? style : {}}
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{ padding: 15 }}
