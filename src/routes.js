@@ -86,6 +86,10 @@ const Routes = () => {
 const BottomTabs = () => {
   return (
     <Tabs.Navigator
+      tabBarOptions={{
+        showLabel: false,
+        style: { elevation: 0 }
+      }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
