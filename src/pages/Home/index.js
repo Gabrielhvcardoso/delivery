@@ -7,7 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 const Home = () => {
   return (
     <Container>
-      <StatusBar style="ligth" />
+      <StatusBar style="dark" />
       <CategoryScrollView categories={data.categories} />
     </Container>
   );

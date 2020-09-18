@@ -29,7 +29,7 @@ const Footer = ({ initialPrice }) => {
               <Text>{ option.name }</Text>
               <Text
                 numberOfLines={1}
-                style={{ overflow: 'hidden', flex: 1 }}
+                style={{ flex: 1 }}
                 ellipsizeMode="clip"
               >....................................................................................</Text>
               <Text>
