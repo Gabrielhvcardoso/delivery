@@ -54,34 +54,39 @@ const Section = ({ product }) => {
           style={{ height: 100, width: 100, borderRadius: 10 }}
         />
         <View style={{ flexDirection: 'column', marginLeft: 15, flex: 1 }}>
-          <Text numberOfLines={1} style={{ flex: 1, fontSize: 19, fontWeight: 'bold' }}>{ product.name }</Text>
+          <Text numberOfLines={1} style={{ fontSize: 19, fontWeight: 'bold' }}>{ product.name }</Text>
+          <Divider style={{ marginVertical: 5 }} />
           {
-            product.options[0] ? (
-              <Divider style={{ marginVertical: 5 }} />
-            ) : <></>
-          }
-          {
-            product.options.map(option => (
-              <View
-                key={Math.random() * Math.random()}
-                style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, }}
-              >
-                <Text>{ option.name }</Text>
+            !product.options[0] ? (
+              <Text style={{ color: '#666' }}>
+                Nenhum adicional
+              </Text>
+            ) : (
+              <>
+                {
+                  product.options.map(option => (
+                    <View
+                      key={Math.random() * Math.random()}
+                      style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, }}
+                    >
+                      <Text>{ option.name }</Text>
 
-                <Text>
-                  {
-                    option.price ? (
-                      `R$ ${ option.price ? option.price.toFixed(2).toString().replace('.', ',') : '' }`
-                    ) : (
-                      'R$ 0,00'
-                    )
-                  }
-                </Text>
-              </View>
-            ))
+                      <Text>
+                        {
+                          option.price ? (
+                            `R$ ${ option.price ? option.price.toFixed(2).toString().replace('.', ',') : '' }`
+                          ) : (
+                            'R$ 0,00'
+                          )
+                        }
+                      </Text>
+                    </View>
+                  ))
+                }
+              </>
+            )
           }
         </View>
-        
       </View>  
       
 
