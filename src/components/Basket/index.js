@@ -6,15 +6,20 @@ import { Icon } from 'react-native-elements';
 
 import { Container } from './styles';
 
-import HorizontalList from '../HorinzontalList';
+import Suggestion from './Suggestion';
 import Section from './Section';
 
 import BasketContext from '../../context/BasketContext';
 import * as RootNavigation from '../../RootNavigation';
 
+import data from '../../data';
+
 const Basket = () => {
   const { products, isBasketVisible, dismissBasket, showBasket } = useContext(BasketContext);
-  
+  const { categories } = data;
+  const productsArray = categories.flatMap(item => item.products);
+
+
   const finalPricing = useMemo(() => products.reduce((acumulador, item) => acumulador + item.price, 0), [products])
 
   return (
@@ -78,8 +83,11 @@ const Basket = () => {
                   <Text
                     style={{ fontSize: 19, marginHorizontal: 10 }}
                   >Escolha também</Text>
-                  <HorizontalList style={{ marginHorizontal: -15 }} />
-                </View>
+                  <Suggestion
+                    style={{ marginHorizontal: -15 }}
+                    array={productsArray}
+                  />
+                </View> 
         
 
                 <View style={{ flexDirection: 'row', marginTop: 20 }}>
