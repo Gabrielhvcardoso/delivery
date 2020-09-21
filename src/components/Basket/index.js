@@ -24,7 +24,7 @@ const Basket = () => {
       animationType="slide"
     >
       <Container>
-        <StatusBar style="dark" />
+        <StatusBar backgroundColor="#fff" style="dark" />
         <View style={{ flexDirection: 'row' }}>
           <Icon name="close" type="material-community" onPress={dismissBasket} />
           <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 10 }}>

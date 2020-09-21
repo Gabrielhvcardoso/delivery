@@ -72,9 +72,12 @@ const AndressSelector = ({ navigation, route }) => {
   // On select andress search by coordinates
   const handleEndEditting =  async () => {
     setPossibleAndress('');
-    const locationObj = await Location.geocodeAsync(finalAndress);
-    if (locationObj[0]) {
-      setLocation(locationObj[0])
+    console.log('a')
+    if (!textInputRef.current?.isFocused()) {
+      const locationObj = await Location.geocodeAsync(finalAndress);
+      if (locationObj[0]) {
+        setLocation(locationObj[0])
+      }  
     }
   }
 
@@ -91,7 +94,9 @@ const AndressSelector = ({ navigation, route }) => {
         setFinalAndress(andressStr);
       }
 
-      setProcessing(false);
+      setTimeout(() => {
+        setProcessing(false);        
+      }, 1000);
     }
     
     if (processing) {
@@ -116,8 +121,18 @@ const AndressSelector = ({ navigation, route }) => {
     ),
   });
 
+  const [processing2, setProcessing2] = useState(false);
+
   const onRegionChange = (event) => {
+    if (processing) {
+      return;
+    }
+
+    setProcessing2(true);
     setLocation(event);
+    setTimeout(() => {
+      setProcessing2(false);
+    }, 100);
   }
 
   return (
@@ -127,16 +142,11 @@ const AndressSelector = ({ navigation, route }) => {
         location ? (
           <>
             <MapView
+
               style={styles.mapStyle}
               onRegionChangeComplete={onRegionChange}
               customMapStyle={mapStyle}
-              region={{...location, latitudeDelta: 0.07, longitudeDelta: 0.07 }}
-              initialRegion={{
-                latitude: location ? location.latitude ?? 0 : 0,
-                longitude: location ? location.longitude ?? 0 : 0,
-                latitudeDelta: 0.07,
-                longitudeDelta: 0.07
-              }}
+              region={location.latitudeDelta ? location : {...location, latitudeDelta: 0.01, longitudeDelta: 0.01 }}
             />
 
             <View pointerEvents="none" style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent'}}>
