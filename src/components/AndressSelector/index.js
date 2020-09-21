@@ -148,6 +148,7 @@ const AndressSelector = ({ navigation, route }) => {
       }
       <SafeAreaView style={styles.safetextinput}>
         <TextInput
+          clearTextOnFocus
           ref={textInputRef}
           value={andress}
           onChangeText={handleSearchPlace}
@@ -167,7 +168,7 @@ const AndressSelector = ({ navigation, route }) => {
             textInputRef.current.blur();
           }}>
             <Text numberOfLines={1} style={{ fontSize: 18 }}>
-              { possibleAndress } asdashdgasdjasghdsajdhgsadjhasgdjg
+              { possibleAndress }
             </Text>
           </TouchableOpacity>
         ) : <></>
