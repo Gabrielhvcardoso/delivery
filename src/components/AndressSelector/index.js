@@ -87,10 +87,12 @@ const AndressSelector = ({ navigation, route }) => {
     const getAndress = async () => {
       if (location) {
         const andressObj = (await Location.reverseGeocodeAsync(location))[0];
-        const andressStr = `${andressObj.street ?? 'Rua desconhecida'}, ${andressObj.name} - ${andressObj.postalCode ?? 'Sem código postal'}`;
+        const andressStr = `${andressObj.street ?? 'Rua desconhecida'}, ${andressObj.name}`;
         
-        setAndress(andressStr);
-        setFinalAndress(andressStr);
+        if (processing) {
+          setAndress(andressStr);
+          setFinalAndress(andressStr);
+        }
       }
 
       setTimeout(() => {
