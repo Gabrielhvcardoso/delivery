@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect, useLayoutEffect, useState } from 'react';
 import MapView from 'react-native-maps';
 import { View, StyleSheet, TouchableOpacity, Dimensions, Image, StatusBar, TextInput, Text, Alert, YellowBox } from 'react-native';
 
@@ -83,7 +83,7 @@ const AndressSelector = ({ navigation, route }) => {
   // set andress text on set map position
   const [processing, setProcessing] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getAndress = async () => {
       if (location) {
         const andressObj = (await Location.reverseGeocodeAsync(location))[0];
@@ -98,12 +98,8 @@ const AndressSelector = ({ navigation, route }) => {
       }, 1000);
     }
     
-    if (processing) {
-      return;
-    } else {
-      setProcessing(true);
-      getAndress();
-    }
+    setProcessing(true);
+    getAndress();
   }, [location]);
 
   navigation.setOptions({
@@ -120,18 +116,14 @@ const AndressSelector = ({ navigation, route }) => {
     ),
   });
 
-  const [processing2, setProcessing2] = useState(false);
 
   const onRegionChange = (event) => {
     if (processing) {
       return;
+    } else {
+      setLocation(event);
+      setProcessing(true);
     }
-
-    setProcessing2(true);
-    setLocation(event);
-    setTimeout(() => {
-      setProcessing2(false);
-    }, 100);
   }
 
   return (
@@ -141,7 +133,6 @@ const AndressSelector = ({ navigation, route }) => {
         location ? (
           <>
             <MapView
-
               style={styles.mapStyle}
               onRegionChangeComplete={onRegionChange}
               customMapStyle={mapStyle}
