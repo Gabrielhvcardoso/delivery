@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { View, Dimensions, Modal, Text, Image, TouchableOpacity } from 'react-native';
 import { Button, Divider } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
@@ -14,11 +14,13 @@ import * as RootNavigation from '../../RootNavigation';
 
 const Basket = () => {
   const { products, isBasketVisible, dismissBasket, showBasket } = useContext(BasketContext);
+  
+  const finalPricing = useMemo(() => products.reduce((acumulador, item) => acumulador + item.price, 0), [products])
 
   return (
     <Modal
       visible={isBasketVisible}
-      onDismiss={dismissBasket}
+      onRequestClose={dismissBasket}
       animationType="slide"
     >
       <Container>
@@ -79,6 +81,12 @@ const Basket = () => {
                   <HorizontalList style={{ marginHorizontal: -15 }} />
                 </View>
         
+
+                <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                  <Text style={{ fontSize: 18 }}>Valor final </Text>
+                  <Text style={{ fontSize: 18, flex: 1 }} numberOfLines={1} ellipsizeMode={"clip"}>...........................................................................................</Text>
+                  <Text style={{ fontSize: 18 }}> R$ { finalPricing.toFixed(2).toString().replace('.', ',') }</Text>
+                </View>
                 <Button
                   mode="contained"
                   style={{ marginTop: 20, paddingVertical: 10 }}
