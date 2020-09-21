@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from 'react';
 import MapView from 'react-native-maps';
-import { View, StyleSheet, TouchableOpacity, Dimensions, Image, StatusBar, TextInput, Text, Alert } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Dimensions, Image, StatusBar, TextInput, Text, Alert, YellowBox } from 'react-native';
 
 import * as Location from 'expo-location';
 
@@ -11,12 +11,15 @@ import mapStyle from './mapStyle.json';
 import { Icon } from 'react-native-elements';
 const markerImage = { uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Map_marker.svg/512px-Map_marker.svg.png' };
 
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
+
 const AndressSelector = ({ navigation, route }) => {
   const [location, setLocation] = useState(null);
   const [andress, setAndress] = useState('');
   const [finalAndress, setFinalAndress] = useState('');
   const [possibleAndress, setPossibleAndress] = useState('');
-  const [errorMsg, setErrorMsg] = useState(null);
   const [isLookingGPS, setIsLookingGPS] = useState(false);
 
   const textInputRef = createRef();
@@ -50,6 +53,11 @@ const AndressSelector = ({ navigation, route }) => {
   // Text Input Auto Complete
   const handleSearchPlace = async (text) => {
     setAndress(text);
+    
+    if (!textInputRef.current.isFocused()) {
+      return;
+    }
+    
     const locationObj = await Location.geocodeAsync(text);
 
     if (locationObj[0]) {
@@ -70,6 +78,8 @@ const AndressSelector = ({ navigation, route }) => {
     }
   }
 
+  // set andress text on set map position
+  const [processing, setProcessing] = useState(false);
 
   useEffect(() => {
     const getAndress = async () => {
@@ -80,9 +90,16 @@ const AndressSelector = ({ navigation, route }) => {
         setAndress(andressStr);
         setFinalAndress(andressStr);
       }
-    }
 
-    getAndress();
+      setProcessing(false);
+    }
+    
+    if (processing) {
+      return;
+    } else {
+      setProcessing(true);
+      getAndress();
+    }
   }, [location]);
 
   navigation.setOptions({
