@@ -72,7 +72,6 @@ const AndressSelector = ({ navigation, route }) => {
   // On select andress search by coordinates
   const handleEndEditting =  async () => {
     setPossibleAndress('');
-    console.log('a')
     if (!textInputRef.current?.isFocused()) {
       const locationObj = await Location.geocodeAsync(finalAndress);
       if (locationObj[0]) {
