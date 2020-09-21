@@ -1,19 +1,19 @@
-import React, { useContext } from 'react';
-import { View, Dimensions, Modal, Text, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import React, { useContext } from 'react';
+import { View, Dimensions, Modal, Text, Image, TouchableOpacity } from 'react-native';
 import { Button, Divider } from 'react-native-paper';
-
-import HorizontalList from '../HorinzontalList';
+import { Icon } from 'react-native-elements';
 
 import { Container } from './styles';
+
+import HorizontalList from '../HorinzontalList';
 import Section from './Section';
 
 import BasketContext from '../../context/BasketContext';
-import { Icon } from 'react-native-elements';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as RootNavigation from '../../RootNavigation';
 
 const Basket = () => {
-  const { products, isBasketVisible, dismissBasket } = useContext(BasketContext);
+  const { products, isBasketVisible, dismissBasket, showBasket } = useContext(BasketContext);
 
   return (
     <Modal
@@ -40,7 +40,16 @@ const Basket = () => {
               >Parece que não há nada aqui ainda</Text>
             ) : (
               <>
-                <TouchableOpacity style={{ padding: 10, marginBottom: 15, flexDirection: 'row' }}>
+                <TouchableOpacity
+                  style={{ padding: 10, marginBottom: 15, flexDirection: 'row' }}
+                  activeOpacity={0.8}
+                  onPress={() => {
+                    dismissBasket();
+                    RootNavigation.navigate('AndressSelector', {
+                      goBack: () => showBasket(),
+                    });
+                  }}
+                >
                   <Image
                     source={require('../../../assets/images/map.jpg')}
                     style={{ width: 65, height: 65, borderRadius: 10, resizeMode: 'contain'}}

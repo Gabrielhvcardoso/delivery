@@ -1,28 +1,37 @@
 import React from 'react';
+import { Image } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+// Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+// Temp data
+import data from './data';
+
+// Pages
 import Home from './pages/Home';
 import Category from './pages/Category';
 import Product from './pages/Product';
 import Options from './pages/Options';
-
-import { Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Icon } from 'react-native-elements';
-
-import data from './data';
 import Orders from './pages/Orders';
 
+// Components
+import AndressSelector from './components/AndressSelector';
+
+// ***
+import { navigationRef } from './RootNavigation';
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 
+// Main route
 const Routes = () => {
   const { horizontalLogo } = data;
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerStyle: { elevation: 0 } }}>
 
         <Stack.Screen
@@ -65,6 +74,16 @@ const Routes = () => {
           component={Product}
           options={{
             headerTintColor: 'white',
+            headerTitle: '',
+            headerTransparent: true
+          }}
+        />
+
+        <Stack.Screen
+          name="AndressSelector"
+          component={AndressSelector}
+          options={{
+            headerTintColor: 'black',
             headerTitle: '',
             headerTransparent: true
           }}
