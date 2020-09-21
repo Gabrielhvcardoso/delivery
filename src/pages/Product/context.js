@@ -14,7 +14,7 @@ const ProductContext = createContext({
 });
 
 export const ProductContextProvider = ({ children }) => {
-  const { increaseItem } = useContext(BasketContext);
+  const { increaseItem, showBasket } = useContext(BasketContext);
   const navigation = useNavigation();
 
   const [product, setProduct] = useState({});
@@ -37,7 +37,8 @@ export const ProductContextProvider = ({ children }) => {
       options,
     });
 
-    navigation.popToTop();
+    showBasket();
+    navigation.goBack();
   } 
 
   return (
