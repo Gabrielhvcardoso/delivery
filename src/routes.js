@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,17 +18,35 @@ import Product from './pages/Product';
 import Options from './pages/Options';
 import Orders from './pages/Orders';
 
+// NotLogged Pages
+import Login from './pages/Login';
+import Register from './pages/Register';
+
 // Components
 import AndressSelector from './components/AndressSelector';
 
 // ***
 import { navigationRef } from './RootNavigation';
+import AuthContext from './context/AuthContext';
+
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 
 // Main route
 const Routes = () => {
+  const { isUserLogged } = useContext(AuthContext);
   const { horizontalLogo } = data;
+
+  if (!isUserLogged) {
+    return (
+      <NavigationContainer ref={navigationRef}>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+          <Stack.Screen name="Register" component={Register} options={{ headerStyle: { elevation: 0 }, title: 'Cadastro' }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
+  }
 
   return (
     <NavigationContainer ref={navigationRef}>

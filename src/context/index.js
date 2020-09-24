@@ -2,20 +2,23 @@ import React from 'react';
 import Showcase from '../components/Showcase';
 import Basket from '../components/Basket';
 
+import { AuthContextProvider } from './AuthContext';
 import { ShowcaseContextProvider } from './ShowcaseContext';
 import { BasketContextProvider } from './BasketContext';
 
 const ContextProvider = ({ children }) => {
   return (
-    <BasketContextProvider>
-      <Basket />
+    <AuthContextProvider>
+      <BasketContextProvider>
+        <Basket />
 
-      <ShowcaseContextProvider>
-        <Showcase />
+        <ShowcaseContextProvider>
+          <Showcase />
 
-          { children }
-      </ShowcaseContextProvider>
-    </BasketContextProvider>
+            { children }
+        </ShowcaseContextProvider>
+      </BasketContextProvider>
+    </AuthContextProvider>
   );
 }
 
