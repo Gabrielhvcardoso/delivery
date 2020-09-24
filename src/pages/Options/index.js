@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Text, View, } from 'react-native';
 import { List, Avatar, Divider, Button } from 'react-native-paper';
 
 import { Container } from './styles';
 
+import AuthContext from '../../context/AuthContext';
+
 const Options = ({ navigation }) => {
+  const { setUserStatus } = useContext(AuthContext);
+
   return (
     <Container>
       <View style={{ padding: 20, flexDirection: 'row' }}>
@@ -42,6 +46,13 @@ const Options = ({ navigation }) => {
         )}
       />
 
+      <List.Item
+        title="Sair"
+        onPress={() => setUserStatus(false)}
+        left={props => (
+          <List.Icon {...props} icon="exit-to-app" />
+        )}
+      />
       <List.Item
         title="Ajuda"
         left={props => (
