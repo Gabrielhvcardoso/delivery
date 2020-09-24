@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { StatusBar, Text, View } from 'react-native';
-import { Button, Dialog, Portal, DialogContent, TextInput as PaperTextInput } from 'react-native-paper';
+import { Button, Dialog, Portal, DialogContent, TextInput as PaperTextInput, ActivityIndicator } from 'react-native-paper';
 
 import styled from 'styled-components';
 import { useFetch } from '../../hooks/useFetch';
@@ -13,8 +13,10 @@ const TextInput = styled(PaperTextInput)`
   margin-bottom: 10px;
 `;
 
-const Register = () => {
+const Register = ({ navigation }) => {
   const { setUserStatus } = useContext(AuthContext);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -60,7 +62,7 @@ const Register = () => {
       return;
     }
 
-
+    setIsLoading(true);
     useFetch.post('/p/u/create', {
       name,
       email,
@@ -68,6 +70,7 @@ const Register = () => {
       token: useToken()
     }, (response) => {
       if (response.code) {
+        setIsLoading(false);
         if (response.message === 'email already in use') {
           showError("Este e-mail já foi cadastrado no sistema.");
         } else {
@@ -76,6 +79,22 @@ const Register = () => {
       } else {
         setUserStatus(true, response);
       }
+    });
+  }
+
+  if (isLoading) {
+    navigation.setOptions({
+      headerShown: false,
+    });
+
+    return (
+      <View style={{ backgroundColor: 'white', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color="black" size="small" />
+      </View>
+    );
+  } else {
+    navigation.setOptions({
+      headerShown: true,
     });
   }
 
@@ -96,8 +115,8 @@ const Register = () => {
       <View style={{ flex: 1 }}>
         <TextInput value={name} onChangeText={text => setName(text)} label="Nome" />
         <TextInput value={email} onChangeText={text => setEmail(text)} label="E-mail" />
-        <TextInput value={pass} onChangeText={text => setPass(text)} label="Senha" />
-        <TextInput value={rpass} onChangeText={text => setRpass(text)} label="Repita a senha" />
+        <TextInput secureTextEntry value={pass} onChangeText={text => setPass(text)} label="Senha" />
+        <TextInput secureTextEntry value={rpass} onChangeText={text => setRpass(text)} label="Repita a senha" />
       </View>
 
       <Button onPress={onRegisterRequest} mode="contained">Cadastrar-se</Button>
