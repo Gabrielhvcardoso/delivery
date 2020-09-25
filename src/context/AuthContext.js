@@ -4,7 +4,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 const AuthContext = createContext({
   isUserLogged: false,
   setUserStatus: () => {},
-  user: {}
+  user: {},
+  setUser: () => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
@@ -16,8 +17,8 @@ export const AuthContextProvider = ({ children }) => {
       const userData = await AsyncStorage.getItem('user');
 
       if (userData) {
-        setUser(JSON.parse(userData));
         setIsUserLogged(true);
+        setUser(JSON.parse(userData));
       }
     }
 
@@ -27,12 +28,12 @@ export const AuthContextProvider = ({ children }) => {
   const setUserStatus = async (status, data) => {
     if (!status) {
       await AsyncStorage.removeItem("user");
-      setUser({});
       setIsUserLogged(false);
+      setUser({});
     } else {
       await AsyncStorage.setItem("user", JSON.stringify(data));
-      setUser(data);
       setIsUserLogged(true);
+      setUser(data);
     }
   }
 
@@ -41,7 +42,8 @@ export const AuthContextProvider = ({ children }) => {
       value={{
         isUserLogged,
         setUserStatus,
-        user
+        user,
+        setUser,
       }}
     >
       { children }

@@ -7,6 +7,10 @@ import { Container } from './styles';
 import AuthContext from '../../context/AuthContext';
 
 function getFirstLetters (str) {
+  if (!str) {
+    return 'AB'
+  }
+
   let words = str.trim().split(' ').length;
 
   if (words > 1) {

@@ -45,7 +45,14 @@ const AndressSelector = ({ navigation, route }) => {
 
   useEffect(() => {
     if (location === null) {
-      getActualPosition();
+      if (route.params?.latitude && route.params.longitude) {
+        setLocation({
+          latitude: parseFloat(route.params.latitude),
+          longitude: parseFloat(route.params.longitude),
+        });
+      } else {
+        getActualPosition();
+      }
     }
   });
 
@@ -112,7 +119,11 @@ const AndressSelector = ({ navigation, route }) => {
           const goBack = route.params?.goBack ? route.params.goBack : () => {};
 
           navigation.goBack();
-          goBack();
+          goBack({
+            andress: finalAndress,
+            latitude: location.latitude.toString(),
+            longitude: location.longitude.toString(),
+          });
         }}
       />
     ),
