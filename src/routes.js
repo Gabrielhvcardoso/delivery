@@ -55,17 +55,19 @@ const Routes = () => {
         <Stack.Screen
         name="Home" 
         component={BottomTabs}
-        options={{
-          headerTitle: '',
-          
-          headerBackground: () => (
-            <SafeAreaView style={{ backgroundColor: 'white', flex: 1, display: 'flex' }}>
-              <Image 
-                source={{ uri: horizontalLogo }}
-                style={{ resizeMode: 'contain', flex: 1 }}  
-              />
-            </SafeAreaView>
-          ) 
+        options={({ route }) => {
+          return {
+            headerTitle: '',
+            headerShown: route?.state?.index ?? 0 === 2 ? false : true,
+            headerBackground: () => (
+              <SafeAreaView style={{ backgroundColor: 'white', flex: 1, display: 'flex' }}>
+                <Image 
+                  source={{ uri: horizontalLogo }}
+                  style={{ resizeMode: 'contain', flex: 1 }}  
+                />
+              </SafeAreaView>
+            ) 
+            }
           }}
         />
 
@@ -134,7 +136,13 @@ const BottomTabs = () => {
     >
       <Tabs.Screen name="Home" component={Home} options={{ title: 'Principal' }} />
       <Tabs.Screen name="Orders" component={Orders} options={{ title: 'Pedidos' }} />
-      <Tabs.Screen name="Options" component={Options} options={{ title: 'Menu' }} />
+      <Tabs.Screen name="Options" component={Options} options={({ route }) => {
+          return {
+            title: 'Menu',
+            headerShown: false,
+            tabBarVisible: true
+          }
+        }} />
     </Tabs.Navigator>
   );
 }

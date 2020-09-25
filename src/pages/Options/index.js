@@ -1,73 +1,41 @@
-import React, { useContext } from 'react';
-import { Text, View, } from 'react-native';
-import { List, Avatar, Divider, Button } from 'react-native-paper';
+import React, { useEffect } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import { Container } from './styles';
+import Main from './main';
+import AndressManager from './AndressManager';
+import Agreement from './Agreement';
+import Favorites from './Favorites';
+import Help from './Help';
 
-import AuthContext from '../../context/AuthContext';
+const Stack = createStackNavigator();
 
-const Options = ({ navigation }) => {
-  const { setUserStatus } = useContext(AuthContext);
+export default function Options ({ navigation, route }) {
+
+  const setTabBarVisible = (value) => {
+    navigation.setOptions({
+      tabBarVisible: value
+    });
+  }
+
+  useEffect(() => {
+    if (route.state) {
+      if (route.state.index === 0) {
+        setTabBarVisible(true);
+      } else {
+        setTabBarVisible(false);
+      }
+    } else {
+      setTabBarVisible(true);
+    }
+  }, [route]);
 
   return (
-    <Container>
-      <View style={{ padding: 20, flexDirection: 'row' }}>
-        <Avatar.Text size={60} label="GC" />
-        <View style={{ marginLeft: 10 }}>
-          <Text style={{
-            marginLeft: 15,
-            fontSize: 18  
-          }}>Gabriel Cardoso</Text>
-          <Button>Editar perfil</Button>
-        </View>
-      </View>
-
-      <Divider style={{ marginVertical: 20 }} />
-
-      <List.Item
-        title="Gerenciar endereços"
-        description="Adicione e remova endereços de entrega"
-        left={props => (
-          <List.Icon {...props} icon="map-marker-outline" />
-        )}
-      />
-      <List.Item
-        title="Favoritos"
-        description="Meus pratos favoritos"
-        left={props => (
-          <List.Icon {...props} icon="heart-multiple-outline" />
-        )}
-      />
-      <List.Item
-        title="Termos de uso"
-        description="Política de privacidade"
-        left={props => (
-          <List.Icon {...props} icon="file-document-outline" />
-        )}
-      />
-
-      <List.Item
-        title="Sair"
-        onPress={() => setUserStatus(false)}
-        left={props => (
-          <List.Icon {...props} icon="exit-to-app" />
-        )}
-      />
-      <List.Item
-        title="Ajuda"
-        left={props => (
-          <List.Icon {...props} icon="information-outline" />
-        )}
-      />
-      <List.Item
-        title="Configurações"
-        left={props => (
-          <List.Icon {...props} icon="settings-outline" />
-        )}
-      />
-
-    </Container>
-  );
+    <Stack.Navigator>
+      <Stack.Screen name="Main" component={Main} options={{ headerTitle: "", headerStyle: { elevation: 0 } }} />
+      <Stack.Screen name="AndressManager" component={AndressManager} options={{ headerTitle: 'Gerenciar endereços' }} />
+      <Stack.Screen name="Agreement" component={Agreement} options={{ headerTitle: 'Termos de Uso' }} />
+      <Stack.Screen name="Favorites" component={Favorites} options={{ headerTitle: 'Favoritos' }} />
+      <Stack.Screen name="Help" component={Help} options={{ headerTitle: 'Ajuda' }} />
+    </Stack.Navigator>
+  )
 }
-
-export default Options;
