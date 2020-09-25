@@ -1,14 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Container, CategoryScrollView } from './styles';
 import { FAB } from 'react-native-paper';
 
 import BasketContext from '../../context/BasketContext';
 
-import data from '../../data';
+import { useFetch } from '../../hooks/useFetch';
+import { useToken } from '../../hooks/useToken';
 
 const Home = () => {
+  const [categories, setCategories] = useState([]);
   const { showBasket } = useContext(BasketContext);
+
+  useEffect(() => {
+    useFetch.get('/p/all/' + useToken(), (response) => {
+      setCategories(response.categories);
+    });
+  }, []);
 
   return (
     <>
@@ -19,7 +27,7 @@ const Home = () => {
       />
       <Container>
         <StatusBar style="dark" />
-        <CategoryScrollView categories={data.categories} />
+        <CategoryScrollView categories={categories} />
       </Container>
     </>
   );
