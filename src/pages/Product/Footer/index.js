@@ -10,6 +10,7 @@ const Footer = ({ product }) => {
   const { price, options, setProduct, addToCart } = useContext(ProductContext);
 
   useEffect(() => setProduct({
+    productId: product.productId,
     name: product.name,
     price: product.price,
     image: product.image

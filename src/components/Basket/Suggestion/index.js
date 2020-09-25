@@ -35,6 +35,7 @@ const Suggestion = ({ array, style }) => {
       {
         shuffle(array).slice(0, 10).map(product => (
           <TouchableOpacity
+            key={Math.random() * Math.random()}
             activeOpacity={0.8}
             onPress={() => {
               dismissBasket();
@@ -42,7 +43,6 @@ const Suggestion = ({ array, style }) => {
             }}
           >
             <Image
-              key={Math.random() * Math.random()}
               style={{
                 borderRadius: 10,
                 margin: 5,
