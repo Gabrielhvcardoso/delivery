@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { View, Dimensions, Modal, Text, Image, TouchableOpacity } from 'react-native';
 import { Button, Divider } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
@@ -12,13 +12,19 @@ import Section from './Section';
 import BasketContext from '../../context/BasketContext';
 import * as RootNavigation from '../../RootNavigation';
 
-import data from '../../data';
+import { useFetch } from '../../hooks/useFetch';
+import { useToken } from '../../hooks/useToken';
 
 const Basket = () => {
   const { products, isBasketVisible, dismissBasket, showBasket } = useContext(BasketContext);
-  const { categories } = data;
+  const [categories, setCategories] = useState([]);
   const productsArray = categories.flatMap(item => item.products);
 
+  useEffect(() => {
+    useFetch.get('/p/all/' + useToken(), (response) => {
+      setCategories(response.categories)
+    })
+  }, []);
 
   const finalPricing = useMemo(() => products.reduce((acumulador, item) => acumulador + item.price, 0), [products])
 
