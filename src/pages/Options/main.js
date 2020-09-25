@@ -1,24 +1,42 @@
 import React, { useContext } from 'react';
 import { Text, View, } from 'react-native';
-import { List, Avatar, Divider, Button } from 'react-native-paper';
+import { List, Avatar, Divider } from 'react-native-paper';
 
 import { Container } from './styles';
 
 import AuthContext from '../../context/AuthContext';
 
+function getFirstLetters (str) {
+  let words = str.trim().split(' ').length;
+
+  if (words > 1) {
+    let matches = str.match(/\b(\w)/g);
+    return matches.slice(0, 2).join('').toUpperCase();
+  } else {
+    return str.slice(0, 2).toUpperCase();
+  }
+}
+
 const Options = ({ navigation }) => {
-  const { setUserStatus } = useContext(AuthContext);
+  const { setUserStatus, user } = useContext(AuthContext);
 
   return (
     <Container>
-      <View style={{ padding: 20, flexDirection: 'row' }}>
-        <Avatar.Text size={60} label="GC" />
-        <View style={{ marginLeft: 10 }}>
+      <View style={{ marginTop: 40, padding: 20, flexDirection: 'row', alignItems: 'center' }}>
+        {
+          user.image ? (
+            <Avatar.Image source={{ uri: user.image }} />
+          ) : (
+            <Avatar.Text size={60} label={getFirstLetters(user.name)} />
+          )
+        }
+        <View style={{ marginLeft: 25 }}>
           <Text style={{
-            marginLeft: 15,
             fontSize: 18  
-          }}>Gabriel Cardoso</Text>
-          <Button>Editar perfil</Button>
+          }}>
+            { user.name }
+          </Text>
+          <Text style={{ color: 'grey' }}>Editar perfil</Text>
         </View>
       </View>
 

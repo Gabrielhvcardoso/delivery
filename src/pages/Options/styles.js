@@ -1,11 +1,12 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
-import styled from 'styled-components';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 export const Container = ({ children }) => {
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
-      { children }
-    </ScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
+        { children }
+      </ScrollView>
+    </SafeAreaView>
   );
 }
