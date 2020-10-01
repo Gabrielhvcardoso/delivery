@@ -1,4 +1,4 @@
-const BASE_URL = 'https://dinamica-delivery-server.herokuapp.com';
+const BASE_URL = 'http://dmihost.com.br:21089';
 
 export const useFetch = {
   get: (url = '/', onEnd = () => {}) => {
