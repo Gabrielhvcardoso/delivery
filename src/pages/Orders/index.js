@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, StatusBar, Text, View } from 'react-native';
+import { ActivityIndicator, RefreshControl, ScrollView, StatusBar, Text, View } from 'react-native';
 import { Divider, ProgressBar } from 'react-native-paper';
 
 import AuthContext from '../../context/AuthContext';
@@ -10,6 +10,22 @@ const Orders = ({ navigation }) => {
 
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRefresh, setIsRefresh] = useState(false);
+
+  const refresh = () => {
+    setIsLoading(true);
+    setIsRefresh(true);
+
+    useFetch.post('/p/order', {
+      userId: user.userId
+    }, (response) => {
+      setIsLoading(false);
+      setIsRefresh(false);
+      setOrders(response);
+    });
+  }
+
+  console.log(orders)
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', () => {
@@ -17,6 +33,7 @@ const Orders = ({ navigation }) => {
         userId: user.userId
       }, (response) => {
         setIsLoading(false);
+        setIsRefresh(false);
         setOrders(response);
       });
     });
@@ -34,6 +51,9 @@ const Orders = ({ navigation }) => {
 
   return (
     <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={isRefresh} onRefresh={refresh} />
+      }
       style={{ flex: 1, backgroundColor: 'white' }}
       contentContainerStyle={{
         paddingTop: StatusBar.currentHeight + 15,
