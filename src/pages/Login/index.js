@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, ImageBackground, StatusBar, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { ActivityIndicator, Button, Dialog, Portal, TextInput } from 'react-native-paper';
 
@@ -16,10 +17,23 @@ const Login = ({ navigation }) => {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    
+    const verifyUser = async () => {
+      const userData = await AsyncStorage.getItem('user');
+
+      if (!userData) {
+        setIsLoading(false);
+      }
+    }
+
+    verifyUser();
+  }, []);
 
   const showError = (message) => {
     setErrorMessage(message);
