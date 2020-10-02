@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dinamica-delivery-client",
+    "name": "Dinâmica Delivery",
     "slug": "dinamica-delivery-client",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,7 +8,10 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2371D9",
+      "hdpi": "./assets/splash.png",
+      "xhdpi": "./assets/splash@x2.png",
+      "xxhdpi": "./assets/splash@x3.png"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,14 +20,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.dmi.delivery"
     },
     "android": {
+      "icon": "./assets/icon_android.png",
       "package": "com.dmi.delivery",
       "versionCode": 1
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     }
   }
 }
