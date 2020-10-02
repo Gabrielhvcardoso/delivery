@@ -81,12 +81,13 @@ const Login = ({ navigation }) => {
   }
 
   return (
-    <ImageBackground
+    <View
       source={{ uri: image }}
       style={{
         flex: 1,
         padding: 15,
         justifyContent: 'center',
+        backgroundColor: 'white',
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height + StatusBar.currentHeight
       }}>
@@ -104,7 +105,7 @@ const Login = ({ navigation }) => {
         </Dialog>
       </Portal>
       
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="dark-content" />
 
       <TextInput value={email} onChangeText={text => setEmail(text)} label="E-mail" mode="outlined" />
       <TextInput secureTextEntry value={password} onChangeText={text => setPassword(text)} label="Senha" mode="outlined" />
@@ -115,7 +116,7 @@ const Login = ({ navigation }) => {
         onPress={() => navigation.navigate("Register")}
         style={{ marginTop: 15 }}
       >Registrar-se</Button>
-    </ImageBackground>
+    </View>
   );
 }
 

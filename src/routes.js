@@ -19,6 +19,7 @@ import Options from './pages/Options';
 import Orders from './pages/Orders';
 
 // NotLogged Pages
+import Apresentation from './pages/Apresentation';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -42,6 +43,7 @@ const Routes = () => {
     return (
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator>
+          <Stack.Screen name="Apresentation" component={Apresentation} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
           <Stack.Screen name="Register" component={Register} options={{ headerStyle: { elevation: 0 }, title: 'Cadastro' }} />
         </Stack.Navigator>
