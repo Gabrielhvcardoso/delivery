@@ -6,6 +6,7 @@ import AndressManager from './AndressManager';
 import Agreement from './Agreement';
 import Favorites from './Favorites';
 import Help from './Help';
+import Profile from './Profile';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ export default function Options ({ navigation, route }) {
       <Stack.Screen name="Agreement" component={Agreement} options={{ headerTitle: 'Termos de Uso' }} />
       <Stack.Screen name="Favorites" component={Favorites} options={{ headerTitle: 'Favoritos' }} />
       <Stack.Screen name="Help" component={Help} options={{ headerTitle: 'Ajuda' }} />
+      <Stack.Screen name="Profile" component={Profile} options={{ headerTitle: 'Editar perfil', headerTransparent: true }} />
     </Stack.Navigator>
   )
 }

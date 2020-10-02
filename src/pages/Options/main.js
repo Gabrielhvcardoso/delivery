@@ -5,6 +5,7 @@ import { List, Avatar, Divider } from 'react-native-paper';
 import { Container } from './styles';
 
 import AuthContext from '../../context/AuthContext';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function getFirstLetters (str) {
   if (!str) {
@@ -34,14 +35,14 @@ const Options = ({ navigation }) => {
             <Avatar.Text size={60} label={getFirstLetters(user.name)} />
           )
         }
-        <View style={{ marginLeft: 25 }}>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ marginLeft: 25 }}>
           <Text style={{
             fontSize: 18  
           }}>
             { user.name }
           </Text>
           <Text style={{ color: 'grey' }}>Editar perfil</Text>
-        </View>
+        </TouchableOpacity>
       </View>
 
       <Divider style={{ marginVertical: 20 }} />
