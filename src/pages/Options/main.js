@@ -27,7 +27,7 @@ const Options = ({ navigation }) => {
 
   return (
     <Container>
-      <View style={{ marginTop: 40, padding: 20, flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ marginTop: 40, backgroundColor: 'white', margin: 15, borderRadius: 10, padding: 20, flexDirection: 'row', alignItems: 'center' }}>
         {
           user.image ? (
             <Avatar.Image source={{ uri: user.image }} />
@@ -45,47 +45,47 @@ const Options = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <Divider style={{ marginVertical: 20 }} />
+      <View style={{ backgroundColor: 'white', margin: 15, borderRadius: 10 }}>
+        <List.Item
+          title="Gerenciar endereços"
+          description="Adicione e remova endereços de entrega"
+          onPress={() => navigation.navigate('AndressManager')}
+          left={props => (
+            <List.Icon {...props} icon="map-marker-outline" />
+          )}
+        />
+        <List.Item
+          title="Favoritos"
+          description="Meus pratos favoritos"
+          onPress={() => navigation.navigate('Favorites')}
+          left={props => (
+            <List.Icon {...props} icon="heart-multiple-outline" />
+          )}
+        />
+        <List.Item
+          title="Termos de uso"
+          description="Política de privacidade"
+          onPress={() => navigation.navigate('Agreement')}
+          left={props => (
+            <List.Icon {...props} icon="file-document-outline" />
+          )}
+        />
 
-      <List.Item
-        title="Gerenciar endereços"
-        description="Adicione e remova endereços de entrega"
-        onPress={() => navigation.navigate('AndressManager')}
-        left={props => (
-          <List.Icon {...props} icon="map-marker-outline" />
-        )}
-      />
-      <List.Item
-        title="Favoritos"
-        description="Meus pratos favoritos"
-        onPress={() => navigation.navigate('Favorites')}
-        left={props => (
-          <List.Icon {...props} icon="heart-multiple-outline" />
-        )}
-      />
-      <List.Item
-        title="Termos de uso"
-        description="Política de privacidade"
-        onPress={() => navigation.navigate('Agreement')}
-        left={props => (
-          <List.Icon {...props} icon="file-document-outline" />
-        )}
-      />
-
-      <List.Item
-        title="Sair"
-        onPress={() => setUserStatus(false)}
-        left={props => (
-          <List.Icon {...props} icon="exit-to-app" />
-        )}
-      />
-      <List.Item
-        title="Ajuda"
-        onPress={() => navigation.navigate('Help')}
-        left={props => (
-          <List.Icon {...props} icon="information-outline" />
-        )}
-      />
+        <List.Item
+          title="Sair"
+          onPress={() => setUserStatus(false)}
+          left={props => (
+            <List.Icon {...props} icon="exit-to-app" />
+          )}
+        />
+        <List.Item
+          title="Ajuda"
+          onPress={() => navigation.navigate('Help')}
+          left={props => (
+            <List.Icon {...props} icon="information-outline" />
+          )}
+        />
+      </View>
     </Container>
   );
 }

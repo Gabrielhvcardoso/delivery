@@ -31,7 +31,7 @@ export default function Options ({ navigation, route }) {
   }, [route]);
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerStyle: { elevation: 0 } }}>
       <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
       <Stack.Screen name="AndressManager" component={AndressManager} options={{ headerTitle: 'Gerenciar endereços' }} />
       <Stack.Screen name="Agreement" component={Agreement} options={{ headerTitle: 'Termos de Uso' }} />

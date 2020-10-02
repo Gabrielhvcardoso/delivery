@@ -29,13 +29,14 @@ import AndressSelector from './components/AndressSelector';
 import { navigationRef } from './RootNavigation';
 import AuthContext from './context/AuthContext';
 
+const horizontalLogo = require('../assets/client/logo.png');
+
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
 
 // Main route
 const Routes = () => {
   const { isUserLogged } = useContext(AuthContext);
-  const { horizontalLogo } = data;
 
   if (!isUserLogged) {
     return (
@@ -62,8 +63,8 @@ const Routes = () => {
             headerBackground: () => (
               <SafeAreaView style={{ backgroundColor: 'white', flex: 1, display: 'flex' }}>
                 <Image 
-                  source={{ uri: horizontalLogo }}
-                  style={{ resizeMode: 'contain', flex: 1 }}  
+                  source={horizontalLogo}
+                  style={{ resizeMode: 'contain', alignSelf: 'center', flex: 1 }}  
                 />
               </SafeAreaView>
             ) 
@@ -119,17 +120,26 @@ const BottomTabs = () => {
     <Tabs.Navigator
       tabBarOptions={{
         showLabel: false,
-        style: { elevation: 0 }
+        inactiveTintColor: '#666',
+        style: {
+          position: 'absolute',
+          backgroundColor: '#E1EDF9',
+          elevation: 0,
+          height: 60,
+          borderTopStartRadius: 20,
+          borderTopEndRadius: 20,
+          borderTopColor: 'transparent'
+        }
       }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           switch (route.name) {
             case 'Home':
-              return <Icon name={'home'} size={size+5} color={color} type="material-community" />;
+              return <Icon name={'home'} size={size+5} color={color} type="feather" />;
             case 'Orders':
-              return <Icon name={'cart-outline'} size={size+5} color={color} type="material-community" />;
+              return <Icon name={'shopping-bag'} size={size+5} color={color} type="feather" />;
             case 'Options':
-              return <Icon name={'menu'} size={size+5} color={color} type="material-community" />;
+              return <Icon name={'menu'} size={size+5} color={color} type="feather" />;
           }
         }
       })}

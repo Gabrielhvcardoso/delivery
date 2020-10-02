@@ -10,7 +10,6 @@ export const CategoryScrollView = ({ categories }) => {
 
   return (
     <View>
-      <Text>Categorias</Text>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -24,10 +23,10 @@ export const CategoryScrollView = ({ categories }) => {
             >
               <View>
                 <Image
-                  style={{ width: 120, height: 120, marginHorizontal: 5, borderRadius: 12 }}
+                  style={{ width: 180, height: 120, marginHorizontal: 5, borderRadius: 12 }}
                   source={{ uri: category.image }}
                 />
-                <Text numberOfLines={1} style={{ width: 120, marginLeft: 5, marginRight: 5, fontSize: 15 }}>
+                <Text numberOfLines={1} style={{ width: 170, marginLeft: 5, marginRight: 5, fontSize: 15 }}>
                   { category.name }
                 </Text>
               </View>
@@ -39,7 +38,7 @@ export const CategoryScrollView = ({ categories }) => {
   );
 }
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   flex: 1;
   background-color: #fff;
 `;

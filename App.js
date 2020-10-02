@@ -10,7 +10,7 @@ export default function App() {
   const theme = {
     ...DefaultTheme, colors: {
       ...DefaultTheme.colors,
-      primary: '#FFC800',
+      primary: '#3C88DA',
       accent: '#2b7ed7'
     }
   }

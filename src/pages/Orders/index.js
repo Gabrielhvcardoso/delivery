@@ -54,10 +54,11 @@ const Orders = ({ navigation }) => {
       refreshControl={
         <RefreshControl refreshing={isRefresh} onRefresh={refresh} />
       }
-      style={{ flex: 1, backgroundColor: 'white' }}
+      style={{ flex: 1, backgroundColor: '#f2f2f2' }}
       contentContainerStyle={{
         paddingTop: StatusBar.currentHeight + 15,
-        padding: 15
+        padding: 15,
+        paddingBottom: 60,
       }}>
         <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Meus pedidos</Text>
         {
@@ -66,10 +67,9 @@ const Orders = ({ navigation }) => {
               key={Math.random()}
               style={{
                 borderTopWidth: 3,
-                borderTopColor: 'grey',
+                borderTopColor: '#C3DAF4',
                 backgroundColor: 'white',
                 borderRadius: 8,
-                elevation: 3,
                 marginTop: 10,
                 padding: 15,
                 marginBottom: 15
