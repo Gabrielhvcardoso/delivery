@@ -1,8 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { View, Dimensions, Modal, Text, Image, TouchableOpacity, Modal as NativeModal } from 'react-native';
+import { View, Dimensions, Modal, Image, TouchableOpacity, Modal as NativeModal } from 'react-native';
 import { Button, Divider, Menu } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
+
+import styled from 'styled-components';
 
 import { Container } from './styles';
 
@@ -15,6 +17,10 @@ import * as RootNavigation from '../../RootNavigation';
 
 import { useFetch } from '../../hooks/useFetch';
 import { useToken } from '../../hooks/useToken';
+
+const Text = styled.Text`
+  font-family: Inter Regular;
+`;
 
 const Basket = () => {
   const { products, isBasketVisible, dismissBasket, showBasket, handleSendOrder } = useContext(BasketContext);

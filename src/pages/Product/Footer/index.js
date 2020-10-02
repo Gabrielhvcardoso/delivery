@@ -1,10 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import { Button } from 'react-native-paper';
-import { Text, View } from 'react-native';
-
+import { View } from 'react-native';
+import styled from 'styled-components';
 import { Title } from '../styles';
 
 import ProductContext from '../context';
+
+const Text = styled.Text`
+  font-family: Poppins Regular;
+`;
 
 const Footer = ({ product }) => {
   const { price, options, setProduct, addToCart } = useContext(ProductContext);

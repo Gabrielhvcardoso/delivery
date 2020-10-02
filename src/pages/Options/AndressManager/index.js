@@ -1,9 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, ScrollView, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import styled from 'styled-components';
 
 import AuthContext from '../../../context/AuthContext';
 
 import { useFetch } from '../../../hooks/useFetch';
+
+const Text = styled.Text`
+  font-family: Inter Regular;
+`;
 
 const AndressManager = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);

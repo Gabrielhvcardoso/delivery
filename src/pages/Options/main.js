@@ -1,11 +1,16 @@
 import React, { useContext } from 'react';
-import { Text, View, } from 'react-native';
-import { List, Avatar, Divider } from 'react-native-paper';
+import { View, } from 'react-native';
+import { List, Avatar } from 'react-native-paper';
+import styled from 'styled-components';
 
 import { Container } from './styles';
 
 import AuthContext from '../../context/AuthContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
+const Text = styled.Text`
+  font-family: Inter Regular;
+`;
 
 function getFirstLetters (str) {
   if (!str) {
@@ -47,6 +52,7 @@ const Options = ({ navigation }) => {
 
       <View style={{ backgroundColor: 'white', margin: 15, borderRadius: 10 }}>
         <List.Item
+          style={{ fontFamily: 'Inter Regular' }}
           title="Gerenciar endereços"
           description="Adicione e remova endereços de entrega"
           onPress={() => navigation.navigate('AndressManager')}

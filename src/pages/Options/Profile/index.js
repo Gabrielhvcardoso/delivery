@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, Platform } from 'react-native';
+import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Avatar, Button, Dialog, Menu, Portal, TextInput } from 'react-native-paper';
+import styled from 'styled-components';
 
 import AuthContext from '../../../context/AuthContext';
 
@@ -9,6 +10,9 @@ import { useFetch } from '../../../hooks/useFetch';
 import { useCamera } from '../../../hooks/useCamera';
 import { useLibrary } from '../../../hooks/useLibrary';
 
+const Text = styled.Text`
+  font-family: Inter Regular;
+`;
 
 function getFirstLetters (str) {
   if (!str) {

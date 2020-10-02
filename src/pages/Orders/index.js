@@ -1,9 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, RefreshControl, ScrollView, StatusBar, Text, View } from 'react-native';
+import { ActivityIndicator, RefreshControl, ScrollView, StatusBar, View } from 'react-native';
 import { Divider, ProgressBar } from 'react-native-paper';
+import styled from 'styled-components';
 
 import AuthContext from '../../context/AuthContext';
 import { useFetch } from '../../hooks/useFetch';
+
+const Text = styled.Text`
+  font-family: Inter Regular;
+`;
+
 
 const Orders = ({ navigation }) => {
   const { user } = useContext(AuthContext);
@@ -60,7 +66,7 @@ const Orders = ({ navigation }) => {
         padding: 15,
         paddingBottom: 60,
       }}>
-        <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Meus pedidos</Text>
+        <Text style={{ fontSize: 24, fontFamily: 'Inter Bold' }}>Meus pedidos</Text>
         {
           orders.map(order => (
             <View
@@ -76,7 +82,7 @@ const Orders = ({ navigation }) => {
               }}
             >
               <View>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 5 }}>
+                <Text style={{ fontSize: 20, fontFamily: 'Inter Bold', marginBottom: 5 }}>
                   {
                     order.status === 0 
                       ? 'Pedido entrege'

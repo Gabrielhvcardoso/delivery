@@ -24,5 +24,5 @@ const HeaderContainer = styled.View`
 const HeaderText = styled.Text`
   color: #333;
   font-size: 16px;
-  font-weight: bold;
+  font-family: Inter Bold;
 `;

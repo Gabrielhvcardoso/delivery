@@ -1,9 +1,14 @@
 import React, { useContext, useState } from 'react';
-import { Animated, Image, Text, View } from 'react-native';
+import { Animated, Image, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Divider } from 'react-native-paper';
+import styled from 'styled-components';
 
 import BasketContext from '../../../context/BasketContext';
+
+const Text = styled.Text`
+  font-family: Inter Regular;
+`;
 
 const Section = ({ product }) => {
   const [deleteTouch, setDeleteTouch] = useState(false);
@@ -54,7 +59,7 @@ const Section = ({ product }) => {
           style={{ height: 100, width: 100, borderRadius: 10 }}
         />
         <View style={{ flexDirection: 'column', marginLeft: 15, flex: 1 }}>
-          <Text numberOfLines={1} style={{ fontSize: 19, fontWeight: 'bold' }}>{ product.name }</Text>
+          <Text numberOfLines={1} style={{ fontSize: 19, fontFamily: 'Inter Bold' }}>{ product.name }</Text>
           <Divider style={{ marginVertical: 5 }} />
           {
             !product.options[0] ? (

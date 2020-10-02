@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Image from '../../../components/Image';
+import styled from 'styled-components';
 
-// import { Container } from './styles';
+const Text = styled.Text`
+  font-family: Inter Regular;
+`;
 
 const Product = ({ product }) => {
   const navigation = useNavigation();
@@ -25,7 +28,7 @@ const Product = ({ product }) => {
         }}
       >
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text numberOfLines={2} style={{ fontSize: 17, color: '#222', fontWeight: 'bold' }}>
+          <Text numberOfLines={2} style={{ fontSize: 17, color: '#222', fontFamily: 'Inter SemiBold' }}>
             { product.name }
           </Text>
 
@@ -45,12 +48,12 @@ const Product = ({ product }) => {
               <Text style={{ fontSize: 17, color: 'red', textAlign: 'right', textDecorationLine: 'line-through' }}>
                 R$ { product.price.toFixed(2).toString().replace('.', ',') }
               </Text>
-              <Text style={{ fontSize: 17, color: '#222', marginLeft: 10, fontWeight: 'bold', textAlign: 'right' }}>
+              <Text style={{ fontSize: 17, color: '#222', marginLeft: 10, fontFamily: 'Inter SemiBold', textAlign: 'right' }}>
                 R$ { product.salePrice.toFixed(2).toString().replace('.', ',') }
               </Text>
             </View>
           ) : (
-            <Text style={{ fontSize: 17, color: '#222', fontWeight: 'bold', textAlign: 'right' }}>
+            <Text style={{ fontSize: 17, color: '#222', fontFamily: 'Inter SemiBold', textAlign: 'right' }}>
               R$ { product.price.toFixed(2).toString().replace('.', ',') }
             </Text>
           )

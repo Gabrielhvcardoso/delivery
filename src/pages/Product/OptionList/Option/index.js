@@ -18,7 +18,7 @@ export const Option = ({ option }) => {
   `;
 
   const OptionText = styled.Text`
-    ${isSelected ? 'font-weight: bold' : ''}
+    font-family: ${isSelected ? 'Inter Bold' : 'Inter Regular'}
   `;
 
   useEffect(() => {

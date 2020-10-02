@@ -26,7 +26,7 @@ export const CategoryScrollView = ({ categories }) => {
                   style={{ width: 180, height: 120, marginHorizontal: 5, borderRadius: 12 }}
                   source={{ uri: category.image }}
                 />
-                <Text numberOfLines={1} style={{ width: 170, marginLeft: 5, marginRight: 5, fontSize: 15 }}>
+                <Text numberOfLines={1} style={{ width: 170, marginLeft: 5, marginRight: 5, fontSize: 16 }}>
                   { category.name }
                 </Text>
               </View>
@@ -45,6 +45,6 @@ export const Container = styled.ScrollView`
 
 export const Text = styled.Text`
   font-size: 23px;
-  font-weight: bold;
+  font-family: Inter SemiBold;
   margin: 0px 20px;
 `;
