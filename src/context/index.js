@@ -5,19 +5,22 @@ import Basket from '../components/Basket';
 import { AuthContextProvider } from './AuthContext';
 import { ShowcaseContextProvider } from './ShowcaseContext';
 import { BasketContextProvider } from './BasketContext';
+import { FavoriteContextProvider } from './FavoriteContext';
 
 const ContextProvider = ({ children }) => {
   return (
     <AuthContextProvider>
-      <BasketContextProvider>
-        <Basket />
+      <FavoriteContextProvider>
+        <BasketContextProvider>
+          <Basket />
 
-        <ShowcaseContextProvider>
-          <Showcase />
+          <ShowcaseContextProvider>
+            <Showcase />
 
-            { children }
-        </ShowcaseContextProvider>
-      </BasketContextProvider>
+              { children }
+          </ShowcaseContextProvider>
+        </BasketContextProvider>
+      </FavoriteContextProvider>
     </AuthContextProvider>
   );
 }

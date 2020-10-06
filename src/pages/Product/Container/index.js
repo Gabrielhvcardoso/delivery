@@ -1,10 +1,9 @@
-import React, { useLayoutEffect, useState } from 'react';
-import { Animated, StatusBar, Dimensions, View, TouchableOpacity } from 'react-native';
-import { Icon } from 'react-native-elements';
+import React from 'react';
+import { Animated, Dimensions, View } from 'react-native';
 
 import { BlurView } from 'expo-blur'
 
-const Container = ({ children, image, favorite }) => {
+const Container = ({ children, image }) => {
   const screenWidth = Dimensions.get('window').width;
 
   const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
@@ -24,21 +23,6 @@ const Container = ({ children, image, favorite }) => {
   const headerBlur = scrollYAnimatedValue.interpolate({
     inputRange: [0, headerMaxHeight],
     outputRange: [0, 120],
-    extrapolate: 'clamp'
-  });
-
-  // Header Buttons Animation
-
-  const buttonsOpacity = scrollYAnimatedValue.interpolate({
-    inputRange: [0, 50],
-    outputRange: [0, 1],
-    extrapolate: 'clamp'
-  });
-
-
-  const buttonsTransform = buttonsOpacity.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-15, 0],
     extrapolate: 'clamp'
   });
 
@@ -77,31 +61,6 @@ const Container = ({ children, image, favorite }) => {
           { children }
         </Animated.View>
       </Animated.ScrollView>
-
-
-      <Animated.View style={{
-        position: 'absolute',
-        top: StatusBar.currentHeight,
-        right: 0,
-
-        transform: [{ translateY: buttonsTransform }],
-        opacity: buttonsOpacity
-      }}>
-        <Animated.View style={{
-          height: 100 - StatusBar.currentHeight - 10,
-          width: 70,
-          alignItems: "center",
-          justifyContent: "center"
-        }}>
-          <Icon
-            name={favorite ? "heart" : "heart-outline"}
-            type="material-community"
-            color="white"
-            size={26}
-          />
-        </Animated.View>
-      </Animated.View>
-
     </View>    
   )
 };
