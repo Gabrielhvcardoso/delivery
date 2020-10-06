@@ -28,13 +28,13 @@ const Product = ({ product }) => {
         }}
       >
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text numberOfLines={2} style={{ fontSize: 17, color: '#222', fontFamily: 'Inter SemiBold' }}>
+          <Text numberOfLines={2} style={{ flex: 1, fontSize: 17, color: '#222', fontFamily: 'Inter SemiBold' }}>
             { product.name }
           </Text>
 
           {
             product.saleStatus ? (
-              <Text style={{ backgroundColor: '#E1EDF9', paddingHorizontal: 5, borderRadius: 10, fontSize: 12, textAlignVertical: 'center' }}>Promoção</Text>
+              <Text style={{ backgroundColor: '#E1EDF9', height: 20, marginTop: 4, paddingHorizontal: 5, borderRadius: 10, fontSize: 12, textAlignVertical: 'center' }}>Promoção</Text>
             ) : <></>
           }
         </View>
@@ -45,7 +45,7 @@ const Product = ({ product }) => {
         {
           product.saleStatus ? (
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 17, color: 'red', textAlign: 'right', textDecorationLine: 'line-through' }}>
+              <Text style={{ fontSize: 17, flex: 1, color: 'red', textAlign: 'right', textDecorationLine: 'line-through' }}>
                 R$ { product.price.toFixed(2).toString().replace('.', ',') }
               </Text>
               <Text style={{ fontSize: 17, color: '#222', marginLeft: 10, fontFamily: 'Inter SemiBold', textAlign: 'right' }}>
