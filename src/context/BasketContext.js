@@ -40,7 +40,12 @@ export const BasketContextProvider = ({ children }) => {
   }
 
   const handleSendOrder = (andressId, paymentMethod) => {
-
+    if (!andressId) {
+      Alert.alert("Atenção", "Selecione um endereço para entrega", [{
+        text: 'Ok'
+      }]);
+      return;
+    }
   
     useFetch.post('/p/order/' + useToken(), {
       userId: user.userId,
