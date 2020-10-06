@@ -7,7 +7,7 @@ import { Title } from '../styles';
 import ProductContext from '../context';
 
 const Text = styled.Text`
-  font-family: Poppins Regular;
+  font-family: Inter Regular;
 `;
 
 const Footer = ({ product }) => {
@@ -16,7 +16,7 @@ const Footer = ({ product }) => {
   useEffect(() => setProduct({
     productId: product.productId,
     name: product.name,
-    price: product.price,
+    price: product.saleStatus ? product.salePrice : product.price,
     image: product.image
   }), []);
 
@@ -29,6 +29,32 @@ const Footer = ({ product }) => {
         borderTopWidth: 0.3,
         borderTopColor: '#aaa',
       }}>
+        {
+          options[0] ? (
+            <View
+              key={Math.random()}
+              style={{ flexDirection: 'row', justifyContent: 'space-between', overflow: 'hidden', }}
+            >
+              <Text>{ product.name }</Text>
+              <Text
+                numberOfLines={1}
+                style={{ flex: 1 }}
+                ellipsizeMode="clip"
+              >....................................................................................</Text>
+              <Text>
+                {
+                  product.price ? (
+                    `R$ ${ product.saleStatus
+                      ? product.salePrice.toFixed(2).toString().replace('.', ',')
+                      : product.price.toFixed(2).toString().replace('.', ',') }`
+                  ) : (
+                    'R$ 0,00'
+                  )
+                }
+              </Text>
+            </View>
+          ) : <></>
+        }
         {
           options.map((option) => (
             <View
