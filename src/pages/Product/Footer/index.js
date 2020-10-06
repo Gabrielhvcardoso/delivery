@@ -1,23 +1,25 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-native-paper';
 import { View } from 'react-native';
 import styled from 'styled-components';
 import { Title } from '../styles';
 
 import ProductContext from '../context';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Text = styled.Text`
   font-family: Inter Regular;
 `;
 
 const Footer = ({ product }) => {
-  const { price, options, setProduct, addToCart } = useContext(ProductContext);
+  const { price, options, setProduct, addToCart, quantity, setQuantity } = useContext(ProductContext);
 
   useEffect(() => setProduct({
     productId: product.productId,
     name: product.name,
     price: product.saleStatus ? product.salePrice : product.price,
-    image: product.image
+    image: product.image,
+    quantity
   }), []);
 
   return (
@@ -89,7 +91,27 @@ const Footer = ({ product }) => {
             R$ { price.toFixed(2).toString().replace('.', ',') }
           </Title>
         </View>
-        
+      </View>
+
+      <View style={{ flexDirection: 'row', marginTop: 20 }}>
+        <TouchableOpacity
+          disabled={quantity === 1}
+          onPress={() => setQuantity(quantity - 1)}
+          style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#eee', width: 50, height: 50 }}
+        >
+          <Text>-</Text>
+        </TouchableOpacity>
+
+        <Text style={{ height: 50, textAlignVertical: 'center', backgroundColor: '#f4f4f4', flex: 1, textAlign: 'center', }}>
+          {quantity}
+        </Text>
+
+        <TouchableOpacity
+          onPress={() => setQuantity(quantity + 1)}
+          style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#eee', width: 50, height: 50 }}
+        >
+          <Text>+</Text>
+        </TouchableOpacity>
       </View>
 
       <Button
