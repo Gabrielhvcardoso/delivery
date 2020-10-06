@@ -56,7 +56,17 @@ const Basket = () => {
     })
   }, []);
 
-  const finalPricing = useMemo(() => products.reduce((acumulador, item) => acumulador + item.price, 0), [products]);
+  const finalPricing = useMemo(() => products.reduce((acumulador, item) => {
+    acumulador += item.price;
+
+    if (item.options[0]) {
+      for (let counter = 0; counter < item.options.length; counter ++) {
+        acumulador += item.options[counter].price 
+      }
+    }
+  
+    return acumulador;
+  }, 0), [products]);
 
   return (
     <Modal
