@@ -60,11 +60,13 @@ const Home = ({ navigation }) => {
       }
 
       <Animated.ScrollView
+        removeClippedSubviews
+
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue }  }}], { useNativeDriver: false }
         )}
-        scrollEventThrottle={100}
-        contentContainerStyle={{ paddingTop: 25, paddingBottom: 60 }}
+        scrollEventThrottle={16}
+        contentContainerStyle={{ paddingTop: 25, paddingBottom: 80 }}
         style={{ 
           marginTop: headerHeight,
           backgroundColor: '#f2f2f2',
