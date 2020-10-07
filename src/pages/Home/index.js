@@ -113,7 +113,11 @@ const Home = ({ navigation }) => {
           }
         </ScrollView>
 
-        <Text style={{ marginLeft: 25, marginBottom: 15, fontFamily: 'Inter Bold', fontSize: 20 }}>Promoções</Text>
+        {
+          suggestions.filter(item => item.saleStatus)[0] ? (
+            <Text style={{ marginLeft: 25, marginBottom: 15, fontFamily: 'Inter Bold', fontSize: 20 }}>Promoções</Text>
+          ) : <></>
+        }
 
         <View style={{ paddingHorizontal: 20 }}>
           {
