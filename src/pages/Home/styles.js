@@ -38,7 +38,7 @@ export const CategoryScrollView = ({ categories }) => {
   );
 }
 
-export const Container = styled.ScrollView`
+export const Container = styled.FlatList`
   flex: 1;
   background-color: #fff;
 `;
