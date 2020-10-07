@@ -6,10 +6,13 @@ const ProductContext = createContext({
   price: 0,
   quantity: 1,
   options: [],
+  required: [],
   setProduct: () => {},
   setQuantity: () => {},
   increaseOption: () => {},
   decreaseOption: () => {},
+  replaceOption: () => {},
+  setRequired: () => {},
   addToCart: () => {},
 });
 
@@ -20,6 +23,7 @@ export const ProductContextProvider = ({ children }) => {
   const [product, setProduct] = useState({});
   const [options, setOptions] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [required, setRequired] = useState([]);
 
   const price = useMemo(() => {
     let value = product.price ?? 0; 
@@ -29,6 +33,7 @@ export const ProductContextProvider = ({ children }) => {
 
   const increaseOption = (arg1) => setOptions([...options, arg1]);
   const decreaseOption = (arg1) => setOptions(options.filter(item => item.name !== arg1.name));
+  const replaceOption = (arg1, arg2) => setOptions([...options.filter(item => item.name !== arg1.name), arg2]);
 
   const addToCart = () => {
     increaseItem({
@@ -47,10 +52,13 @@ export const ProductContextProvider = ({ children }) => {
         price,
         quantity,
         options,
+        required,
         setProduct,
         setQuantity,
         increaseOption,
         decreaseOption,
+        replaceOption,
+        setRequired,
         addToCart,
       }}
     >

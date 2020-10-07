@@ -1,10 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 
+import RadioList from './RadioList';
 import Option from './Option';
 import { Header } from './styles';
 
-const Options = ({ options, initialPrice }) => {
+const Options = ({ options }) => {
 
   if (!options) return <View />;
 
@@ -14,9 +15,10 @@ const Options = ({ options, initialPrice }) => {
         options.map((option) => (
           <View key={Math.random()}>
             <Header required={option.required} title={option.title} />
-            
             {
-              option.options.map(suboption => (
+              option.unique ? (
+                <RadioList options={option.options} />
+              ) : option.options.map(suboption => (
                 <Option option={suboption} key={Math.random()} />
               ))
             }

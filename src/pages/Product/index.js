@@ -55,7 +55,6 @@ const Product = ({ navigation, route }) => {
 
         <Title numberOfLines={2}>{ product.name }</Title>
         <Subtitle>{ product.details }</Subtitle>
-        
         <OptionList options={product.options} />
         <Footer product={product} />
 

@@ -54,7 +54,13 @@ const Product = ({ product }) => {
             </View>
           ) : (
             <Text style={{ fontSize: 17, color: '#222', fontFamily: 'Inter SemiBold', textAlign: 'right' }}>
-              R$ { product.price.toFixed(2).toString().replace('.', ',') }
+              {
+                product.price === 0 ? (
+                  'Ver preços'
+                ) : (
+                  `R$ ${ product.price.toFixed(2).toString().replace('.', ',') }`
+                )
+              }
             </Text>
           )
         }
