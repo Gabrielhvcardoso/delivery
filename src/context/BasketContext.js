@@ -8,6 +8,7 @@ import AuthContext from './AuthContext';
 
 const BasketContext = createContext({
   products: [],
+  setProducts: () => {},
   increaseItem: () => {},
   decreaseItem: () => {},
 
@@ -66,6 +67,7 @@ export const BasketContextProvider = ({ children }) => {
   return (
     <BasketContext.Provider value={{
       products,
+      setProducts,
       increaseItem,
       decreaseItem,
       isBasketVisible,

@@ -202,7 +202,7 @@ const Basket = () => {
                     style={{ width: 65, height: 65, borderRadius: 10, resizeMode: 'contain'}}
                   />
                   <View style={{ flex: 1, marginLeft: 12, justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 17, color: '#666' }}>Entregar no <Text style={{ fontWeight: 'bold' }}>endereço</Text></Text>
+                    <Text style={{ fontSize: 17, color: '#666' }}>Entregar em</Text>
                     <Text numberOfLines={1} style={{ fontSize: 15, flex: 1 }}>
                       {
                         andress.andress === '' ? 'Selecione o seu endereço' : andress.andress
@@ -225,9 +225,6 @@ const Basket = () => {
                 }
 
                 <View style={{ marginTop: 30 }}>
-                  <Text
-                    style={{ fontSize: 19, marginHorizontal: 10 }}
-                  >Escolha também</Text>
                   <Suggestion
                     style={{ marginHorizontal: -15 }}
                     array={productsArray}
@@ -235,11 +232,6 @@ const Basket = () => {
                 </View> 
         
 
-                <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                  <Text style={{ fontSize: 18 }}>Valor final </Text>
-                  <Text style={{ fontSize: 18, flex: 1 }} numberOfLines={1} ellipsizeMode={"clip"}>...........................................................................................</Text>
-                  <Text style={{ fontSize: 18 }}> R$ { finalPricing.toFixed(2).toString().replace('.', ',') }</Text>
-                </View>
                 
                 <View style={{ marginTop: 15, paddingTop: 5 }}>
                   <Text style={{ fontSize: 12, marginLeft: 8 }}>Forma de pagamento</Text>
@@ -261,6 +253,7 @@ const Basket = () => {
                   </TouchableOpacity>
                 </View>
                 
+                <Text style={{ fontSize: 28, marginTop: 15 }}> R$ { finalPricing.toFixed(2).toString().replace('.', ',') }</Text>
                 
                 <Button
                   onPress={() => handleSendOrder(andress.andressId, paymentMethod)}

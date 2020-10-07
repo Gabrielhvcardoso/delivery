@@ -1,30 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Image, ScrollView, TouchableOpacity } from 'react-native';
 
 import * as RootNavigation from '../../../RootNavigation';
 import BasketContext from '../../../context/BasketContext';
 
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
+import { useFetch } from '../../../hooks/useFetch';
+import { useToken } from '../../../hooks/useToken';
 
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
+import { useShuffle } from '../../../hooks/useShuffle';
 
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-const Suggestion = ({ array, style }) => {
+const Suggestion = ({ style }) => {
   const { dismissBasket } = useContext(BasketContext);
+  const [array, setArray] = useState([]);
+
+  useEffect(() => {
+    useFetch.get('/p/all/' + useToken(), (response) => {
+      setArray(response.categories.flatMap(item => item.products));
+    });
+  }, []);
+  
   return (
     <ScrollView
       horizontal
@@ -33,7 +27,7 @@ const Suggestion = ({ array, style }) => {
       contentContainerStyle={{ paddingHorizontal: 10 }}
     >
       {
-        shuffle(array).slice(0, 10).map(product => (
+        useShuffle(array).slice(0, 10).map(product => (
           <TouchableOpacity
             key={Math.random() * Math.random()}
             activeOpacity={0.8}
