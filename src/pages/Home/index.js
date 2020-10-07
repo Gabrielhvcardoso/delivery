@@ -51,7 +51,7 @@ const Home = ({ navigation }) => {
       {
         products[0] ? (
           <FAB
-            style={{ position: 'absolute', bottom: 90, right: 20, zIndex: 1 }}
+            style={{ position: 'absolute', bottom: 90, right: 20, zIndex: 2 }}
             onPress={() => showBasket()}
             icon={() => <Icon name="shopping-bag" type="feather" color="white" />}
             label="Ver pedido"
