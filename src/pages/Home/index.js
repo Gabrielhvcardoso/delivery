@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Container, CategoryScrollView } from './styles';
+import { CategoryScrollView } from './styles';
 import { FAB } from 'react-native-paper';
 import styled from 'styled-components';
 
@@ -8,8 +8,10 @@ import BasketContext from '../../context/BasketContext';
 
 import { useFetch } from '../../hooks/useFetch';
 import { useToken } from '../../hooks/useToken';
-import { FlatList, Image, RefreshControl, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Animated, Dimensions, Image, RefreshControl, TouchableOpacity, View } from 'react-native';
 import { Icon } from 'react-native-elements';
+
+import { Container } from './container';
 
 export const Text = styled.Text`
   font-size: 23px;
@@ -20,7 +22,6 @@ export const Text = styled.Text`
 const Home = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
   const { showBasket, products } = useContext(BasketContext);
-
   const [isRefresh, setIsRefresh] = useState(false);
 
   const getProducts = (onEnd = () => {}) => {
@@ -30,13 +31,18 @@ const Home = ({ navigation }) => {
     });
   }
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+  useEffect(() => getProducts(), []);
 
   return (
-    <>
-      <StatusBar style="dark" />
+    <Container
+      data={categories}
+      image="https://lh3.googleusercontent.com/proxy/d69sBOKZf3yhWnA7KOruqdyvVIhvN17A9pOOf8R9AZZbYcjNpVuH9ryAbjVkxdsVRieLvEyETtWMWDbcA4ELSdAw2PVSjcFJdGLascjYbNM4iE9uhPwqrM480UJEvCSn68kRG1vROOzfAxE0DAAKVxtHBcukvw"
+    >
+      <StatusBar style="light" />
+
+      <View style={{ }} />
+
+
 
       {
         products[0] ? (
@@ -49,7 +55,16 @@ const Home = ({ navigation }) => {
         ) : <></>
       }
       
-      <FlatList
+
+      {/* <Animated.FlatList
+        style={{
+          backgroundColor: '#f2f2f2',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          marginTop: headerHeight,
+          zIndex: 1,
+          flex: 1
+        }}
         refreshControl={
           <RefreshControl refreshing={isRefresh} onRefresh={() => {
             setIsRefresh(true);
@@ -58,9 +73,12 @@ const Home = ({ navigation }) => {
             });
           }} />
         }
-        style={{ backgroundColor: 'white' }}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue }  }}], { useNativeDriver: false }
+        )}
+        scrollEventThrottle={16}
         data={categories}
-        contentContainerStyle={{ padding: 15 }}
+        contentContainerStyle={{ padding: 15, paddingTop: 20, paddingBottom: 60 }}
         keyExtractor={(category) => category.categoryId.toString()}
         numColumns={2}
         renderItem={({ item}) => {
@@ -83,9 +101,8 @@ const Home = ({ navigation }) => {
             </TouchableOpacity>
           )
         }}
-      />
-        {/* <CategoryScrollView categories={categories} /> */}
-    </>
+      /> */}
+    </Container>
   );
 }
 

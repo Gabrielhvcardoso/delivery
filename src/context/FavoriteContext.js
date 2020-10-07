@@ -14,8 +14,9 @@ export const FavoriteContextProvider = ({ children }) => {
   useEffect(() => {
     const getItems = async () => {
       const favoritos = await AsyncStorage.getItem("favoritos");
-      console.log(JSON.parse(favoritos));
-      setProducts(JSON.parse(favoritos));
+      if (favoritos) {
+        setProducts(JSON.parse(favoritos));
+      }
     }
     getItems();
   }, []);
@@ -26,8 +27,12 @@ export const FavoriteContextProvider = ({ children }) => {
   }
 
   const addFavorite = (productId) => {
-    const newProducts = [...products, productId];
-    updateFavorites(newProducts);
+    if (products) {
+      const newProducts = [...products, productId];
+      updateFavorites(newProducts);
+    } else {
+      updateFavorites([ productId ]);
+    }
   }
 
   const removeFavorite = async (productId) => {
@@ -36,7 +41,7 @@ export const FavoriteContextProvider = ({ children }) => {
   }
 
   const verifyFavorite = (productId) => {
-    return products.includes(productId);
+    return products ? products.some(item => item === productId) > -1 : false;
   }
 
   return (

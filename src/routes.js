@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Image } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -55,24 +55,7 @@ const Routes = () => {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{ headerStyle: { elevation: 0 } }}>
 
-        <Stack.Screen
-        name="Home" 
-        component={BottomTabs}
-        options={({ route }) => {
-          return {
-            headerTitle: '',
-            headerShown: route?.state?.index ?? 0 === 2 ? false : true,
-            headerBackground: () => (
-              <SafeAreaView style={{ backgroundColor: 'white', flex: 1, display: 'flex' }}>
-                <Image 
-                  source={horizontalLogo}
-                  style={{ resizeMode: 'contain', alignSelf: 'center', flex: 1 }}  
-                />
-              </SafeAreaView>
-            ) 
-            }
-          }}
-        />
+        <Stack.Screen name="Home" component={BottomTabs} options={{ headerShown: false }} />
 
         <Stack.Screen
           name="Category"
@@ -125,7 +108,7 @@ const BottomTabs = () => {
         inactiveTintColor: '#666',
         style: {
           position: 'absolute',
-          backgroundColor: '#E1EDF9',
+          backgroundColor: '#FFFFFF',
           elevation: 0,
           height: 60,
           borderTopStartRadius: 20,
@@ -134,7 +117,7 @@ const BottomTabs = () => {
         }
       }}
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ color, size, focused }) => {
           switch (route.name) {
             case 'Home':
               return <Icon name={'home'} size={size+5} color={color} type="feather" />;
