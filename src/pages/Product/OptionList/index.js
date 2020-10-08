@@ -1,9 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
+import { Header } from './styles';
 
+import RadioListRequired from './RadioListRequired';
 import RadioList from './RadioList';
 import Option from './Option';
-import { Header } from './styles';
 
 const Options = ({ options }) => {
 
@@ -16,9 +17,13 @@ const Options = ({ options }) => {
           <View key={Math.random()}>
             <Header required={option.required} title={option.title} />
             {
-              option.unique ? (
-                <RadioList options={option.options} />
-              ) : option.options.map(suboption => (
+              option.unique ?
+                option.required ? (
+                  <RadioListRequired options={option.options} />
+                ) : (
+                  <RadioList options={option.options} />
+                )
+               : option.options.map(suboption => (
                 <Option option={suboption} key={Math.random()} />
               ))
             }

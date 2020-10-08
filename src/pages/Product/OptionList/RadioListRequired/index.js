@@ -6,7 +6,7 @@ import ProductContext from '../../context';
 
 const RadioList = ({ options }) => {
   const [selected, setSelected] = useState(null);
-  const { replaceOption, increaseOption, decreaseOption } = useContext(ProductContext);
+  const { replaceOption, increaseOption } = useContext(ProductContext);
 
   const OptionContainer = styled.TouchableOpacity`
     background-color: ${props => selected === props.id ? '#fafafa' : 'white'}
@@ -25,24 +25,14 @@ const RadioList = ({ options }) => {
     let index;
 
     if (selected !== null) {
-      if (selected === id) {
-        index = options.findIndex(item => item.optionItemId === id);
-        const { name, addValue: price } = options[index];
+      index = options.findIndex(item => item.optionItemId === selected);
+      const { name: name1, addValue: price1 } = options[index];
 
-        decreaseOption({ name, price });
-        setSelected(null);
-      }
-      
-      else {
-        index = options.findIndex(item => item.optionItemId === selected);
-        const { name: name1, addValue: price1 } = options[index];
-
-        index = options.findIndex(item => item.optionItemId === id);
-        const { name: name2, addValue: price2 } = options[index];
-    
-        replaceOption({ name: name1, price: price1 }, { name: name2, price: price2 });
-        setSelected(id);
-      }
+      index = options.findIndex(item => item.optionItemId === id);
+      const { name: name2, addValue: price2 } = options[index];
+  
+      replaceOption({ name: name1, price: price1 }, { name: name2, price: price2 });
+      setSelected(id);
     } 
   
     else {
@@ -52,7 +42,13 @@ const RadioList = ({ options }) => {
       increaseOption({ name, price });
       setSelected(id);
     }
+
+    
   }
+
+  useEffect(() => {
+    alterSelected(options[0].optionItemId);
+  }, []);
 
   return (
     <View>
