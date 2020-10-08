@@ -37,23 +37,29 @@ const Footer = ({ product }) => {
               key={Math.random()}
               style={{ flexDirection: 'row', justifyContent: 'space-between', overflow: 'hidden', }}
             >
-              <Text>{ product.name }</Text>
-              <Text
-                numberOfLines={1}
-                style={{ flex: 1 }}
-                ellipsizeMode="clip"
-              >....................................................................................</Text>
-              <Text>
-                {
-                  product.price ? (
-                    `R$ ${ product.saleStatus
-                      ? product.salePrice.toFixed(2).toString().replace('.', ',')
-                      : product.price.toFixed(2).toString().replace('.', ',') }`
-                  ) : (
-                    'R$ 0,00'
-                  )
-                }
-              </Text>
+              {
+                product.price > 0 ? (
+                  <>
+                  <Text>{ product.name }</Text>
+                    <Text
+                      numberOfLines={1}
+                      style={{ flex: 1 }}
+                      ellipsizeMode="clip"
+                    > ....................................................................................</Text>
+                    <Text>
+                      {
+                        product.price ? (
+                          ` R$ ${ product.saleStatus
+                            ? product.salePrice.toFixed(2).toString().replace('.', ',')
+                            : product.price.toFixed(2).toString().replace('.', ',') }`
+                        ) : (
+                          ' R$ 0,00'
+                        )
+                      }
+                    </Text>
+                  </>
+                ) : <></>
+              }
             </View>
           ) : <></>
         }
@@ -68,13 +74,13 @@ const Footer = ({ product }) => {
                 numberOfLines={1}
                 style={{ flex: 1 }}
                 ellipsizeMode="clip"
-              >....................................................................................</Text>
+              > ....................................................................................</Text>
               <Text>
                 {
                   option.price ? (
-                    `R$ ${ option.price.toFixed(2).toString().replace('.', ',') }`
+                    ` + R$ ${ option.price.toFixed(2).toString().replace('.', ',') }`
                   ) : (
-                    'R$ 0,00'
+                    ' Grátis'
                   )
                 }
               </Text>

@@ -15,7 +15,7 @@ const Options = ({ options }) => {
       {
         options.map((option) => (
           <View key={Math.random()}>
-            <Header required={option.required} title={option.title} />
+            <Header required={option.required} unique={option.unique} title={option.title} />
             {
               option.unique ?
                 option.required ? (

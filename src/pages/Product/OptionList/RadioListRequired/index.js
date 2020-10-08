@@ -19,6 +19,7 @@ const RadioList = ({ options }) => {
 
   const OptionText = styled.Text`
     font-family: ${props => selected === props.id ? 'Inter Bold' : 'Inter Regular'}
+    color: ${props => selected === props.id ? '#0088ff' : 'black'};
   `;
 
   const alterSelected = (id) => {
@@ -64,6 +65,13 @@ const RadioList = ({ options }) => {
             >
               <OptionText id={optionItemId}>
                 { name }
+              </OptionText>
+              <OptionText>
+                {
+                  price ? (
+                    `R$ ${price.toFixed(2).toString().replace('.', ',')}`
+                  ) : '-'
+                }
               </OptionText>
             </OptionContainer>
           );

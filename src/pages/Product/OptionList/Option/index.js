@@ -19,6 +19,7 @@ export const Option = ({ option }) => {
 
   const OptionText = styled.Text`
     font-family: ${isSelected ? 'Inter Bold' : 'Inter Regular'}
+    color: ${isSelected ? '#0088ff' : 'black'};
   `;
 
   useEffect(() => {
