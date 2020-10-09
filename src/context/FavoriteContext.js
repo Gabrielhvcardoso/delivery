@@ -10,6 +10,7 @@ const FavoriteContext = createContext({
 
 export const FavoriteContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  console.log(products)
 
   useEffect(() => {
     const getItems = async () => {
@@ -41,7 +42,7 @@ export const FavoriteContextProvider = ({ children }) => {
   }
 
   const verifyFavorite = (productId) => {
-    return products ? products.some(item => item === productId) > -1 : false;
+    return products ? products.some(item => item === productId) : false;
   }
 
   return (
