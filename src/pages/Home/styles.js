@@ -2,8 +2,6 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Image, TouchableWithoutFeedback } from 'react-native';
 import styled from 'styled-components';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Icon } from 'react-native-elements';
 
 export const CategoryScrollView = ({ categories }) => {
   const navigation = useNavigation();

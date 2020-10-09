@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Button } from 'react-native-paper';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import { Title } from '../styles';
 
 import ProductContext from '../context';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Text = styled.Text`
   font-family: Inter Regular;

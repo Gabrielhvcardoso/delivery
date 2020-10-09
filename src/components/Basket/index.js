@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { View, Dimensions, Modal, Image, TouchableOpacity, Modal as NativeModal } from 'react-native';
 import { Button, Divider, Menu } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
@@ -21,6 +21,12 @@ import { useToken } from '../../hooks/useToken';
 const Text = styled.Text`
   font-family: Inter Regular;
 `;
+
+const getAndress = (json) => {
+  const { street, number, cep, city, state } = JSON.parse(json);
+
+  return `${street}, ${number} - ${cep} - ${city}-${state}`;
+}
 
 const Basket = () => {
   const { products, isBasketVisible, dismissBasket, showBasket, handleSendOrder } = useContext(BasketContext);
@@ -57,16 +63,20 @@ const Basket = () => {
   }, []);
 
   const finalPricing = useMemo(() => products.reduce((acumulador, item) => {
-    acumulador += item.price;
+    acumulador += item.price * item.quantity;
 
     if (item.options[0]) {
       for (let counter = 0; counter < item.options.length; counter ++) {
-        acumulador += item.options[counter].price 
+        acumulador += item.options[counter].price * item.quantity
       }
     }
-  
+
     return acumulador;
-  }, 0), [products]);
+  }, 0), [JSON.stringify(products)]);
+
+  useEffect(() => {
+    console.log(Object.keys(products))
+  }, [])
 
   return (
     <Modal
@@ -118,19 +128,23 @@ const Basket = () => {
             <View style={{ backgroundColor: '#f2f2f2', borderRadius: 8, width: '90%', padding: 20, paddingBottom: 10 }}>
               <Text style={{ fontSize: 18, marginBottom: 10 }}>Selecionar um endereço</Text>
               {
-                user.andress?.map(item => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      setAndress(item);
-                      setIsAndressModal(false);
-                    }}
-                    key={Math.random()}
-                    style={{ elevation: 3, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: 'white' }}
-                  >
-                    <Text numberOfLines={1} style={{ fontSize: 17 }}>{ item.andress }</Text>
-                    <Text style={{ fontSize: 13, color: 'grey' }}>Selecionar</Text>
-                  </TouchableOpacity>
-                ))
+                user.andress?.map(item => {
+                  const { number, cep, state, city, street, name } = JSON.parse(item.andress);
+                  return (
+                    <TouchableOpacity
+                      onPress={() => {
+                        setAndress(item);
+                        setIsAndressModal(false);
+                      }}
+                      key={Math.random()}
+                      style={{ elevation: 3, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: 'white' }}
+                    >
+                      <Text numberOfLines={1} style={{ fontSize: 17 }}>{ name }</Text>
+                      <Text numberOfLines={1} style={{ fontSize: 13 }}>{ `${street}, ${number} - ${cep} - ${city}-${state}` }</Text>
+                      <Text style={{ fontSize: 13, color: 'grey' }}>Selecionar</Text>
+                    </TouchableOpacity>
+                  );
+                })
               }
               <TouchableOpacity
                 onPress={() => {
@@ -138,24 +152,23 @@ const Basket = () => {
 
                   RootNavigation.navigate('AndressSelector', {
                     goBack: (data) => {
-                      const newAndress = {
-                        userId: user.userId,
-                        ...data,
-                      };
+                      const newAndress = JSON.stringify(data);
 
-                      useFetch.post('/p/u/a/create', newAndress, (response) => {
-                        const justNowCreatedAndress = {
-                          andressId: response.id,
-                          ...data
-                        };
-                        
-                        const newAndressArr = user.andress;
-                        newAndressArr.push(justNowCreatedAndress);
-                        setUser({...user, andress: newAndressArr });
-                        setAndress(justNowCreatedAndress);
-
-                        setIsAndressModal(false);
-                        showBasket();
+                      useFetch.post('/p/u/a/create', { userId: user.userId, andress: newAndress }, (response) => {
+                        if (response.code) {
+                          alert('Error');
+                        } 
+                    
+                        else {
+                          const newUserAndressArr = user.andress;
+                          const justNowCreatedAndress = { andressId: response.id, andress: JSON.stringify(data) }
+                          newUserAndressArr.push(justNowCreatedAndress);
+          
+                          setUser({...user, andress: newUserAndressArr });
+                          setAndress(justNowCreatedAndress);
+                          setIsAndressModal(false);
+                          showBasket();
+                        }
                       })
                     }
                   })
@@ -205,7 +218,7 @@ const Basket = () => {
                     <Text style={{ fontSize: 17, color: '#666' }}>Entregar em</Text>
                     <Text numberOfLines={1} style={{ fontSize: 15, flex: 1 }}>
                       {
-                        andress.andress === '' ? 'Selecione o seu endereço' : andress.andress
+                        andress.andress === '' ? 'Selecione o seu endereço' : getAndress(andress.andress)
                       }
                     </Text>
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Dimensions, ImageBackground, StatusBar, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Dimensions, ImageBackground, StatusBar, Text, View, TouchableOpacity } from 'react-native';
 
 import { Container, Button } from './styles';
 

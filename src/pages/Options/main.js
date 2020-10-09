@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
-import { View, } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { List, Avatar } from 'react-native-paper';
 import styled from 'styled-components';
 
 import { Container } from './styles';
 
 import AuthContext from '../../context/AuthContext';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Text = styled.Text`
   font-family: Inter Regular;

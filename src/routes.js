@@ -91,7 +91,6 @@ const Routes = () => {
           options={{
             headerTintColor: 'black',
             headerTitle: '',
-            headerTransparent: true
           }}
         />
 

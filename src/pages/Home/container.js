@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Animated, Dimensions, TouchableOpacity, Image, Text, TextInput } from 'react-native';
+import { View, Animated, Dimensions, TouchableOpacity, Image, Text, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
-import { ScrollView } from 'react-native-gesture-handler';
 
 export const Container = ({ data, image }) => {
   const navigation = useNavigation();

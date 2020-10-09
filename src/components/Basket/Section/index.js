@@ -102,7 +102,7 @@ const Section = ({ product }) => {
           source={{ uri: product.image }}
           style={{ height: 50, width: 50, borderRadius: 10 }}
         />
-        <TouchableOpacity onPress={() => setQuantityModal(true)} style={{ flexDirection: 'column', marginLeft: 15, flex: 1 }}>
+        <TouchableOpacity disabled onPress={() => setQuantityModal(true)} style={{ flexDirection: 'column', marginLeft: 15, flex: 1 }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
             <Text numberOfLines={1} style={{ fontSize: 19, flex: 1, fontFamily: 'Inter Bold' }}>{ product.quantity}x { product.name }</Text>
             <Text style={{ flex: 1, fontSize: 17, textAlign: 'right' }}>
