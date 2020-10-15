@@ -14,7 +14,7 @@ export const cepMask = (value) => {
 }
 
 const AndressSelector = ({ navigation, route }) => {
-  const [andress, setAndress] = useState({ name: 'Casa', cep: '89.254-300', state: '', city: '', street: '', neighborhood: '', number: '2515', observation: '2307' });
+  const [andress, setAndress] = useState({ name: '', cep: '', state: '', city: '', street: '', neighborhood: '', number: '', observation: '' });
   const onChange = (field, value) => field === 'cep' ? setAndress({ ...andress, [field]: cepMask(value) }) : setAndress({ ...andress, [field]: value });
 
   const { goBack } = route.params;
