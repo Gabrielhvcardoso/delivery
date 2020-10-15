@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, StatusBar, View } from 'react-native';
+import { ActivityIndicator, Alert, StatusBar, View } from 'react-native';
 import { TextInput } from './styles';
 
 import cep from 'cep-promise';
@@ -14,11 +14,9 @@ export const cepMask = (value) => {
 }
 
 const AndressSelector = ({ navigation, route }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [andress, setAndress] = useState({ name: '', cep: '', state: '', city: '', street: '', neighborhood: '', number: '', observation: '' });
   const onChange = (field, value) => field === 'cep' ? setAndress({ ...andress, [field]: cepMask(value) }) : setAndress({ ...andress, [field]: value });
-
-  const { goBack } = route.params;
-  if (!goBack) navigation.goBack();
 
   useEffect(() => {
     if (andress.cep.length === 10) {
@@ -30,6 +28,12 @@ const AndressSelector = ({ navigation, route }) => {
         });
     } 
   }, [andress.cep]);
+
+  if (isLoading) return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <ActivityIndicator color="black" />
+    </View>
+  );
 
   return (
     <View style={{ flex: 1, padding: 15, backgroundColor: 'white' }}>
@@ -64,9 +68,14 @@ const AndressSelector = ({ navigation, route }) => {
             return Alert.alert('Atenção', 'Preencha todos os campos obrigatórios', [{ text: 'Ok' }]);
           }
 
+          setIsLoading(true);
           delete andress.service;
-          navigation.goBack();
-          goBack(andress);
+          route.params.goBack(andress, (success) => {
+            if (success) {
+              navigation.goBack();
+            } 
+            setIsLoading(false);
+          });
         }}
         contentStyle={{ height: 60 }}
       >Salvar</Button>

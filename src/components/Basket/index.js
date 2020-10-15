@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
-import { View, Dimensions, Modal, Image, TouchableOpacity, Modal as NativeModal } from 'react-native';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { View, Dimensions, Modal, Image, TouchableOpacity, Modal as NativeModal, ScrollView } from 'react-native';
 import { Button, Divider, Menu } from 'react-native-paper';
 import { Icon } from 'react-native-elements';
 
@@ -128,7 +128,11 @@ const Basket = () => {
           <TouchableOpacity style={{ flex: 1 }} onPress={dismissModal} />
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity style={{ flex: 1 }} onPress={dismissModal} />
-            <View style={{ backgroundColor: '#f2f2f2', borderRadius: 8, width: '90%', padding: 20, paddingBottom: 10 }}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ padding: 20 }}
+              style={{ maxHeight: 500, backgroundColor: '#f2f2f2', borderRadius: 8, width: '90%', paddingBottom: 10 }}
+            >
               <Text style={{ fontSize: 18, marginBottom: 10 }}>Selecionar um endereço</Text>
               {
                 user.andress?.map(item => {
@@ -182,7 +186,7 @@ const Basket = () => {
               >
                 <Text numberOfLines={1} style={{ fontSize: 17 }}>Adicionar endereço</Text>
               </TouchableOpacity>
-            </View>
+            </ScrollView>
             <TouchableOpacity style={{ flex: 1 }} onPress={dismissModal} />
           </View>
           <TouchableOpacity style={{ flex: 1 }} onPress={dismissModal} />
@@ -212,7 +216,7 @@ const Basket = () => {
                   style={{ padding: 10, marginBottom: 15, flexDirection: 'row' }}
                   activeOpacity={0.8}
                   onPress={() => {
-                    setIsAndressModal(true)
+                    setIsAndressModal(!isAndressModal)
                   }}
                 >
                   <Image

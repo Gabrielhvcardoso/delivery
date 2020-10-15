@@ -11,20 +11,16 @@ const Text = styled.Text`
 `;
 
 const AndressManager = ({ navigation }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { user, setUser } = useContext(AuthContext);
-  const { andress } = user;
-
-  console.log(andress)
-
+  const [andress, setAndress] = useState({})
+  
   useEffect(() => {
-    if (andress[0]) {
-      setIsLoading(false);
-    } else {
-      navigation.navigate('AndressSelector');
+    if (user.andress) {
+      setAndress(user.andress);
     }
-  }, []);
+  }, [user.andress])
 
   if (isLoading) {
     return (
@@ -37,7 +33,7 @@ const AndressManager = ({ navigation }) => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: 'white' }} contentContainerStyle={{ padding: 15 }}>
       {
-        andress[0].andress ? andress.map(item => {
+        andress ? andress[0] ? andress.map(item => {
           const {
             name, number, observation, cep, state, city, neighborhood, street
           } = JSON.parse(item.andress);
@@ -76,27 +72,27 @@ const AndressManager = ({ navigation }) => {
               <Text style={{ marginTop: 5, color: 'grey' }}>Editar</Text>
             </TouchableOpacity>
           );
-        }) : <></>
+        }) : <></> : <></>
       }
 
       <TouchableOpacity
         onPress={() => navigation.navigate('AndressSelector', {
-          goBack: (data) => {
-
+          goBack: (data, onEnd) => {
             const newAndress = JSON.stringify(data);
+
 
             useFetch.post('/p/u/a/create', { userId: user.userId, andress: newAndress }, (response) => {
 
               if (response.code) {
-                alert('Error')
-              } else {
-                navigation.goBack();
-
-                const newUserAndressArr = andress;
-                newUserAndressArr.push({ andressId: response.id, andress: JSON.stringify(data) });
-
-                setUser({...user, andress: newUserAndressArr });
+                alert('Ocorreu algum erro, por favor, tente novamente.');
+                onEnd(false);
               }
+
+
+                const newUserAndressArr = andress[0] ? andress : [];
+                newUserAndressArr.push({ andressId: response.id, andress: JSON.stringify(data) });
+                setUser({...user, andress: newUserAndressArr });
+                onEnd(true);
             })
           }
         })}
