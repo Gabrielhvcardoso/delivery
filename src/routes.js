@@ -37,7 +37,7 @@ const Tabs = createBottomTabNavigator();
 
 // Main route
 const Routes = () => {
-  const { isUserLogged } = useContext(AuthContext);
+  const { user, isUserLogged } = useContext(AuthContext);
 
   if (!isUserLogged) {
     return (

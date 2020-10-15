@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, ImageBackground, StatusBar, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { ActivityIndicator, Button, Dialog, Portal, TextInput } from 'react-native-paper';
+import { ActivityIndicator, Button, Dialog, Portal } from 'react-native-paper';
+import { TextInput } from './styles';
 
 import { useFetch } from '../../hooks/useFetch';
 import { useToken } from '../../hooks/useToken';
 
 import AuthContext from '../../context/AuthContext';
+import { Icon } from 'react-native-elements';
 
 let image = 'https://images.unsplash.com/photo-1559329007-40df8a9345d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1834&q=80';
 
@@ -51,12 +53,13 @@ const Login = ({ navigation }) => {
       return;
     }
 
-    if (!email.includes("@")) {
+    if (!email.includes("@") || !email.includes('.com')) {
       showError("O E-mail inserido é inválido.");
       return;
     }
 
     setIsLoading(true);
+
     useFetch.post('/p/u/login', {
       token: useToken(),
       email,
@@ -107,15 +110,36 @@ const Login = ({ navigation }) => {
       
       <StatusBar barStyle="dark-content" />
 
-      <TextInput value={email} onChangeText={text => setEmail(text)} label="E-mail" mode="outlined" />
-      <TextInput secureTextEntry value={password} onChangeText={text => setPassword(text)} label="Senha" mode="outlined" />
-
-      <Button onPress={onLoginRequest} style={{ marginTop: 10 }} mode="contained">Entrar</Button>
+      <TextInput value={email} onChangeText={text => setEmail(text)} placeholder="E-mail" />
+      <TextInput secureTextEntry value={password} onChangeText={text => setPassword(text)} placeholder="Senha" />
 
       <Button
+        onPress={onLoginRequest}
+        contentStyle={{ height: 60, justifyContent: 'flex-start' }}
+        icon={<Icon name="home" color="black" />}
+        labelStyle={{
+          fontFamily: 'Inter Regular',
+        }}
+        style={{
+          marginTop: 10,
+          // backgroundColor: 'white',
+          borderRadius: 10
+        }}
+        mode="contained"
+      >
+        <Text style={{ color: 'white', textTransform: 'capitalize', fontFamily: 'Inter SemiBold', fontSize: 18 }}>
+          Entrar
+        </Text>
+      </Button>
+
+      <Button
+        contentStyle={{ justifyContent: 'flex-start' }}
         onPress={() => navigation.navigate("Register")}
-        style={{ marginTop: 15 }}
-      >Registrar-se</Button>
+        labelStyle={{ fontFamily: 'Inter Medium', textTransform: 'none' }}
+        style={{ marginTop: 15 }} 
+      >
+        Ainda não tem uma conta? Registre-se
+      </Button>
     </View>
   );
 }
