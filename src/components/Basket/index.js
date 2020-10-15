@@ -38,7 +38,7 @@ const Basket = () => {
   const [categories, setCategories] = useState([]);
   const productsArray = categories.flatMap(item => item.products);
 
-  const [andress, setAndress] = useState({ andress: '', andressId: 0, latitude: 0, longitude: 0 });
+  const [andress, setAndress] = useState({ andress: '', andressId: 0 });
   const [isAndressModal, setIsAndressModal] = useState(false);
   const dismissModal = () => setIsAndressModal(false);
 
@@ -159,24 +159,26 @@ const Basket = () => {
                   dismissBasket();
 
                   RootNavigation.navigate('AndressSelector', {
-                    goBack: (data) => {
+                    goBack: (data, onEnd) => {
                       const newAndress = JSON.stringify(data);
 
                       useFetch.post('/p/u/a/create', { userId: user.userId, andress: newAndress }, (response) => {
                         if (response.code) {
-                          console.log(response);
-                          alert('Error');
+                          alert('Aconteceu algum erro, por favor, tente novamente.');
+                          onEnd(false);
                         } 
                     
                         else {
-                          const newUserAndressArr = user.andress;
-                          const justNowCreatedAndress = { andressId: response.id, andress: JSON.stringify(data) }
+                          const newUserAndressArr = user.andress[0] ? user.andress : [];
+                          const justNowCreatedAndress = { andressId: response.id, andress: newAndress };
                           newUserAndressArr.push(justNowCreatedAndress);
           
                           setUser({...user, andress: newUserAndressArr });
                           setAndress(justNowCreatedAndress);
                           setIsAndressModal(false);
                           showBasket();
+
+                          onEnd(true);
                         }
                       })
                     }
@@ -227,7 +229,7 @@ const Basket = () => {
                     <Text style={{ fontSize: 17, color: '#666' }}>Entregar em</Text>
                     <Text numberOfLines={1} style={{ fontSize: 15, flex: 1 }}>
                       {
-                        andress.andress ? 'Selecione o seu endereço' : getAndress(andress.andress)
+                        !andress.andress ? 'Selecione o seu endereço' : getAndress(andress.andress)
                       }
                     </Text>
 
