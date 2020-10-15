@@ -169,7 +169,7 @@ const Basket = () => {
                         } 
                     
                         else {
-                          const newUserAndressArr = user.andress[0] ? user.andress : [];
+                          const newUserAndressArr = user.andress ? user.andress : [];
                           const justNowCreatedAndress = { andressId: response.id, andress: newAndress };
                           newUserAndressArr.push(justNowCreatedAndress);
           
