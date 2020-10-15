@@ -13,6 +13,8 @@ import { Icon } from 'react-native-elements';
 import Product from '../Category/Product';
 import image from '../../../assets/images/home.jpg';
 
+import Search from './Search';
+
 import { useShuffle } from '../../hooks/useShuffle';
 
 export const Text = styled.Text`
@@ -24,6 +26,7 @@ export const Text = styled.Text`
 const Home = ({ navigation }) => {
   const [categories, setCategories] = useState([]);
   const suggestions = useMemo(() => categories.flatMap(item => item.products), [categories]);
+  const [isSearch, setIsSearch] = useState(false);
 
   const { showBasket, products } = useContext(BasketContext);
 
@@ -48,6 +51,8 @@ const Home = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="light" />
+      {/* <Search visible={isSearch} onDismiss={() => setIsSearch(false)} /> */}
+
       {
         products[0] ? (
           <FAB
@@ -79,6 +84,7 @@ const Home = ({ navigation }) => {
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 25, marginHorizontal: 25, }}>
           <Icon name="search" type="feather" />
           <TextInput
+            onFocus={() => setIsSearch(true)}
             style={{
               borderRadius: 40,
               fontFamily: 'Inter Regular',

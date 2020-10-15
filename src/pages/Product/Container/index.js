@@ -45,6 +45,7 @@ const Container = ({ children, image }) => {
       </AnimatedBlurView>
 
       <Animated.ScrollView
+        removeClippedSubviews
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue }  }}], { useNativeDriver: false }
         )}

@@ -23,9 +23,12 @@ const Text = styled.Text`
 `;
 
 const getAndress = (json) => {
-  const { street, number, cep, city, state } = JSON.parse(json);
-
-  return `${street}, ${number} - ${cep} - ${city}-${state}`;
+  try {
+    const { street, number, cep, city, state } = JSON.parse(json);
+    return `${street}, ${number} - ${cep} - ${city}-${state}`;
+  } catch (e) {
+    return 'Nenhum endereço'
+  }
 }
 
 const Basket = () => {
@@ -129,6 +132,7 @@ const Basket = () => {
               <Text style={{ fontSize: 18, marginBottom: 10 }}>Selecionar um endereço</Text>
               {
                 user.andress?.map(item => {
+                  if (item.andress === null) return <View />
                   const { number, cep, state, city, street, name } = JSON.parse(item.andress);
                   return (
                     <TouchableOpacity
@@ -156,6 +160,7 @@ const Basket = () => {
 
                       useFetch.post('/p/u/a/create', { userId: user.userId, andress: newAndress }, (response) => {
                         if (response.code) {
+                          console.log(response);
                           alert('Error');
                         } 
                     
@@ -175,7 +180,7 @@ const Basket = () => {
                 }}
                 style={{ elevation: 3, marginTop: 10, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: 'white' }}
               >
-                <Text numberOfLines={1} style={{ fontSize: 17 }}>Selecionar outro</Text>
+                <Text numberOfLines={1} style={{ fontSize: 17 }}>Adicionar endereço</Text>
               </TouchableOpacity>
             </View>
             <TouchableOpacity style={{ flex: 1 }} onPress={dismissModal} />
@@ -218,7 +223,7 @@ const Basket = () => {
                     <Text style={{ fontSize: 17, color: '#666' }}>Entregar em</Text>
                     <Text numberOfLines={1} style={{ fontSize: 15, flex: 1 }}>
                       {
-                        andress.andress === '' ? 'Selecione o seu endereço' : getAndress(andress.andress)
+                        andress.andress ? 'Selecione o seu endereço' : getAndress(andress.andress)
                       }
                     </Text>
 

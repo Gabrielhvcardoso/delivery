@@ -14,6 +14,7 @@ export const Container = ({ children, image }) => {
   return (
     <View style={{ flex: 1 }}>
       <Animated.ScrollView
+        removeClippedSubviews
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue }  }}], { useNativeDriver: false }
         )}
