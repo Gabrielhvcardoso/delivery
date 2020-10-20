@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { FAB } from 'react-native-paper';
 import styled from 'styled-components';
 
@@ -7,7 +6,7 @@ import BasketContext from '../../context/BasketContext';
 
 import { useFetch } from '../../hooks/useFetch';
 import { useToken } from '../../hooks/useToken';
-import { Animated, Dimensions, Image, TextInput, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Animated, Dimensions, Image, TextInput, ScrollView, TouchableOpacity, StatusBar, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import Product from '../Category/Product';
@@ -50,7 +49,7 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <StatusBar style="light" />
+      <StatusBar barStyle="light-content" />
       {/* <Search visible={isSearch} onDismiss={() => setIsSearch(false)} /> */}
 
       {
@@ -109,7 +108,7 @@ const Home = ({ navigation }) => {
               >
               <View>
                   <Image
-                    style={{ flex: 1, height: 100, width: 120, marginHorizontal: 5, borderRadius: 4 }}
+                    style={{ flex: 1, height: 100, width: 120, marginHorizontal: 5, borderRadius: 10 }}
                     source={{ uri: item.image }}
                   />
                   <Text numberOfLines={1} style={{ textAlign: 'center', width: 120, marginLeft: 5, marginRight: 5, fontSize: 14, marginTop: 7, color: '#444', fontFamily: 'Inter Medium' }}>
@@ -123,7 +122,7 @@ const Home = ({ navigation }) => {
 
         {
           suggestions.filter(item => item.saleStatus)[0] ? (
-            <Text style={{ marginLeft: 25, marginBottom: 15, fontFamily: 'Inter Bold', fontSize: 20 }}>Promoções</Text>
+            <Text style={{ marginLeft: 25, marginTop: 25, fontFamily: 'Inter Bold', fontSize: 20 }}>Promoções</Text>
           ) : <></>
         }
 
@@ -137,7 +136,7 @@ const Home = ({ navigation }) => {
           }
         </View>
 
-        <Text style={{ marginTop: 25, marginLeft: 25, marginBottom: 15, fontFamily: 'Inter Bold', fontSize: 20 }}>Populares</Text>
+        <Text style={{ marginTop: 35, marginLeft: 25, fontFamily: 'Inter Bold', fontSize: 20 }}>Populares</Text>
 
         <View style={{ paddingHorizontal: 20 }}>
           {
