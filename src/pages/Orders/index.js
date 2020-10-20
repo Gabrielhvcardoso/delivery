@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import AuthContext from '../../context/AuthContext';
 import { useFetch } from '../../hooks/useFetch';
 
+import BasketSvg from './BasketSvg';
+
 const Text = styled.Text`
   font-family: Inter Regular;
 `;
@@ -66,9 +68,10 @@ const Orders = ({ navigation }) => {
         padding: 15,
         paddingBottom: 60,
       }}>
+        <StatusBar barStyle="dark-content" />
         <Text style={{ fontSize: 24, fontFamily: 'Inter Bold' }}>Meus pedidos</Text>
         {
-          orders.map(order => {
+          orders[0] ? orders.map(order => {
             const { street, number } = JSON.parse(order.andress); 
 
             return (
@@ -143,7 +146,13 @@ const Orders = ({ navigation }) => {
                 }
               </View>
             );
-          })
+          }) : (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingTop: 200 }}>
+              <BasketSvg />
+              <Text style={{ fontSize: 20 }}>Nenhum pedido</Text>
+              <Text>Explore os produtos e faça seu primeiro pedido</Text>
+            </View>
+          )
         }
         
     </ScrollView>
