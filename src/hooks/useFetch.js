@@ -9,7 +9,7 @@ export const useFetch = {
     });
   },
 
-  post: async (url = '/', body, onEnd = () => {}) => {
+  post: (url = '/', body, onEnd = () => {}) => {
     fetch(BASE_URL + url, {
       method: 'POST',
       headers: {
@@ -19,12 +19,9 @@ export const useFetch = {
       body: JSON.stringify(body),
     }).then((response) => {
       response.json()
-        .then(data => {
-          onEnd(data);
-        })
-        .catch(() => {
-          onEnd({ code: 'error' })
-        });
+        .then((text) => onEnd(text));
+    }).catch((e) => {
+      onEnd({ code: 'error', message: 'catch 1' });
     });
   },
 
