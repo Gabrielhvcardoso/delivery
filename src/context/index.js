@@ -6,22 +6,25 @@ import { AuthContextProvider } from './AuthContext';
 import { ShowcaseContextProvider } from './ShowcaseContext';
 import { BasketContextProvider } from './BasketContext';
 import { FavoriteContextProvider } from './FavoriteContext';
+import { ThemeContextProvider } from './ThemeContext';
 
 const ContextProvider = ({ children }) => {
   return (
-    <AuthContextProvider>
-      <FavoriteContextProvider>
-        <BasketContextProvider>
-          <Basket />
+    <ThemeContextProvider>
+      <AuthContextProvider>
+        <FavoriteContextProvider>
+          <BasketContextProvider>
+            <Basket />
 
-          <ShowcaseContextProvider>
-            <Showcase />
+            <ShowcaseContextProvider>
+              <Showcase />
 
-              { children }
-          </ShowcaseContextProvider>
-        </BasketContextProvider>
-      </FavoriteContextProvider>
-    </AuthContextProvider>
+                { children }
+            </ShowcaseContextProvider>
+          </BasketContextProvider>
+        </FavoriteContextProvider>
+      </AuthContextProvider>
+    </ThemeContextProvider>
   );
 }
 
