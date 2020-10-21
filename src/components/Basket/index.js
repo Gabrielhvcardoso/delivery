@@ -18,6 +18,8 @@ import * as RootNavigation from '../../RootNavigation';
 import { useFetch } from '../../hooks/useFetch';
 import { useToken } from '../../hooks/useToken';
 
+import ThemeContext from '../../context/ThemeContext';
+
 const Text = styled.Text`
   font-family: Inter Regular;
 `;
@@ -32,6 +34,8 @@ const getAndress = (json) => {
 }
 
 const Basket = () => {
+  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
+
   const { products, isBasketVisible, dismissBasket, showBasket, handleSendOrder } = useContext(BasketContext);
   const { user, setUser } = useContext(AuthContext);
 
@@ -97,7 +101,7 @@ const Basket = () => {
           <TouchableOpacity style={{ flex: 1 }} onPress={dismissPMModal} />
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity style={{ flex: 1 }} onPress={dismissPMModal} />
-            <View style={{ backgroundColor: '#f2f2f2', borderRadius: 8, width: '90%', padding: 20 }}>
+            <View style={{ backgroundColor: surface, borderRadius: 8, width: '90%', padding: 20 }}>
               {
                 paymentMethods.map(item => {
                   
@@ -107,7 +111,7 @@ const Basket = () => {
                   }
                   
                   return (
-                    <Menu.Item key={Math.random()} title={item} onPress={handleSelect} />
+                    <Menu.Item key={Math.random()} titleStyle={{ color: text }} title={item} onPress={handleSelect} />
                   );
                 })
               } 
@@ -131,9 +135,9 @@ const Basket = () => {
             <ScrollView
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ padding: 20 }}
-              style={{ maxHeight: 500, backgroundColor: '#f2f2f2', borderRadius: 8, width: '90%', paddingBottom: 10 }}
+              style={{ maxHeight: 500, backgroundColor: surface, borderRadius: 8, width: '90%', paddingBottom: 10 }}
             >
-              <Text style={{ fontSize: 18, marginBottom: 10 }}>Selecionar um endereço</Text>
+              <Text style={{ color: text, fontSize: 18, marginBottom: 10 }}>Selecionar um endereço</Text>
               {
                 user.andress?.map(item => {
                   if (item.andress === null) return <View />
@@ -145,11 +149,11 @@ const Basket = () => {
                         setIsAndressModal(false);
                       }}
                       key={Math.random()}
-                      style={{ elevation: 3, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: 'white' }}
+                      style={{ elevation: 3, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: soft }}
                     >
                       <Text numberOfLines={1} style={{ fontSize: 17 }}>{ name }</Text>
                       <Text numberOfLines={1} style={{ fontSize: 13 }}>{ `${street}, ${number} - ${cep} - ${city}-${state}` }</Text>
-                      <Text style={{ fontSize: 13, color: 'grey' }}>Selecionar</Text>
+                      <Text style={{ fontSize: 13, color: muted }}>Selecionar</Text>
                     </TouchableOpacity>
                   );
                 })
@@ -184,9 +188,9 @@ const Basket = () => {
                     }
                   })
                 }}
-                style={{ elevation: 3, marginTop: 10, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: 'white' }}
+                style={{ elevation: 3, marginTop: 10, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: soft }}
               >
-                <Text numberOfLines={1} style={{ fontSize: 17 }}>Adicionar endereço</Text>
+                <Text numberOfLines={1} style={{ color: muted, fontSize: 17 }}>Adicionar endereço</Text>
               </TouchableOpacity>
             </ScrollView>
             <TouchableOpacity style={{ flex: 1 }} onPress={dismissModal} />
@@ -195,10 +199,10 @@ const Basket = () => {
         </View>
       </NativeModal>
 
-      <Container>
+      <Container style={{ backgroundColor: background }}>
         <StatusBar backgroundColor="#fff" style="dark" />
         <View style={{ flexDirection: 'row' }}>
-          <Icon name="close" type="material-community" onPress={dismissBasket} />
+          <Icon name="close" type="material-community" color={muted} onPress={dismissBasket} />
           <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 10 }}>
             Sua sacola
           </Text>
@@ -226,15 +230,15 @@ const Basket = () => {
                     style={{ width: 65, height: 65, borderRadius: 10, resizeMode: 'contain'}}
                   />
                   <View style={{ flex: 1, marginLeft: 12, justifyContent: 'space-between' }}>
-                    <Text style={{ fontSize: 17, color: '#666' }}>Entregar em</Text>
-                    <Text numberOfLines={1} style={{ fontSize: 15, flex: 1 }}>
+                    <Text style={{ fontSize: 17, color: muted }}>Entregar em</Text>
+                    <Text numberOfLines={1} style={{ color: text, fontSize: 15, flex: 1 }}>
                       {
                         !andress.andress ? 'Selecione o seu endereço' : getAndress(andress.andress)
                       }
                     </Text>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                      <Text style={{ fontSize: 13, color: '#666' }}>ALTERAR </Text>
+                      <Text style={{ fontSize: 13, color: muted }}>ALTERAR </Text>
                       <Icon name="chevron-right" type="material-community" color="#666" size={15} />
                     </View>
                   </View>
@@ -258,7 +262,7 @@ const Basket = () => {
 
                 
                 <View style={{ marginTop: 15, paddingTop: 5 }}>
-                  <Text style={{ fontSize: 12, marginLeft: 8 }}>Forma de pagamento</Text>
+                  <Text style={{ color: text, fontSize: 12, marginLeft: 8 }}>Forma de pagamento</Text>
                   <TouchableOpacity
                     onPress={() => setIsPaymentMethodModal(true)}
                     style={{
@@ -272,17 +276,18 @@ const Basket = () => {
                       borderRadius: 6
                     }}
                   >
-                    <Text style={{ fontSize: 17 }}>{ paymentMethod }</Text>
-                    <Icon name="menu-down" type="material-community" />
+                    <Text style={{ color: text, fontSize: 17 }}>{ paymentMethod }</Text>
+                    <Icon name="menu-down" type="material-community" color={text} />
                   </TouchableOpacity>
                 </View>
                 
-                <Text style={{ fontSize: 28, marginTop: 15 }}> R$ { finalPricing.toFixed(2).toString().replace('.', ',') }</Text>
+                <Text style={{ color: text, fontSize: 28, marginTop: 15 }}> R$ { finalPricing.toFixed(2).toString().replace('.', ',') }</Text>
                 
                 <Button
                   onPress={() => handleSendOrder(andress.andressId, paymentMethod)}
                   mode="contained"
-                  style={{ marginTop: 20, paddingVertical: 10 }}
+                  style={{ backgroundColor: main, marginTop: 20, paddingVertical: 10 }}
+                  labelStyle={{ color: 'white' }}
                 >continuar</Button>
               </>
             )

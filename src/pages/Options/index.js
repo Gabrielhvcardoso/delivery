@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Main from './main';
@@ -8,9 +8,12 @@ import Favorites from './Favorites';
 import Help from './Help';
 import Profile from './Profile';
 
+import ThemeContext from '../../context/ThemeContext';
+
 const Stack = createStackNavigator();
 
 export default function Options ({ navigation, route }) {
+  const { background, text } = useContext(ThemeContext);
 
   const setTabBarVisible = (value) => {
     navigation.setOptions({
@@ -31,7 +34,13 @@ export default function Options ({ navigation, route }) {
   }, [route]);
 
   return (
-    <Stack.Navigator screenOptions={{ headerStyle: { elevation: 0 } }}>
+    <Stack.Navigator screenOptions={{
+      headerTintColor: text.hex(),
+      headerStyle: {
+        elevation: 0,
+        backgroundColor: background
+      }
+    }}>
       <Stack.Screen name="Main" component={Main} options={{ headerShown: false }} />
       <Stack.Screen name="AndressManager" component={AndressManager} options={{ headerTitle: 'Gerenciar endereços' }} />
       <Stack.Screen name="Agreement" component={Agreement} options={{ headerTitle: 'Termos de Uso' }} />

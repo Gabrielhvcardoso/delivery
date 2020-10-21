@@ -3,6 +3,7 @@ import { FAB } from 'react-native-paper';
 import styled from 'styled-components';
 
 import BasketContext from '../../context/BasketContext';
+import ThemeContext from '../../context/ThemeContext';
 
 import { useFetch } from '../../hooks/useFetch';
 import { useToken } from '../../hooks/useToken';
@@ -23,6 +24,8 @@ export const Text = styled.Text`
 `;
 
 const Home = ({ navigation }) => {
+  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
+
   const [categories, setCategories] = useState([]);
   const suggestions = useMemo(() => categories.flatMap(item => item.products), [categories]);
   const [isSearch, setIsSearch] = useState(false);
@@ -55,7 +58,7 @@ const Home = ({ navigation }) => {
       {
         products[0] ? (
           <FAB
-            style={{ position: 'absolute', bottom: 90, right: 20, zIndex: 2 }}
+            style={{ backgroundColor: main, position: 'absolute', bottom: 90, right: 20, zIndex: 2 }}
             onPress={() => showBasket()}
             icon={() => <Icon name="shopping-bag" type="feather" color="white" />}
             label="Ver pedido"
@@ -73,7 +76,7 @@ const Home = ({ navigation }) => {
         contentContainerStyle={{ paddingTop: 25, paddingBottom: 80 }}
         style={{ 
           marginTop: headerHeight,
-          backgroundColor: '#f2f2f2',
+          backgroundColor: background,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           flex: 1,
@@ -81,11 +84,12 @@ const Home = ({ navigation }) => {
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 25, marginHorizontal: 25, }}>
-          <Icon name="search" type="feather" />
+          <Icon name="search" color={text} type="feather" />
           <TextInput
             onFocus={() => setIsSearch(true)}
             style={{
               borderRadius: 40,
+              color: text,
               fontFamily: 'Inter Regular',
               fontSize: 16,
               flex: 1,
@@ -93,11 +97,12 @@ const Home = ({ navigation }) => {
               paddingHorizontal: 15
             }}
             placeholder="Pesquisar produto"
+            placeholderTextColor={muted}
           />
         </View>
 
 
-        <Text style={{ marginLeft: 25, marginBottom: 15, fontFamily: 'Inter Bold', fontSize: 20 }}>Cardápio</Text>
+        <Text style={{ color: text, marginLeft: 25, marginBottom: 15, fontFamily: 'Inter Bold', fontSize: 20 }}>Cardápio</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
           {
             categories.map(item => (
@@ -111,7 +116,7 @@ const Home = ({ navigation }) => {
                     style={{ flex: 1, height: 100, width: 120, marginHorizontal: 5, borderRadius: 10 }}
                     source={{ uri: item.image }}
                   />
-                  <Text numberOfLines={1} style={{ textAlign: 'center', width: 120, marginLeft: 5, marginRight: 5, fontSize: 14, marginTop: 7, color: '#444', fontFamily: 'Inter Medium' }}>
+                  <Text numberOfLines={1} style={{ textAlign: 'center', width: 120, marginLeft: 5, marginRight: 5, fontSize: 14, marginTop: 7, color: muted, fontFamily: 'Inter Medium' }}>
                     { item.name }
                   </Text>
                 </View>
@@ -122,7 +127,7 @@ const Home = ({ navigation }) => {
 
         {
           suggestions.filter(item => item.saleStatus)[0] ? (
-            <Text style={{ marginLeft: 25, marginTop: 25, fontFamily: 'Inter Bold', fontSize: 20 }}>Promoções</Text>
+            <Text style={{ color: text, marginLeft: 25, marginTop: 25, fontFamily: 'Inter Bold', fontSize: 20 }}>Promoções</Text>
           ) : <></>
         }
 
@@ -136,7 +141,7 @@ const Home = ({ navigation }) => {
           }
         </View>
 
-        <Text style={{ marginTop: 35, marginLeft: 25, fontFamily: 'Inter Bold', fontSize: 20 }}>Populares</Text>
+        <Text style={{ color: text, marginTop: 35, marginLeft: 25, fontFamily: 'Inter Bold', fontSize: 20 }}>Populares</Text>
 
         <View style={{ paddingHorizontal: 20 }}>
           {

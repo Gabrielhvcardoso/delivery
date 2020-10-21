@@ -2,14 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import ProductContext from '../../context';
+import ThemeContext from '../../../../context/ThemeContext';
 
 export const Option = ({ option }) => {
+  const { mode, main, surface, text } = useContext(ThemeContext);
+
   const [isSelected, setIsSelected] = useState(false);
   const { increaseOption, decreaseOption } = useContext(ProductContext);
   const { addValue: price, name } = option;
 
   const OptionContainer = styled.TouchableOpacity`
-    background-color: ${isSelected ? '#fafafa' : 'white'}
+    background-color: ${isSelected ? mode === 'light' ? main.lighten(0.9) : main.darken(0.6) : surface }
     align-items: center;
     flex-direction: row;
     height: 70px;
@@ -19,7 +22,7 @@ export const Option = ({ option }) => {
 
   const OptionText = styled.Text`
     font-family: ${isSelected ? 'Inter Bold' : 'Inter Regular'}
-    color: ${isSelected ? '#0088ff' : 'black'};
+    color: ${isSelected ? mode === 'light' ? main : main : text};
   `;
 
   useEffect(() => {

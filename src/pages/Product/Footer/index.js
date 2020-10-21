@@ -4,6 +4,7 @@ import { View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import { Title } from '../styles';
 
+import ThemeContext from '../../../context/ThemeContext';
 import ProductContext from '../context';
 
 const Text = styled.Text`
@@ -11,6 +12,7 @@ const Text = styled.Text`
 `;
 
 const Footer = ({ product }) => {
+  const { mode, background, main, muted, soft, surface, text } = useContext(ThemeContext);
   const { price, options, setProduct, addToCart, quantity, setQuantity } = useContext(ProductContext);
 
   useEffect(() => setProduct({
@@ -28,7 +30,7 @@ const Footer = ({ product }) => {
         paddingTop: 40,
         marginTop: 30,
         borderTopWidth: 0.3,
-        borderTopColor: '#aaa',
+        borderTopColor: soft,
       }}>
         {
           options[0] ? (
@@ -39,13 +41,13 @@ const Footer = ({ product }) => {
               {
                 product.price > 0 ? (
                   <>
-                  <Text>{ product.name }</Text>
+                  <Text style={{ color: text }}>{ product.name }</Text>
                     <Text
                       numberOfLines={1}
-                      style={{ flex: 1 }}
+                      style={{ flex: 1, color: text }}
                       ellipsizeMode="clip"
                     > ....................................................................................</Text>
-                    <Text>
+                    <Text style={{ color: text }}>
                       {
                         product.price ? (
                           ` R$ ${ product.saleStatus
@@ -68,13 +70,13 @@ const Footer = ({ product }) => {
               key={Math.random()}
               style={{ flexDirection: 'row', justifyContent: 'space-between', overflow: 'hidden', }}
             >
-              <Text>{ option.name }</Text>
+              <Text style={{ color: text }}>{ option.name }</Text>
               <Text
                 numberOfLines={1}
-                style={{ flex: 1 }}
+                style={{ color: text, flex: 1 }}
                 ellipsizeMode="clip"
               > ....................................................................................</Text>
-              <Text>
+              <Text style={{ color: text }}>
                 {
                   option.price ? (
                     ` + R$ ${ option.price.toFixed(2).toString().replace('.', ',') }`
@@ -89,10 +91,10 @@ const Footer = ({ product }) => {
         
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between',}}>
-          <Title style={{ marginTop: 20 }}>
+          <Title style={{ color: text, marginTop: 20 }}>
             Valor final:
           </Title>
-          <Title style={{ marginTop: 20 }}>
+          <Title style={{ color: text, marginTop: 20 }}>
             R$ { price.toFixed(2).toString().replace('.', ',') }
           </Title>
         </View>
@@ -102,26 +104,32 @@ const Footer = ({ product }) => {
         <TouchableOpacity
           disabled={quantity === 1}
           onPress={() => setQuantity(quantity - 1)}
-          style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#eee', width: 50, height: 50 }}
+          style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: surface, width: 50, height: 50 }}
         >
-          <Text>-</Text>
+          <Text style={{ color: text }}>-</Text>
         </TouchableOpacity>
 
-        <Text style={{ height: 50, textAlignVertical: 'center', backgroundColor: '#f4f4f4', flex: 1, textAlign: 'center', }}>
+        <Text style={{ height: 50, textAlignVertical: 'center', backgroundColor: soft, color: text, flex: 1, textAlign: 'center', }}>
           {quantity}
         </Text>
 
         <TouchableOpacity
           onPress={() => setQuantity(quantity + 1)}
-          style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#eee', width: 50, height: 50 }}
+          style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: surface, width: 50, height: 50 }}
         >
-          <Text>+</Text>
+          <Text style={{ color: text }}>+</Text>
         </TouchableOpacity>
       </View>
 
       <Button
         onPress={addToCart}
-        style={{ marginTop: 20, elevation: 0, paddingVertical: 10 }}
+        style={{
+          backgroundColor: mode === 'light' ? main.lighten(0.9) : main,
+          marginTop: 20,
+          elevation: 0,
+          paddingVertical: 10
+        }}
+        labelStyle={{ color: mode === 'light' ? main : text.negate() }}
         mode="contained"
         icon="cart"
       >

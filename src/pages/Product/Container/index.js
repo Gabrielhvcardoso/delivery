@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Animated, Dimensions, View } from 'react-native';
 
 import { BlurView } from 'expo-blur'
+import ThemeContext from '../../../context/ThemeContext';
 
 const Container = ({ children, image }) => {
+  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
+
   const screenWidth = Dimensions.get('window').width;
 
   const AnimatedBlurView = Animated.createAnimatedComponent(BlurView);
@@ -54,7 +57,7 @@ const Container = ({ children, image }) => {
           marginTop: headerHeight,
           flex: 1,
           flexDirection: 'column',
-          backgroundColor: 'white'
+          backgroundColor: background
         }} 
       > 
         <Animated.View style={{ padding: 20 }}>

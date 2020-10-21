@@ -3,6 +3,7 @@ import { ActivityIndicator, RefreshControl, ScrollView, StatusBar, View } from '
 import styled from 'styled-components';
 
 import AuthContext from '../../context/AuthContext';
+import ThemeContext from '../../context/ThemeContext';
 import { useFetch } from '../../hooks/useFetch';
 
 import BasketSvg from './BasketSvg';
@@ -14,6 +15,7 @@ const Text = styled.Text`
 `;
 
 const Orders = ({ navigation }) => {
+  const { background, main, text } = useContext(ThemeContext);
   const { user } = useContext(AuthContext);
 
   const [orders, setOrders] = useState([]);
@@ -51,8 +53,8 @@ const Orders = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator color="black" size="small" />
+      <View style={{ flex: 1, backgroundColor: background, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={main} size="small" />
       </View>
     );
   }
@@ -62,14 +64,14 @@ const Orders = ({ navigation }) => {
       refreshControl={
         <RefreshControl refreshing={isRefresh} onRefresh={refresh} />
       }
-      style={{ flex: 1, backgroundColor: '#f2f2f2' }}
+      style={{ flex: 1, backgroundColor: background }}
       contentContainerStyle={{
         paddingTop: StatusBar.currentHeight + 15,
         padding: 15,
         paddingBottom: 80,
       }}>
         <StatusBar barStyle="dark-content" />
-        <Text style={{ fontSize: 24, fontFamily: 'Inter Bold' }}>Meus pedidos</Text>
+        <Text style={{ fontSize: 24, fontFamily: 'Inter Bold', color: text }}>Meus pedidos</Text>
         {
           orders[0] ? (
             <View>
@@ -78,7 +80,7 @@ const Orders = ({ navigation }) => {
               }
               
               <View style={{ marginTop: 40, marginBottom: 20, alignItems: 'center' }}>
-                <Text style={{ fontFamily: 'Inter Regular', fontSize: 17 }}>Pedidos antigos</Text>
+                <Text style={{ color: text, fontFamily: 'Inter Regular', fontSize: 17 }}>Pedidos antigos</Text>
               </View>
 
               {

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Animated, Dimensions, TouchableOpacity, Image, Text, TextInput, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Icon } from 'react-native-elements';
+import ThemeContext from '../../context/ThemeContext';
 
 export const Container = ({ data, image }) => {
+  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
   const navigation = useNavigation();
 
   const headerMaxHeight = 250;
@@ -25,7 +27,7 @@ export const Container = ({ data, image }) => {
         contentContainerStyle={{ paddingTop: 25, paddingBottom: 60 }}
         style={{ 
           marginTop: headerHeight,
-          backgroundColor: '#f2f2f2',
+          backgroundColor: background,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           flex: 1,
@@ -33,16 +35,18 @@ export const Container = ({ data, image }) => {
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 25, marginHorizontal: 25, }}>
-          <Icon name="search" type="feather" />
+          <Icon name="search" color={text} type="feather" />
           <TextInput
             style={{
               borderRadius: 40,
+              color: text,
               fontFamily: 'Inter Regular',
               fontSize: 16,
               flex: 1,
               paddingVertical: 5,
               paddingHorizontal: 15
             }}
+            placeholderTextColor={muted}
             placeholder="Pesquisar produto"
           />
         </View>

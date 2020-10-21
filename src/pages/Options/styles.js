@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 
+import ThemeContext from '../../context/ThemeContext';
+
 export const Container = ({ children }) => {
+  const { background } = useContext(ThemeContext);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
+      <ScrollView style={{ flex: 1, backgroundColor: background }}>
         { children }
       </ScrollView>
     </SafeAreaView>

@@ -4,12 +4,15 @@ import { Divider } from 'react-native-paper';
 import styled from 'styled-components';
 
 import BasketContext from '../../../context/BasketContext';
+import ThemeContext from '../../../context/ThemeContext';
+
 
 const Text = styled.Text`
   font-family: Inter Regular;
 `;
 
 const Section = ({ product }) => {
+  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
   const { decreaseItem, products, setProducts } = useContext(BasketContext);
   const [deleteTouch, setDeleteTouch] = useState(false);
 
@@ -56,7 +59,7 @@ const Section = ({ product }) => {
   return (
     <Animated.View
       style={{
-        backgroundColor: '#f2f2f2',
+        backgroundColor: surface,
         borderRadius: 8,
         marginTop: 15,
         padding: 15,
@@ -76,19 +79,19 @@ const Section = ({ product }) => {
           <TouchableOpacity onPress={dismissModal} style={{ flex: 1 }} />
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity onPress={dismissModal} style={{ flex: 1 }} />
-            <View style={{ flexDirection: 'row', padding: 10, backgroundColor: 'white', minWidth: '80%' }}>
+            <View style={{ flexDirection: 'row', padding: 10, backgroundColor: surface, minWidth: '80%' }}>
               <TouchableOpacity
                 disabled={quantity === 1}
                 onPress={() => setQuantity(quantity - 1)}
-                style={{ height: 60, width: 60, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ddd' }}
+                style={{ height: 60, width: 60, alignItems: 'center', justifyContent: 'center', backgroundColor: soft }}
               >
-                <Text>-</Text>
+                <Text style={{ color: text }}>-</Text>
               </TouchableOpacity>
-              <Text style={{ fontFamily: 'Inter Regular', textAlign: 'center', textAlignVertical: 'center', height: 60, flex: 1, backgroundColor: '#f2f2f2' }}>
+              <Text style={{ color: text, fontFamily: 'Inter Regular', textAlign: 'center', textAlignVertical: 'center', height: 60, flex: 1, backgroundColor: soft }}>
                 { quantity }
               </Text>
-              <TouchableOpacity onPress={() => setQuantity(quantity + 1)} style={{ height: 60, width: 60, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ddd' }}>
-                <Text>+</Text>
+              <TouchableOpacity onPress={() => setQuantity(quantity + 1)} style={{ height: 60, width: 60, alignItems: 'center', justifyContent: 'center', backgroundColor: soft }}>
+                <Text style={{ color: text }}>+</Text>
               </TouchableOpacity>
             </View>
             <TouchableOpacity onPress={dismissModal} style={{ flex: 1 }} />
@@ -97,15 +100,15 @@ const Section = ({ product }) => {
         </View>
       </Modal>
 
-      <View style={{ flexDirection: 'row', }}>
+      <View style={{ flexDirection: 'row', backgroundColor: surface }}>
         <Image
           source={{ uri: product.image }}
           style={{ height: 50, width: 50, borderRadius: 10 }}
         />
         <TouchableOpacity disabled onPress={() => setQuantityModal(true)} style={{ flexDirection: 'column', marginLeft: 15, flex: 1 }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
-            <Text numberOfLines={1} style={{ fontSize: 19, flex: 1, fontFamily: 'Inter Bold' }}>{ product.quantity}x { product.name }</Text>
-            <Text style={{ flex: 1, fontSize: 17, textAlign: 'right' }}>
+            <Text numberOfLines={1} style={{ color: text, fontSize: 19, flex: 1, fontFamily: 'Inter Bold' }}>{ product.quantity}x { product.name }</Text>
+            <Text style={{ color: text, flex: 1, fontSize: 17, textAlign: 'right' }}>
               R$ { product.price.toFixed(2).toString().replace('.', ',') }
             </Text>
           </View>
@@ -113,7 +116,7 @@ const Section = ({ product }) => {
 
           {
             !product.options[0] ? (
-              <Text style={{ color: '#666' }}>
+              <Text style={{ color: muted }}>
                 Nenhum adicional
               </Text>
             ) : (
@@ -124,9 +127,9 @@ const Section = ({ product }) => {
                       key={Math.random() * Math.random()}
                       style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1, }}
                     >
-                      <Text>{ option.name }</Text>
+                      <Text style={{ color: text }}>{ option.name }</Text>
 
-                      <Text>
+                      <Text style={{ color: text }}>
                         {
                           option.price ? (
                             `R$ ${ option.price ? option.price.toFixed(2).toString().replace('.', ',') : '' }`
@@ -155,7 +158,7 @@ const Section = ({ product }) => {
             { deleteTouch ? 'CLIQUE PARA CONFIRMAR' : 'REMOVER' }
           </Text>
         </TouchableOpacity>
-        <Text style={{ flex: 1, fontSize: 17, textAlign: 'right' }}>
+        <Text style={{ color: text, flex: 1, fontSize: 17, textAlign: 'right' }}>
           R$ { price.toFixed(2).toString().replace('.', ',') }
         </Text>
       </View>

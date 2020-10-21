@@ -11,32 +11,32 @@ const capitalizeFirstLetter = (str) => {
 }
 
 const HistoryItem = ({ order }) => {
-  const { main } = useContext(ThemeContext);
+  const { mode, main, muted, soft, surface, text } = useContext(ThemeContext);
   
   const { createdAt, paymentMethod, products } = order;
   const { street, number } = JSON.parse(order.andress);
 
   return (
-    <View style={{ backgroundColor: 'white', marginTop: 20, borderRadius: 10, padding: 20 }}>
-      <Text style={{ fontFamily: 'Inter Bold', fontSize: 20, color: '#333' }}>Detalhes do pedido</Text>
-      <Text style={{ fontFamily: 'Inter Regular', fontSize: 16, color: '#666' }}>
+    <View style={{ backgroundColor: surface, marginTop: 20, borderRadius: 10, padding: 20 }}>
+      <Text style={{ fontFamily: 'Inter Bold', fontSize: 20, color: text }}>Detalhes do pedido</Text>
+      <Text style={{ fontFamily: 'Inter Regular', fontSize: 16, color: muted }}>
         { capitalizeFirstLetter( formatRelative(parseInt(createdAt), new Date(), { locale: ptBR }) ) }
       </Text>
       
       <View style={{ marginVertical: 10 }}>
-        <Text style={{ fontFamily: 'Inter Regular',  fontSize: 12, color: '#666' }}>{ `${street} - ${number}` }</Text>
-        <Text style={{ fontFamily: 'Inter Regular', fontSize: 12, color: '#666' }}>{ paymentMethod }</Text>
+        <Text style={{ fontFamily: 'Inter Regular',  fontSize: 12, color: muted }}>{ `${street} - ${number}` }</Text>
+        <Text style={{ fontFamily: 'Inter Regular', fontSize: 12, color: muted }}>{ paymentMethod }</Text>
       </View>
       
       <View style={{ marginTop: 15 }}>
         <Text style={{ marginBottom: 15, color: main, fontFamily: 'Inter Medium', textTransform: 'uppercase' }}>Itens pedidos</Text>
         {
           products.map(({ quantity, observation, productName, price, finalPrice }, index, array) => (
-            <View key={Math.random()} style={{ borderBottomColor: '#ccc', borderBottomWidth: index === array.length - 1 ? 0 : 0.5, paddingVertical: 7 }}>
+            <View key={Math.random()} style={{ borderBottomColor: soft, borderBottomWidth: index === array.length - 1 ? 0 : 0.5, paddingVertical: 7 }}>
               <View style={{ flexDirection: 'row' }}>
                 <Text style={{ fontSize: 17, fontFamily: 'Inter Medium', color: main }}>{ quantity } x</Text>
-                <Text numberOfLines={1} style={{ fontSize: 17, fontFamily: 'Inter Medium', marginHorizontal: 10, flex: 1 }}>{ productName }</Text>
-                <Text style={{ fontSize: 17, fontFamily: 'Inter Medium' }}>R$ { parseFloat(price * quantity).toFixed(2).replace('.', ',') }</Text>
+                <Text numberOfLines={1} style={{ color: text, fontSize: 17, fontFamily: 'Inter Medium', marginHorizontal: 10, flex: 1 }}>{ productName }</Text>
+                <Text style={{ color: text, fontSize: 17, fontFamily: 'Inter Medium' }}>R$ { parseFloat(price * quantity).toFixed(2).replace('.', ',') }</Text>
               </View>
 
               {/* Options */}
@@ -44,8 +44,8 @@ const HistoryItem = ({ order }) => {
                 observation?.map(({ item, price: itemPrice }, index, array) => (
                   <View key={Math.random()} style={{ marginLeft: 35 }}>
                     <View style={{ flexDirection: 'row' }}>
-                      <Text numberOfLines={1} style={{ color: '#666', fontFamily: 'Inter Regular', flex: 1, marginRight: 10 }}>{ item }</Text>
-                      <Text style={{ color: '#666', fontFamily: 'Inter Regular' }}>R$  { parseFloat(itemPrice * quantity).toFixed(2).replace('.', ',') }</Text>
+                      <Text numberOfLines={1} style={{ color: muted, fontFamily: 'Inter Regular', flex: 1, marginRight: 10 }}>{ item }</Text>
+                      <Text style={{ color: muted, fontFamily: 'Inter Regular' }}>R$  { parseFloat(itemPrice * quantity).toFixed(2).replace('.', ',') }</Text>
                     </View>
                   </View>
                 ))
@@ -63,8 +63,8 @@ const HistoryItem = ({ order }) => {
         }
 
         <View style={{ marginTop: 15, flexDirection: 'row' }}>
-          <Text style={{ flex: 1, fontSize: 17, fontFamily: 'Inter Medium' }}>Total</Text>
-          <Text style={{ fontSize: 17, fontFamily: 'Inter Medium' }}>
+          <Text style={{ color: text, flex: 1, fontSize: 17, fontFamily: 'Inter Medium' }}>Total</Text>
+          <Text style={{ color: text, fontSize: 17, fontFamily: 'Inter Medium' }}>
             {
               'R$ ' + products.reduce((total, { finalPrice }) => total += parseFloat(finalPrice), 0).toFixed(2).toString().replace('.', ',')
             }  
@@ -75,9 +75,9 @@ const HistoryItem = ({ order }) => {
         
       <TouchableOpacity
         activeOpacity={0.6}
-        style={{ backgroundColor: main.lighten(0.9), borderRadius: 10, marginTop: 15, justifyContent: 'center', alignItems: 'center', height: 60 }}
+        style={{ backgroundColor: mode === 'light' ? main.lighten(0.9) : main, borderRadius: 10, marginTop: 15, justifyContent: 'center', alignItems: 'center', height: 60 }}
       >
-        <Text style={{ color: main, fontFamily: 'Inter Medium', fontSize: 16 }}>
+        <Text style={{ color: mode === 'light' ? main : text.negate(), fontFamily: 'Inter Medium', fontSize: 16 }}>
           Pedir novamente
         </Text>
       </TouchableOpacity>

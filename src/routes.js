@@ -8,8 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-// Temp data
-import data from './data';
+import ThemeContext from './context/ThemeContext';
 
 // Pages
 import Home from './pages/Home';
@@ -37,7 +36,8 @@ const Tabs = createBottomTabNavigator();
 
 // Main route
 const Routes = () => {
-  const { user, isUserLogged } = useContext(AuthContext);
+  const { background, surface } = useContext(ThemeContext);
+  const { isUserLogged } = useContext(AuthContext);
 
   if (!isUserLogged) {
     return (
@@ -53,7 +53,7 @@ const Routes = () => {
 
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator screenOptions={{ headerStyle: { elevation: 0 } }}>
+      <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: background, elevation: 0 } }}>
 
         <Stack.Screen name="Home" component={BottomTabs} options={{ headerShown: false }} />
 
@@ -66,10 +66,10 @@ const Routes = () => {
             headerLeft: () => (
               <Icon
                 onPress={() => navigation.goBack()}
-                containerStyle={{ elevation: 10, marginLeft: 20, backgroundColor: 'white', padding: 5, borderRadius: 100 }}
+                containerStyle={{ elevation: 10, marginLeft: 20, backgroundColor: surface, padding: 5, borderRadius: 100 }}
                 name="arrow-left"
                 type="material-community"
-                color="black"
+                color={surface.negate()}
               />
             )
           })}
@@ -79,7 +79,7 @@ const Routes = () => {
           name="Product"
           component={Product}
           options={{
-            headerTintColor: 'white',
+            headerTintColor: surface,
             headerTitle: '',
             headerTransparent: true
           }}
@@ -89,7 +89,7 @@ const Routes = () => {
           name="AndressSelector"
           component={AndressSelector}
           options={{
-            headerTintColor: 'black',
+            headerTintColor: surface.negate(),
             headerTitle: '',
           }}
         />
@@ -100,14 +100,17 @@ const Routes = () => {
 }
 
 const BottomTabs = () => {
+  const { main, muted, surface } = useContext(ThemeContext);
+
   return (
     <Tabs.Navigator
       tabBarOptions={{
         showLabel: false,
-        inactiveTintColor: '#666',
+        inactiveTintColor: muted,
+        activeTintColor: main,
         style: {
           position: 'absolute',
-          backgroundColor: '#FFFFFF',
+          backgroundColor: surface,
           elevation: 0,
           height: 60,
           borderTopStartRadius: 20,

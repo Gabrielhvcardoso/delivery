@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { Container } from './styles';
 
 import AuthContext from '../../context/AuthContext';
+import ThemeContext from '../../context/ThemeContext';
 
 const Text = styled.Text`
   font-family: Inter Regular;
@@ -28,10 +29,11 @@ function getFirstLetters (str) {
 
 const Options = ({ navigation }) => {
   const { setUserStatus, user } = useContext(AuthContext);
+  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
 
   return (
-    <Container>
-      <View style={{ marginTop: 40, backgroundColor: 'white', margin: 15, borderRadius: 10, padding: 20, flexDirection: 'row', alignItems: 'center' }}>
+    <Container style={{ backgroundColor: background }}>
+      <View style={{ marginTop: 40, backgroundColor: surface, margin: 15, borderRadius: 10, padding: 20, flexDirection: 'row', alignItems: 'center' }}>
         {
           user.image ? (
             <Avatar.Image source={{ uri: user.image }} />
@@ -41,6 +43,7 @@ const Options = ({ navigation }) => {
         }
         <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ marginLeft: 25 }}>
           <Text style={{
+            color: text,
             fontSize: 18  
           }}>
             { user.name }
@@ -49,45 +52,55 @@ const Options = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ backgroundColor: 'white', margin: 15, borderRadius: 10 }}>
+      <View style={{ backgroundColor: surface, margin: 15, borderRadius: 10 }}>
         <List.Item
           style={{ fontFamily: 'Inter Regular' }}
+          titleStyle={{ color: text }}
+          descriptionStyle={{ color: 'grey' }}
           title="Gerenciar endereços"
           description="Adicione e remova endereços de entrega"
           onPress={() => navigation.navigate('AndressManager')}
-          left={props => (
-            <List.Icon {...props} icon="map-marker-outline" />
+          left={() => (
+            <List.Icon color={text} icon="map-marker-outline" />
           )}
         />
         <List.Item
           title="Favoritos"
+          titleStyle={{ color: text }}
+          descriptionStyle={{ color: 'grey' }}
           description="Meus pratos favoritos"
           onPress={() => navigation.navigate('Favorites')}
-          left={props => (
-            <List.Icon {...props} icon="heart-multiple-outline" />
+          left={() => (
+            <List.Icon color={text} icon="heart-multiple-outline" />
           )}
         />
         <List.Item
           title="Termos de uso"
+          titleStyle={{ color: text }}
+          descriptionStyle={{ color: 'grey' }}
           description="Política de privacidade"
           onPress={() => navigation.navigate('Agreement')}
-          left={props => (
-            <List.Icon {...props} icon="file-document-outline" />
+          left={() => (
+            <List.Icon color={text} icon="file-document-outline" />
           )}
         />
 
         <List.Item
           title="Sair"
+          titleStyle={{ color: text }}
+          descriptionStyle={{ color: 'grey' }}
           onPress={() => setUserStatus(false)}
-          left={props => (
-            <List.Icon {...props} icon="exit-to-app" />
+          left={() => (
+            <List.Icon color={text} icon="exit-to-app" />
           )}
         />
         <List.Item
           title="Ajuda"
+          titleStyle={{ color: text }}
+          descriptionStyle={{ color: 'grey' }}
           onPress={() => navigation.navigate('Help')}
-          left={props => (
-            <List.Icon {...props} icon="information-outline" />
+          left={() => (
+            <List.Icon color={text} icon="information-outline" />
           )}
         />
       </View>

@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
+import ThemeContext from '../../../context/ThemeContext';
+
 export const Header = ({ required, unique, title }) => {
+  const { mode, background, main, soft, surface, text } = useContext(ThemeContext);
+
   return (
-    <HeaderContainer>
-      <HeaderText>
+    <HeaderContainer style={{ backgroundColor: mode === 'light' ? surface : soft }}>
+      <HeaderText style={{ color: text }}>
         { title }
       </HeaderText>
       <View style={{ flexDirection: 'row' }}>
         {
           unique ? (
-          <HeaderBadge>
+          <HeaderBadge style={{ backgroundColor: text, color: text.negate() }}>
             Único
           </HeaderBadge>
           ) : <></>
         }
 
         { required ? (
-          <HeaderBadge>
+          <HeaderBadge style={{ backgroundColor: text, color: text.negate() }}>
             Obrigatório
           </HeaderBadge>
         ) : <></> }
@@ -29,7 +33,6 @@ export const Header = ({ required, unique, title }) => {
 
 const HeaderContainer = styled.View`
   align-items: center;
-  background-color: #f2f2f2;
   flex-direction: row;
   height: 50px;
   justify-content: space-between;
@@ -38,7 +41,6 @@ const HeaderContainer = styled.View`
 `;
 
 const HeaderText = styled.Text`
-  color: #333;
   font-size: 16px;
   font-family: Inter Bold;
 `;

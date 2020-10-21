@@ -12,7 +12,11 @@ import FavoriteContext from '../../context/FavoriteContext';
 import { ProductContextProvider } from './context';
 import { Title, Subtitle } from './styles';
 
+import ThemeContext from '../../context/ThemeContext';
+
 const Product = ({ navigation, route }) => {
+  const { mode, background, main, muted, soft, surface, text } = useContext(ThemeContext);
+
   const { addFavorite, removeFavorite, verifyFavorite } = useContext(FavoriteContext);
   const { showBasket } = useContext(BasketContext);
   const { product } = route.params;
@@ -36,15 +40,24 @@ const Product = ({ navigation, route }) => {
         <View style={{ flexDirection: 'row', marginBottom: 20 }}>
           <Button
             onPress={showBasket}
-            style={{ marginRight: 5, flex: 1 }}
+            style={{
+              marginRight: 5,
+              flex: 1,
+            }}
+            labelStyle={{ color: main }}
             mode="outlined"
-            icon="cart-outline"
+            icon="basket"
           >
-            carrinho
+            ver sacola
           </Button>
           <Button
             onPress={handleFavorite}
-            style={{ marginLeft: 5, flex: 1 }}
+            style={{
+              marginLeft: 5,
+              flex: 1,
+              backgroundColor: isFavorite ? mode === 'light' ? main.lighten(0.9) : main : background,
+            }}
+            labelStyle={{ color: isFavorite ? mode === 'light' ? main : text.negate() : main }}
             mode={isFavorite ? "contained" : "outlined"}
             icon={isFavorite ? "heart" : "heart-outline"}
           >
@@ -53,8 +66,8 @@ const Product = ({ navigation, route }) => {
         </View>
         
 
-        <Title numberOfLines={2}>{ product.name }</Title>
-        <Subtitle>{ product.details }</Subtitle>
+        <Title style={{ color: text }} numberOfLines={2}>{ product.name }</Title>
+        <Subtitle style={{ color: muted }}>{ product.details }</Subtitle>
         <OptionList options={product.options} />
         <Footer product={product} />
 

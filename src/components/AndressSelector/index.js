@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, StatusBar, View } from 'react-native';
 import { TextInput } from './styles';
 
 import cep from 'cep-promise';
 import { Button } from 'react-native-paper';
+
+import ThemeContext from '../../context/ThemeContext';
 
 export const cepMask = (value) => {
   return value
@@ -14,6 +16,8 @@ export const cepMask = (value) => {
 }
 
 const AndressSelector = ({ navigation, route }) => {
+  const { mode, background, main, muted, soft, surface, text} = useContext(ThemeContext);
+
   const [isLoading, setIsLoading] = useState(false);
   const [andress, setAndress] = useState({ name: '', cep: '', state: '', city: '', street: '', neighborhood: '', number: '', observation: '' });
   const onChange = (field, value) => field === 'cep' ? setAndress({ ...andress, [field]: cepMask(value) }) : setAndress({ ...andress, [field]: value });
@@ -30,13 +34,13 @@ const AndressSelector = ({ navigation, route }) => {
   }, [andress.cep]);
 
   if (isLoading) return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: background }}>
       <ActivityIndicator color="black" />
     </View>
   );
 
   return (
-    <View style={{ flex: 1, padding: 15, backgroundColor: 'white' }}>
+    <View style={{ flex: 1, padding: 15, backgroundColor: background }}>
       <StatusBar barStyle="dark-content" />
 
       {
@@ -51,6 +55,7 @@ const AndressSelector = ({ navigation, route }) => {
           { field: 'state', label: 'Estado*' },
         ].map(item => (
           <TextInput
+            style={{ backgroundColor: surface }}
             key={item.field}
             placeholder={item.label}
             value={andress[item.field]}
@@ -77,6 +82,8 @@ const AndressSelector = ({ navigation, route }) => {
             setIsLoading(false);
           });
         }}
+        style={{ backgroundColor: mode === 'light' ? main.lighten(0.9) : main  }}
+        labelStyle={{ color: mode === 'light' ? main : text }}
         contentStyle={{ height: 60 }}
       >Salvar</Button>
     </View>

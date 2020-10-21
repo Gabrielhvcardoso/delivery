@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, View, Text, TouchableOpacity } from 'react-native';
+import { FlatList } from 'react-native';
 
 import { useFetch } from '../../../hooks/useFetch';
 import { useToken } from '../../../hooks/useToken';
@@ -7,7 +7,11 @@ import { useToken } from '../../../hooks/useToken';
 import FavoriteContext from '../../../context/FavoriteContext';
 import Product from '../../Category/Product';
 
+import ThemeContext from '../../../context/ThemeContext';
+
 const Favorites = ({ navigation }) => {
+  const { background } = useContext(ThemeContext);
+
   const { verifyFavorite } = useContext(FavoriteContext);
   const [products, setProducts] = useState([]);
 
@@ -31,7 +35,7 @@ const Favorites = ({ navigation }) => {
   return (
     <FlatList
       data={products}
-      style={{ flex: 1, backgroundColor: '#fff' }}
+      style={{ flex: 1, backgroundColor: background }}
       contentContainerStyle={{ padding: 15 }}
       keyExtractor={item => item.productId.toString()}
       renderItem={({ item }) => {

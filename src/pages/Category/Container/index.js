@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Animated, Dimensions } from 'react-native';
+import ThemeContext from '../../../context/ThemeContext';
 
 export const Container = ({ children, image }) => {
+  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
+
   const headerMaxHeight = 250;
   const headerMinHeight = 100;
   const scrollYAnimatedValue = new Animated.Value(0);
@@ -21,7 +24,7 @@ export const Container = ({ children, image }) => {
         scrollEventThrottle={100}
         style={{ 
           marginTop: headerHeight,
-          backgroundColor: 'white',
+          backgroundColor: background,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           flex: 1,

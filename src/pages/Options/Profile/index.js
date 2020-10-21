@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Avatar, Button, Dialog, Menu, Portal, TextInput } from 'react-native-paper';
+import { Avatar, Button, Dialog, Menu, Portal, TextInput, DefaultTheme } from 'react-native-paper';
 import styled from 'styled-components';
 
 import AuthContext from '../../../context/AuthContext';
+import ThemeContext from '../../../context/ThemeContext';
 
 import { useFetch } from '../../../hooks/useFetch';
 import { useCamera } from '../../../hooks/useCamera';
@@ -12,6 +13,15 @@ import { useLibrary } from '../../../hooks/useLibrary';
 const Text = styled.Text`
   font-family: Inter Regular;
 `;
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'orange',
+    text: 'orange'
+  }
+}
 
 function getFirstLetters (str) {
   if (!str) {
@@ -30,6 +40,7 @@ function getFirstLetters (str) {
 
 const Profile = () => {
   const { user, setUser } = useContext(AuthContext);
+  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
 
   const [isDialogActive, setIsDialogActive] = useState(false);
   const [name, setName] = useState(user.name);
@@ -96,20 +107,20 @@ const Profile = () => {
 
 
   return (
-    <View style={{ flex: 1, paddingTop: 60 }}>
+    <View style={{ flex: 1, paddingTop: 60, backgroundColor: background }}>
       <Portal>
         <Dialog visible={isDialogActive} onDismiss={() => setIsDialogActive(false)}>
-          <Dialog.Content>
-            <Text style={{ marginBottom: 10, marginLeft: 10, fontSize: 12, color: '#666', textTransform: 'uppercase' }}>Mudar imagem de perfil</Text>
-            <Menu.Item icon="camera" onPress={handleCamera} title="Câmera" />
-            <Menu.Item icon="image" onPress={handleLibrary} title="Biblioteca" />
+          <Dialog.Content style={{ backgroundColor: surface }}>
+            <Text style={{ marginBottom: 10, marginLeft: 10, fontSize: 12, color: muted, textTransform: 'uppercase' }}>Mudar imagem de perfil</Text>
+            <Menu.Item titleStyle={{ color: text }} icon="camera" onPress={handleCamera} title="Câmera" />
+            <Menu.Item titleStyle={{ color: text }} icon="image" onPress={handleLibrary} title="Biblioteca" />
           </Dialog.Content>
         </Dialog>
       </Portal>
 
 
       <View style={{ alignItems: 'center', height: 120 }} />
-      <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 15, paddingBottom: 15 }}>
+      <View style={{ flex: 1, backgroundColor: surface, paddingHorizontal: 15, paddingBottom: 15 }}>
         <View>
           {
             user.image ? (
@@ -128,11 +139,24 @@ const Profile = () => {
             label="Nome"
             placeholder="Ex.: Geovana Lima"
             mode="outlined"
-            style={{ fontSize: 20 }}
+            selectionColor={main}
+            style={{ fontSize: 20, backgroundColor: surface, color: text }}
+            theme={{
+              colors: {
+                primary: main.hex(),
+                text: text.hex(),
+                placeholder: text.hex()
+              }}}
           />
         </View>
         <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-          <Button mode="contained" size={"small"} contentStyle={{ height: 60 }}>
+          <Button
+            style={{ backgroundColor: main }}
+            labelStyle={{ color: text.negate() }}
+            mode="contained"
+            size={"small"}
+            contentStyle={{ height: 60 }}
+          >
             Salvar alterações
           </Button>
         </View>

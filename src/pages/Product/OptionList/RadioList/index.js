@@ -1,15 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
 import ProductContext from '../../context';
+import ThemeContext from '../../../../context/ThemeContext';
 
 const RadioList = ({ options }) => {
+  const { mode, main, surface, text } = useContext(ThemeContext);
+
   const [selected, setSelected] = useState(null);
   const { replaceOption, increaseOption, decreaseOption } = useContext(ProductContext);
 
   const OptionContainer = styled.TouchableOpacity`
-    background-color: ${props => selected === props.id ? '#fafafa' : 'white'}
+    background-color: ${props => selected === props.id ? mode === 'light' ? main.lighten(0.9) : main.darken(0.6) : surface}
     align-items: center;
     flex-direction: row;
     height: 70px;
@@ -19,7 +22,7 @@ const RadioList = ({ options }) => {
 
   const OptionText = styled.Text`
     font-family: ${props => selected === props.id ? 'Inter Bold' : 'Inter Regular'}
-    color: ${props => selected === props.id ? '#0088ff' : 'black'};
+    color: ${props => selected === props.id ? mode === 'light' ? main : main : text};
   `;
 
   const alterSelected = (id) => {
