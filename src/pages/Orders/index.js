@@ -75,16 +75,33 @@ const Orders = ({ navigation }) => {
           orders[0] ? (
             <View>
               {
+                !orders.filter(item => item.status !== 0)[0] && orders.filter(item => item.status === 0)[0]
+                  ? (
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
+                      <BasketSvg width={150} height={150} />
+                      <Text style={{ fontSize: 20 }}>Nenhum pedido</Text>
+                      <Text style={{ marginHorizontal: 15, textAlign: 'center' }}>Explore os produtos e promoções ou peça novamente algo do seu histórico.</Text>
+                    </View>
+                  ) : <></>
+
+              }
+
+              {
                 orders
                   .filter(item => item.status !== 0)
                   .sort((a, b) => parseInt(a.createdAt) > parseInt(b.createdAt) ? -1 : 1)
                   .map(order => <OrderItem key={order.identifier} order={order} />)
               }
               
-              <View style={{ marginTop: 40, marginBottom: 20 }}>
-                <Divider style={{ transform: [{ translateY: 15 }] }} />
-                <Text style={{ color: muted, backgroundColor: background, paddingHorizontal: 10, fontFamily: 'Inter Medium', alignSelf: 'center', fontSize: 17 }}>Pedidos antigos</Text>
-              </View>
+              {
+                orders
+                  .filter(item => item.status === 0)[0] ? (
+                    <View style={{ marginTop: 40, marginBottom: 20 }}>
+                      <Divider style={{ transform: [{ translateY: 15 }] }} />
+                      <Text style={{ color: muted, backgroundColor: background, paddingHorizontal: 10, fontFamily: 'Inter Medium', alignSelf: 'center', fontSize: 17 }}>Pedidos antigos</Text>
+                    </View>
+                  ) : <></>
+              }
 
               {
                 orders

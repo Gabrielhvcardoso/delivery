@@ -1,15 +1,33 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, ToastAndroid, TouchableOpacity, View, Clipboard } from 'react-native';
 import { format, addHours, formatDistanceToNow } from 'date-fns';
+
+// 
+// Waiting expo support for Async Clipboard API
+// See the link below:
+//    https://expo.canny.io/feature-requests/p/async-clipboard-api
+// 
+// import Clipboard from '@react-native-community/clipboard';
+// 
 
 import ThemeContext from '../../../context/ThemeContext';
 import { ptBR } from 'date-fns/locale';
 
 const OrderItem = ({ order }) => {
-  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
+  const { main, muted, soft, surface, text } = useContext(ThemeContext);
 
-  const { createdAt, paymentMethod, products, status } = order;
+  const { createdAt, paymentMethod, products, status, identifier } = order;
   const { street, number } = JSON.parse(order.andress);
+
+  const onCopyCodeToClipboard = (code) => {
+    Clipboard.setString(code);
+
+    ToastAndroid.showWithGravity(
+      "Copiado para área de transferência",
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
+  }
 
   return (
     <View style={{ backgroundColor: surface, marginTop: 20, borderRadius: 10, overflow: 'hidden' }}>
@@ -25,7 +43,7 @@ const OrderItem = ({ order }) => {
 
         <View style={{ marginVertical: 10 }}>
           <Text style={{ fontSize: 12, color: muted, fontFamily: 'Inter Regular' }}>{ `${street} - ${number}` }</Text>  
-          <Text style={{ fontSize: 12, color: muted }}>{ formatDistanceToNow(parseInt(createdAt), { locale: ptBR }) } - { paymentMethod }</Text>
+          <Text style={{ fontSize: 12, color: muted }}>Há { formatDistanceToNow(parseInt(createdAt), { locale: ptBR }) } - { paymentMethod }</Text>
         </View>
 
       </View>
@@ -108,12 +126,32 @@ const OrderItem = ({ order }) => {
             }  
           </Text>      
         </View>
+
+        <View style={{ marginTop: 20 }}>
+          <Text style={{ fontSize: 12, color: muted, fontFamily: 'Inter Regular' }}>O código único do seu pedido é:</Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onLongPress={() => onCopyCodeToClipboard(identifier)}
+            style={{ ...styles.codeContainer, backgroundColor: soft.lighten(0.1) }}
+          >
+            <Text style={{ color: muted, fontFamily: 'Inter Medium', fontSize: 17 }}>
+              { identifier }
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  codeContainer: {
+    marginTop: 10,
+    borderRadius: 8,
+    padding: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   verticalLine: {
     backgroundColor: '#555',
     width: 2,
