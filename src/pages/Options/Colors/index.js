@@ -1,16 +1,18 @@
 import React, { useContext } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Icon } from 'react-native-elements';
 
 import ThemeContext from '../../../context/ThemeContext';
 
 const Colors = () => {
-  const { background, muted, surface, soft, text, setThemeVariant, setMainColor } = useContext(ThemeContext);
+  const { mode, background, main, muted, surface, soft, text, setThemeVariant, setMainColor } = useContext(ThemeContext);
 
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: background }}
       contentContainerStyle={{ padding: 20 }}
     >
+      <StatusBar barStyle={mode === "light" ? "dark-content" : "light-content"} />
       <View style={{ backgroundColor: surface, borderRadius: 10, padding: 15 }}>
       <Text style={{ ...styles.heading, color: text }}>Tema do aplicativo</Text>
       <View style={{ flexDirection: 'row', marginHorizontal: -3, marginBottom: 15 }}>
@@ -21,11 +23,11 @@ const Colors = () => {
           ].map(({ variant, title, color }) => (
             <TouchableOpacity
               onPress={() => setThemeVariant(variant)}
-              style={{ ...styles.selector, backgroundColor: soft, flexDirection: 'row' }}
+              style={{ ...styles.selector, backgroundColor: mode === variant ? main : soft, flexDirection: 'row' }}
               key={Math.random()}
             >
               <View style={{ ...styles.circle, backgroundColor: color }} />
-              <Text style={{ color: text, marginLeft: 10, fontFamily: 'Inter Medium' }}>{ title }</Text>
+              <Text style={{ color: mode === variant ? 'white' : text, marginLeft: 10, fontFamily: 'Inter Medium' }}>{ title }</Text>
             </TouchableOpacity>
           ))
         }
@@ -39,20 +41,27 @@ const Colors = () => {
               { color: '#0088FF', title: 'Azul' },
               { color: '#008000', title: 'Verde' },
               { color: '#FFCC00', title: 'Amarelo' },
-              { color: '#ff7700', title: 'Laranja' },
+              { color: '#FF7700', title: 'Laranja' },
               { color: '#FF0044', title: 'Vermelho' }
             ].map(({ color, title }) => (
               <TouchableOpacity
                 onPress={() => setMainColor(color)}
                 key={Math.random()}
-                style={{ ...styles.selector, backgroundColor: soft }}
+                style={{ ...styles.selector, backgroundColor: main.hex() === color ? main : soft }}
               >
-                <View style={{ ...styles.circle, backgroundColor: color }} />
-                <Text style={{ ...styles.label, color: muted }}>{ title }</Text>
+                <View style={{ ...styles.circle, backgroundColor: color, borderColor: 'white', borderWidth: main.hex() === color ? 1 : 0 }} />
+                <Text style={{ ...styles.label, color: main.hex() === color ? 'white' : muted }}>{ title }</Text>
               </TouchableOpacity>
             ))
           }          
         </View>
+      </View>
+
+      <View style={{ marginHorizontal: 10, flexDirection: 'row', alignItems: 'center' }}>
+        <Icon name="info-outline" size={14} color={muted} />
+        <Text style={{ ...styles.label, marginLeft: 5, color: muted }}>
+          Esta página não estará disponível na versão final do aplicativo, apenas no aplicativo de apresentação.
+        </Text>
       </View>
     </ScrollView>
   );
