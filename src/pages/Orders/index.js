@@ -36,10 +36,8 @@ const Orders = ({ navigation }) => {
     });
   }
 
-  console.log(orders)
-
   useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', () => {
+    const unsubscribe = navigation.addListener('focus', () => {
       useFetch.post('/p/order', {
         userId: user.userId
       }, (response) => {
@@ -50,7 +48,7 @@ const Orders = ({ navigation }) => {
     });
     
     return unsubscribe;
-  }, []);
+  }, [navigation]);
 
   if (isLoading) {
     return (
