@@ -135,7 +135,7 @@ const Basket = () => {
             <ScrollView
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ padding: 20 }}
-              style={{ maxHeight: 500, backgroundColor: surface, borderRadius: 8, width: '90%', paddingBottom: 10 }}
+              style={{ maxHeight: 500, backgroundColor: background, borderRadius: 8, width: '90%', paddingBottom: 10 }}
             >
               <Text style={{ color: text, fontSize: 18, marginBottom: 10 }}>Selecionar um endereço</Text>
               {
@@ -149,7 +149,7 @@ const Basket = () => {
                         setIsAndressModal(false);
                       }}
                       key={Math.random()}
-                      style={{ elevation: 3, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: soft }}
+                      style={{ marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: surface }}
                     >
                       <Text numberOfLines={1} style={{ fontSize: 17 }}>{ name }</Text>
                       <Text numberOfLines={1} style={{ fontSize: 13 }}>{ `${street}, ${number} - ${cep} - ${city}-${state}` }</Text>
@@ -188,9 +188,10 @@ const Basket = () => {
                     }
                   })
                 }}
-                style={{ elevation: 3, marginTop: 10, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: soft }}
+                style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: surface }}
               >
-                <Text numberOfLines={1} style={{ color: muted, fontSize: 17 }}>Adicionar endereço</Text>
+                <Icon name="add" color={muted} />
+                <Text numberOfLines={1} style={{ marginLeft: 10, color: muted, fontSize: 17, fontFamily: 'Inter Medium' }}>Adicionar endereço</Text>
               </TouchableOpacity>
             </ScrollView>
             <TouchableOpacity style={{ flex: 1 }} onPress={dismissModal} />
@@ -286,7 +287,8 @@ const Basket = () => {
                 <Button
                   onPress={() => handleSendOrder(andress.andressId, paymentMethod)}
                   mode="contained"
-                  style={{ backgroundColor: main, marginTop: 20, paddingVertical: 10 }}
+                  contentStyle={{ height: 60 }}
+                  style={{ backgroundColor: main, marginTop: 20 }}
                   labelStyle={{ color: 'white' }}
                 >continuar</Button>
               </>

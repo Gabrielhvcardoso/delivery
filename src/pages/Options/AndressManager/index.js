@@ -65,7 +65,7 @@ const AndressManager = ({ navigation }) => {
         andress
           ? andress[0]
             ? andress.map(item => (
-              <AndressItem removeItem={handleRemoveAndress} key={item.andressId} item={item} />
+              <AndressItem andress={andress} setAndress={setAndress} removeItem={handleRemoveAndress} key={item.andressId} item={item} />
             ))
             : <></>
           : <></>

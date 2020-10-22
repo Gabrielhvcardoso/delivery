@@ -3,13 +3,17 @@ import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
+import AuthContext from '../../../../context/AuthContext';
 import ThemeContext from '../../../../context/ThemeContext';
+
 import { useFetch } from '../../../../hooks/useFetch';
 import { Button, Dialog, Paragraph, Portal } from 'react-native-paper';
 
-const AndressItem = ({ removeItem, item }) => {
+const AndressItem = ({ andress, setAndress, removeItem, item }) => {
   const { mode, background, main, muted, soft, surface, text } = useContext(ThemeContext);
   const { name, number, observation, cep, state, city, neighborhood, street } = JSON.parse(item.andress);
+
+  const { user, setUser } = useContext(AuthContext);
 
   const [isDeleteActive, setIsDeleteActive] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
@@ -21,7 +25,7 @@ const AndressItem = ({ removeItem, item }) => {
 
   const navigation = useNavigation();
 
-  const onGoBack = (data) => {
+  const onGoBack = (data, onEnd) => {
     useFetch.post('/p/u/a/update', {
       andressId: item.andressId,
       andress: JSON.stringify(data)
@@ -29,9 +33,10 @@ const AndressItem = ({ removeItem, item }) => {
       if (response.code === 'error') return alert('Algo de errado aconteceu.');
       
       const newUserAndressArr = andress;
-      newUserAndressArr[andress.findIndex(obj => obj.andressId === item.andressId)] = ({ andressId: item.andressId, andress: data });
+      newUserAndressArr[andress.findIndex(obj => obj.andressId === item.andressId)] = ({ andressId: item.andressId, andress: JSON.stringify(data) });
       setUser({...user, andress: newUserAndressArr });
-    });
+      onEnd(true)
+;    });
   }
 
   const handleEditAndress = () => navigation.navigate('AndressSelector', { andress: item.andress, goBack: onGoBack });

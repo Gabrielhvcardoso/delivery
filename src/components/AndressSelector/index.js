@@ -18,16 +18,18 @@ export const cepMask = (value) => {
 const AndressSelector = ({ navigation, route }) => {
   const { mode, background, main, surface, text} = useContext(ThemeContext);
 
-  const { andress: editAndress } = route.params;
+  const { andressId, andress: editAndress } = route.params;
 
   const [isLoading, setIsLoading] = useState(false);
   const [andress, setAndress] = useState(
-    editAndress ? editAndress : { name: '', cep: '', state: '', city: '', street: '', neighborhood: '', number: '', observation: '' }
+    editAndress ? JSON.parse(editAndress) : { name: '', cep: '', state: '', city: '', street: '', neighborhood: '', number: '', observation: '' }
   );
   const onChange = (field, value) => field === 'cep' ? setAndress({ ...andress, [field]: cepMask(value) }) : setAndress({ ...andress, [field]: value });
 
+    console.log(andress)
+
   useEffect(() => {
-    if (andress.cep.length === 10) {
+    if (andress?.cep?.length === 10) {
       cep(andress.cep.replace(['.', '-'], ''))
         .then((newAndress) => {
           if (newAndress.cep) {
