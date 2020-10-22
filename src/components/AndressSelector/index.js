@@ -16,10 +16,14 @@ export const cepMask = (value) => {
 }
 
 const AndressSelector = ({ navigation, route }) => {
-  const { mode, background, main, muted, soft, surface, text} = useContext(ThemeContext);
+  const { mode, background, main, surface, text} = useContext(ThemeContext);
+
+  const { andress: editAndress } = route.params;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [andress, setAndress] = useState({ name: '', cep: '', state: '', city: '', street: '', neighborhood: '', number: '', observation: '' });
+  const [andress, setAndress] = useState(
+    editAndress ? editAndress : { name: '', cep: '', state: '', city: '', street: '', neighborhood: '', number: '', observation: '' }
+  );
   const onChange = (field, value) => field === 'cep' ? setAndress({ ...andress, [field]: cepMask(value) }) : setAndress({ ...andress, [field]: value });
 
   useEffect(() => {
@@ -35,13 +39,13 @@ const AndressSelector = ({ navigation, route }) => {
 
   if (isLoading) return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: background }}>
-      <ActivityIndicator color="black" />
+      <ActivityIndicator color={main} />
     </View>
   );
 
   return (
     <View style={{ flex: 1, padding: 15, backgroundColor: background }}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle={mode === "light" ? "dark-content" : "light-content"} />
 
       {
         [

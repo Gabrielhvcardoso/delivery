@@ -36,16 +36,16 @@ const Tabs = createBottomTabNavigator();
 
 // Main route
 const Routes = () => {
-  const { background, surface } = useContext(ThemeContext);
+  const { background, surface, text } = useContext(ThemeContext);
   const { isUserLogged } = useContext(AuthContext);
 
   if (!isUserLogged) {
     return (
       <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerTintColor: text, headerStyle: { backgroundColor: surface } }}>
           <Stack.Screen name="Apresentation" component={Apresentation} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-          <Stack.Screen name="Register" component={Register} options={{ headerStyle: { elevation: 0 }, title: 'Cadastro' }} />
+          <Stack.Screen name="Register" component={Register} options={{ title: 'Cadastro' }} />
         </Stack.Navigator>
       </NavigationContainer>
     )

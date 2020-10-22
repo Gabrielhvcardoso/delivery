@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 
+import ThemeContext from '../../../context/ThemeContext';
+
 import AuthContext from '../../../context/AuthContext';
 
 import { useFetch } from '../../../hooks/useFetch';
@@ -11,6 +13,7 @@ const Text = styled.Text`
 `;
 
 const AndressManager = ({ navigation }) => {
+  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const { user, setUser } = useContext(AuthContext);
@@ -24,14 +27,14 @@ const AndressManager = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator />
+      <View style={{ flex: 1, backgroundColor: background, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={main} />
       </View>
     )
   }
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: 'white' }} contentContainerStyle={{ padding: 15 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: background }} contentContainerStyle={{ padding: 15 }}>
       {
         andress ? andress[0] ? andress.map(item => {
           const {
@@ -65,11 +68,11 @@ const AndressManager = ({ navigation }) => {
               })}
               activeOpacity={0.8}
               key={Math.random()}
-              style={{ marginTop: 10, borderRadius: 4, elevation: 3, padding: 15, backgroundColor: 'white' }}
+              style={{ marginTop: 10, borderRadius: 4, elevation: 3, padding: 15, backgroundColor: surface }}
             >
-              <Text numberOfLines={1} style={{ fontSize: 18 }}>{ name }</Text>
-              <Text numberOfLines={1} style={{ fontSize: 14 }}>{ `${street}, ${number} - ${cep} - ${city}-${state}` }</Text>
-              <Text style={{ marginTop: 5, color: 'grey' }}>Editar</Text>
+              <Text numberOfLines={1} style={{ color: text, fontSize: 18 }}>{ name }</Text>
+              <Text numberOfLines={1} style={{ color: text, fontSize: 14 }}>{ `${street}, ${number} - ${cep} - ${city}-${state}` }</Text>
+              <Text style={{ marginTop: 5, color: muted }}>Editar</Text>
             </TouchableOpacity>
           );
         }) : <></> : <></>
@@ -98,9 +101,9 @@ const AndressManager = ({ navigation }) => {
         })}
         activeOpacity={0.8}
         key={Math.random()}
-        style={{ marginTop: 10, borderRadius: 4, elevation: 3, padding: 15, backgroundColor: 'white' }}
+        style={{ marginTop: 10, borderRadius: 4, elevation: 3, padding: 15, backgroundColor: surface }}
       >
-        <Text numberOfLines={1} style={{ fontSize: 18 }}>Adicionar endereço</Text>
+        <Text numberOfLines={1} style={{ color: text, fontSize: 18 }}>Adicionar endereço</Text>
       </TouchableOpacity>
     </ScrollView>
   );

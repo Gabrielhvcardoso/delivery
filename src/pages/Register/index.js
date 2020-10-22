@@ -1,19 +1,16 @@
 import React, { useContext, useState } from 'react';
 import { StatusBar, Text, View } from 'react-native';
-import { Button, Dialog, Portal, DialogContent, TextInput as PaperTextInput, ActivityIndicator } from 'react-native-paper';
+import { Button, Dialog, Portal, ActivityIndicator } from 'react-native-paper';
+import { TextInput } from './styles';
 
-import styled from 'styled-components';
 import { useFetch } from '../../hooks/useFetch';
 import { useToken } from '../../hooks/useToken';
 
 import AuthContext from '../../context/AuthContext';
-
-const TextInput = styled(PaperTextInput)`
-  background-color: white;
-  margin-bottom: 10px;
-`;
+import ThemeContext from '../../context/ThemeContext';
 
 const Register = ({ navigation }) => {
+  const { background, main, surface, text } = useContext(ThemeContext);
   const { setUserStatus } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -88,8 +85,8 @@ const Register = ({ navigation }) => {
     });
 
     return (
-      <View style={{ backgroundColor: 'white', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator color="black" size="small" />
+      <View style={{ backgroundColor: background, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={main} size="small" />
       </View>
     );
   } else {
@@ -99,7 +96,7 @@ const Register = ({ navigation }) => {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white', padding: 15 }}>
+    <View style={{ flex: 1, backgroundColor: background, padding: 15 }}>
       <Portal>
         <Dialog visible={isError} onDismiss={() => setIsError(false)}>
           <Dialog.Content>
@@ -113,13 +110,44 @@ const Register = ({ navigation }) => {
 
       <StatusBar barStyle="dark-content" />
       <View style={{ flex: 1 }}>
-        <TextInput value={name} onChangeText={text => setName(text)} label="Nome" />
-        <TextInput value={email} onChangeText={text => setEmail(text)} label="E-mail" />
-        <TextInput secureTextEntry value={pass} onChangeText={text => setPass(text)} label="Senha" />
-        <TextInput secureTextEntry value={rpass} onChangeText={text => setRpass(text)} label="Repita a senha" />
+        <TextInput
+          style={{ backgroundColor: surface, color: text }}
+          placeholderTextColor={text}
+          value={name}
+          onChangeText={text => setName(text)}
+          placeholder="Nome"
+        />
+        <TextInput
+          style={{ backgroundColor: surface, color: text }}
+          placeholderTextColor={text}
+          value={email}
+          onChangeText={text => setEmail(text)}
+          placeholder="E-mail"
+        />
+        <TextInput
+          style={{ backgroundColor: surface, color: text }}
+          placeholderTextColor={text}
+          secureTextEntry
+          value={pass}
+          onChangeText={text => setPass(text)}
+          placeholder="Senha"
+        />
+        <TextInput
+          style={{ backgroundColor: surface, color: text }}
+          placeholderTextColor={text}
+          secureTextEntry
+          value={rpass}
+          onChangeText={text => setRpass(text)}
+          placeholder="Repita a senha"
+        />
       </View>
 
-      <Button onPress={onRegisterRequest} mode="contained">Cadastrar-se</Button>
+      <Button
+        style={{ backgroundColor: main }}
+        contentStyle={{ height: 60 }}
+        onPress={onRegisterRequest}
+        mode="contained"
+      >Cadastrar-se</Button>
     </View>
   );
 }

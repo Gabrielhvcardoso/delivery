@@ -9,11 +9,13 @@ import { useFetch } from '../../hooks/useFetch';
 import { useToken } from '../../hooks/useToken';
 
 import AuthContext from '../../context/AuthContext';
+import ThemeContext from '../../context/ThemeContext';
 import { Icon } from 'react-native-elements';
 
 let image = 'https://images.unsplash.com/photo-1559329007-40df8a9345d8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1834&q=80';
 
 const Login = ({ navigation }) => {
+  const { mode, background, main, muted, soft, surface, text } = useContext(ThemeContext);
   const { setUserStatus } = useContext(AuthContext);
 
   const [isError, setIsError] = useState(false);
@@ -76,8 +78,8 @@ const Login = ({ navigation }) => {
 
   if (isLoading) {
     return (
-      <View style={{ backgroundColor: '#fff', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <StatusBar barStyle='dark-content' />
+      <View style={{ backgroundColor: background, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <StatusBar barStyle={mode === 'light' ? 'dark-content' : 'light-content'} />
         <ActivityIndicator />
       </View>
     );
@@ -90,7 +92,7 @@ const Login = ({ navigation }) => {
         flex: 1,
         padding: 15,
         justifyContent: 'center',
-        backgroundColor: 'white',
+        backgroundColor: background,
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height + StatusBar.currentHeight
       }}>
@@ -108,10 +110,21 @@ const Login = ({ navigation }) => {
         </Dialog>
       </Portal>
       
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle={mode === 'light' ? "dark-content" : "light-content" } />
 
-      <TextInput value={email} onChangeText={text => setEmail(text)} placeholder="E-mail" />
-      <TextInput secureTextEntry value={password} onChangeText={text => setPassword(text)} placeholder="Senha" />
+      <TextInput
+        style={{ backgroundColor: surface, color: text }}
+        value={email}
+        onChangeText={text => setEmail(text)}
+        placeholder="E-mail"
+      />
+      <TextInput
+        style={{ backgroundColor: surface, color: text }}
+        secureTextEntry
+        value={password}
+        onChangeText={text => setPassword(text)}
+        placeholder="Senha"
+        />
 
       <Button
         onPress={onLoginRequest}
@@ -122,7 +135,7 @@ const Login = ({ navigation }) => {
         }}
         style={{
           marginTop: 10,
-          // backgroundColor: 'white',
+          backgroundColor: main,
           borderRadius: 10
         }}
         mode="contained"
@@ -135,7 +148,7 @@ const Login = ({ navigation }) => {
       <Button
         contentStyle={{ justifyContent: 'flex-start' }}
         onPress={() => navigation.navigate("Register")}
-        labelStyle={{ fontFamily: 'Inter Medium', textTransform: 'none' }}
+        labelStyle={{ color: main, fontFamily: 'Inter Medium', textTransform: 'none' }}
         style={{ marginTop: 15 }} 
       >
         Ainda não tem uma conta? Registre-se
