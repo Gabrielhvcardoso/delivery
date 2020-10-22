@@ -9,13 +9,14 @@ import { useFetch } from '../../hooks/useFetch';
 import BasketSvg from './BasketSvg';
 import OrderItem from './OrderItem';
 import HistoryItem from './HistoryItem';
+import { Divider } from 'react-native-paper';
 
 const Text = styled.Text`
   font-family: Inter Regular;
 `;
 
 const Orders = ({ navigation }) => {
-  const { background, main, text } = useContext(ThemeContext);
+  const { background, main, muted, text } = useContext(ThemeContext);
   const { user } = useContext(AuthContext);
 
   const [orders, setOrders] = useState([]);
@@ -79,8 +80,9 @@ const Orders = ({ navigation }) => {
                 orders.filter(item => item.status !== 0).map(order => <OrderItem key={order.identifier} order={order} />)
               }
               
-              <View style={{ marginTop: 40, marginBottom: 20, alignItems: 'center' }}>
-                <Text style={{ color: text, fontFamily: 'Inter Regular', fontSize: 17 }}>Pedidos antigos</Text>
+              <View style={{ marginTop: 40, marginBottom: 20 }}>
+                <Divider style={{ transform: [{ translateY: 15 }] }} />
+                <Text style={{ color: muted, backgroundColor: background, paddingHorizontal: 10, fontFamily: 'Inter Medium', alignSelf: 'center', fontSize: 17 }}>Pedidos antigos</Text>
               </View>
 
               {
