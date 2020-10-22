@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, StatusBar } from 'react-native';
 import { List, Avatar } from 'react-native-paper';
 import styled from 'styled-components';
 
@@ -29,10 +29,12 @@ function getFirstLetters (str) {
 
 const Options = ({ navigation }) => {
   const { setUserStatus, user } = useContext(AuthContext);
-  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
+  const { mode, background, surface, text } = useContext(ThemeContext);
 
   return (
     <Container style={{ backgroundColor: background }}>
+      <StatusBar barStyle={mode === 'light' ? 'dark-content' : 'light-content'} />
+
       <View style={{ marginTop: 40, backgroundColor: surface, margin: 15, borderRadius: 10, padding: 20, flexDirection: 'row', alignItems: 'center' }}>
         {
           user.image ? (
