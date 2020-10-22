@@ -1,33 +1,38 @@
-import React, { createContext } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import Color from 'color';
 
 const ThemeContext = createContext({
-  main: null
+  main: null,
+  mode: null,
+  background: null,
+  muted: null,
+  soft: null,
+  surface: null,
+  text: null,
+
+  setMainColor: (hex) => {},
+  setThemeVariant: (variant) => {},
 });
 
 export const ThemeContextProvider = ({ children }) => {
-  const theme = {
-    mode: 'light',
-    background: Color("#F2F2F2"),
-    main: Color("#0088FF"),
-    muted: Color("#666666"),
-    soft: Color("#CCCCCC"),
-    surface: Color("#FFFFFF"),
-    text: Color("#222222"),
-  }
+  const [mainColor, setMainColor] = useState("#0088FF");
+  const [themeVariant, setThemeVariant] = useState("light");
 
-  const dark_theme = {
-    mode: 'dark',
-    background: Color("#000000"),
-    main: Color("#ff7700"),
-    muted: Color("#999999"),
-    soft: Color("#444444"),
-    surface: Color("#222222"),
-    text: Color("#F2F2F2"),
-  }
+  const theme = useMemo(() => ({
+    main:       Color(mainColor),
+    mode:       themeVariant,
+    background: themeVariant === "light" ? Color("#F2F2F2") : Color("#000000"),
+    muted:      themeVariant === "light" ? Color("#666666") : Color("#999999"),
+    soft:       themeVariant === "light" ? Color("#DDDDDD") : Color("#444444"),
+    surface:    themeVariant === "light" ? Color("#FFFFFF") : Color("#222222"),
+    text:       themeVariant === "light" ? Color("#222222") : Color("#F2F2F2"),
+
+    setMainColor,
+    setThemeVariant,
+  }), [themeVariant, mainColor]);
 
   return (
-    <ThemeContext.Provider value={dark_theme}>
+    <ThemeContext.Provider value={theme}>
       { children }
     </ThemeContext.Provider>
   );

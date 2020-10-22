@@ -75,6 +75,16 @@ const Options = ({ navigation }) => {
           )}
         />
         <List.Item
+          title="Personalizar"
+          titleStyle={{ color: text }}
+          descriptionStyle={{ color: 'grey' }}
+          description="Temas, mudar cores"
+          onPress={() => navigation.navigate('Colors')}
+          left={() => (
+            <List.Icon color={text} icon="palette-outline" />
+          )}
+        />
+        <List.Item
           title="Termos de uso"
           titleStyle={{ color: text }}
           descriptionStyle={{ color: 'grey' }}
