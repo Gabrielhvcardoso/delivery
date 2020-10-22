@@ -10,7 +10,12 @@ const AuthContext = createContext({
 
 export const AuthContextProvider = ({ children }) => {
   const [isUserLogged, setIsUserLogged] = useState(false);
-  const [user, setUser] = useState({});
+  const [user, setStateUser] = useState({});
+
+  const setUser = async (newUser) => {
+    await AsyncStorage.setItem('user', JSON.stringify(newUser));
+    setStateUser(newUser);
+  }
 
   useEffect(() => {
     const getuser = async () => {
@@ -18,7 +23,7 @@ export const AuthContextProvider = ({ children }) => {
 
       if (userData) {
         setIsUserLogged(true);
-        setUser(JSON.parse(userData));
+        setStateUser(JSON.parse(userData));
       }
     }
 
@@ -29,11 +34,11 @@ export const AuthContextProvider = ({ children }) => {
     if (!status) {
       await AsyncStorage.removeItem("user");
       setIsUserLogged(false);
-      setUser({});
+      setStateUser({});
     } else {
       await AsyncStorage.setItem("user", JSON.stringify(data));
       setIsUserLogged(true);
-      setUser(data);
+      setStateUser(data);
     }
   }
 
