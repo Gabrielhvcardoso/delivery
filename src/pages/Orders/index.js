@@ -75,7 +75,10 @@ const Orders = ({ navigation }) => {
           orders[0] ? (
             <View>
               {
-                orders.filter(item => item.status !== 0).map(order => <OrderItem key={order.identifier} order={order} />)
+                orders
+                  .filter(item => item.status !== 0)
+                  .sort((a, b) => parseInt(a.createdAt) > parseInt(b.createdAt) ? -1 : 1)
+                  .map(order => <OrderItem key={order.identifier} order={order} />)
               }
               
               <View style={{ marginTop: 40, marginBottom: 20 }}>
@@ -84,7 +87,10 @@ const Orders = ({ navigation }) => {
               </View>
 
               {
-                orders.filter(item => item.status === 0).map(history => <HistoryItem key={history.identifier} order={history} />)
+                orders
+                  .filter(item => item.status === 0)
+                  .sort((a, b) => parseInt(a.createdAt) > parseInt(b.createdAt) ? -1 : 1)
+                  .map(history => <HistoryItem key={history.identifier} order={history} />)
               }
             </View>
             ) : (

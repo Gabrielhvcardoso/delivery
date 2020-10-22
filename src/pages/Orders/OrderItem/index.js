@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { format, addHours } from 'date-fns';
+import { format, addHours, formatDistanceToNow } from 'date-fns';
 
 import ThemeContext from '../../../context/ThemeContext';
+import { ptBR } from 'date-fns/locale';
 
 const OrderItem = ({ order }) => {
   const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
 
-  const { createdAt, products, status } = order;
+  const { createdAt, paymentMethod, products, status } = order;
   const { street, number } = JSON.parse(order.andress);
 
   return (
@@ -18,12 +19,15 @@ const OrderItem = ({ order }) => {
 
       <View style={{ padding: 20 }}>
         <Text style={{ fontSize: 20, fontFamily: 'Inter Bold', color: text }}>Detalhes do pedido</Text>
-        <Text style={{ fontSize: 17, color: muted, fontFamily: 'Inter Regular' }}>
-          { `${street} - ${number}` }
-        </Text>
         <Text style={{ fontSize: 17, color: text, fontFamily: 'Inter Regular' }}>
           { format(parseInt(createdAt), 'HH:mm') } ~ { format(addHours(parseInt(createdAt), 1), 'HH:mm') }
         </Text>
+
+        <View style={{ marginVertical: 10 }}>
+          <Text style={{ fontSize: 12, color: muted, fontFamily: 'Inter Regular' }}>{ `${street} - ${number}` }</Text>  
+          <Text style={{ fontSize: 12, color: muted }}>{ formatDistanceToNow(parseInt(createdAt), { locale: ptBR }) } - { paymentMethod }</Text>
+        </View>
+
       </View>
 
       {/* Progress */}
