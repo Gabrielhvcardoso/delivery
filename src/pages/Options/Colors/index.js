@@ -58,7 +58,7 @@ const Colors = () => {
       </View>
 
       <View style={{ marginHorizontal: 10, flexDirection: 'row', alignItems: 'center' }}>
-        <Icon name="info-outline" size={14} color={muted} />
+        <Icon name="info-outline" size={14} color={muted.hex()} />
         <Text style={{ ...styles.label, marginLeft: 5, color: muted }}>
           Esta página não estará disponível na versão final do aplicativo, apenas no aplicativo de apresentação.
         </Text>

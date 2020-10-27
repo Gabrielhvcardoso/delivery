@@ -48,9 +48,6 @@ const Profile = () => {
   const handleCamera = () => {
     useCamera((image) => {
       if (!image.cancelled) {
-
-        console.log(image)
-
         const data = new FormData();
 
         const uri = image.uri;
@@ -63,7 +60,6 @@ const Profile = () => {
         data.append("file", { name, type, uri, });
 
         useFetch.postFormData('/p/u/i/update', data, (response) => {
-          console.log(response);
           if (response.code === 'success') {
             const { image } = response;
 
@@ -92,7 +88,6 @@ const Profile = () => {
         });
 
         useFetch.postFormData('/p/u/i/update', data, (response) => {
-          console.log(response);
           if (response.code === 'success') {
             const { image } = response;
 

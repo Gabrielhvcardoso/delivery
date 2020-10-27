@@ -84,7 +84,7 @@ const Home = ({ navigation }) => {
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 25, marginHorizontal: 25, }}>
-          <Icon name="search" color={text} type="feather" />
+          <Icon name="search" color="#000" type="feather" />
           <TextInput
             onFocus={() => setIsSearch(true)}
             style={{
