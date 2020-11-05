@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useMemo, useState } from 'react';
 import { Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Icon } from 'react-native-elements';
+import { IconButton } from 'react-native-paper';
 
 import ThemeContext from '../../../context/ThemeContext';
 
@@ -9,7 +11,7 @@ import Product from '../../Category/Product';
 const Search = ({ categories, visible, onDismiss }) => {
   const navigation = useNavigation();
 
-  const { muted } = useContext(ThemeContext);
+  const { muted, text } = useContext(ThemeContext);
 
   const [search, setSearch] = useState("");
   const suggestions = useMemo(() => categories.flatMap(item => item.products), [categories]);
@@ -22,20 +24,30 @@ const Search = ({ categories, visible, onDismiss }) => {
 
   const filteredProducts = useMemo(() => {
     const regex = new RegExp(search, 'i');
-    return suggestions.filter(({ name }) => regex.test(name))
+    return suggestions.filter(({ name, details }) => regex.test(name) || regex.test(details))
   }, [search]);
 
   return (
     <Modal visible={visible} onRequestClose={onDismiss} transparent animationType={'slide'}>
       <ScrollView removeClippedSubviews style={{ flex: 1, backgroundColor: 'white' }}>
-        <TextInput
-          autoFocus
-          value={search} onChangeText={(t) => setSearch(t)}
-          style={styles.textinput} placeholder="Pesquise categorias, produtos"
-        />
+        <View style={{ alignItems: 'center', marginLeft: 10, margin: 20, flexDirection: 'row' }}>
+          <TouchableOpacity onPress={onDismiss} style={{ padding: 10, marginRight: 10 }}>
+            <Icon name="arrow-left" type="material-community" color={text.hex()} />
+          </TouchableOpacity>
+            
+          <TextInput
+            autoFocus
+            value={search} onChangeText={(t) => setSearch(t)}
+            style={styles.textinput} placeholder="Pesquise categorias, produtos"
+          />
+        </View>
         <View>
           <View>
-          <Text style={{ marginHorizontal: 20, marginBottom: 10, fontSize: 17, fontFamily: 'Inter Medium' }}>Categorias</Text>
+            {
+              filteredCategories[0] ? (
+                <Text style={{ marginHorizontal: 20, marginBottom: 10, fontSize: 17, fontFamily: 'Inter Medium' }}>Categorias</Text>
+              ) : <></>
+            }
             <ScrollView removeClippedSubviews horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
               {
                 filteredCategories.map(item => (
@@ -63,7 +75,11 @@ const Search = ({ categories, visible, onDismiss }) => {
           </View>
 
           <View style={{ margin: 20 }}>
-            <Text style={{ marginBottom: 10, fontSize: 17, fontFamily: 'Inter Medium' }}>Produtos</Text>
+            {
+              filteredProducts[0] ? (
+                <Text style={{ marginBottom: 10, fontSize: 17, fontFamily: 'Inter Medium' }}>Produtos</Text>
+              ) : <></>
+            }
             {
               filteredProducts.map((item) => (
                 <Product onClick={onDismiss} product={item} key={Math.random()} />
@@ -79,12 +95,13 @@ const Search = ({ categories, visible, onDismiss }) => {
 const styles = StyleSheet.create({
   textinput: {
     backgroundColor: '#eee',
+    borderRadius: 4,
 
+    flex: 1,
     height: 50,
     fontFamily: 'Inter Regular',
     fontSize: 17,
 
-    margin: 20,
     paddingHorizontal: 20
   }
 })

@@ -158,7 +158,7 @@ const Home = ({ navigation }) => {
 
 
         <Text style={{ color: text, marginLeft: 25, marginBottom: 15, fontFamily: 'Inter Bold', fontSize: 20 }}>Cardápio</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
+        <ScrollView removeClippedSubviews horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
           {
             categories.map(item => (
               <TouchableOpacity

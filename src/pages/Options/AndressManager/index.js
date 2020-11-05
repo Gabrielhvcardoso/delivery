@@ -60,7 +60,7 @@ const AndressManager = ({ navigation }) => {
   }
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: background }} contentContainerStyle={{ padding: 15 }}>
+    <ScrollView removeClippedSubviews style={{ flex: 1, backgroundColor: background }} contentContainerStyle={{ padding: 15 }}>
       {
         andress
           ? andress[0]

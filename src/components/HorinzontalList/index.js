@@ -17,6 +17,7 @@ const HorinzontalList = ({ style = {}, images, size = 'sm' }) => {
   
   return (
     <ScrollView
+      removeClippedSubviews
       style={style ? style : {}}
       horizontal
       showsHorizontalScrollIndicator={false}

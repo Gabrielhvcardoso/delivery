@@ -11,7 +11,7 @@ const Text = styled.Text`
   font-family: Inter Regular;
 `;
 
-const Product = ({ product, onClick }) => {
+const Product = ({ product, onClick = () => {} }) => {
   const { mode, background, main, muted, soft, surface, text } = useContext(ThemeContext);
 
   const navigation = useNavigation();
@@ -24,6 +24,7 @@ const Product = ({ product, onClick }) => {
     <View style={{ marginTop: 20, flexDirection: 'row' }}>
       <Image size="sm" uri={product.image} />
       <TouchableOpacity
+        activeOpacity={0.9}
         onPress={() => {
           navigation.navigate("Product", { product });
           onClick();

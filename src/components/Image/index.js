@@ -21,6 +21,7 @@ const Image = ({ uri, size = 'sm' }) => {
 
   return (
     <TouchableOpacity
+      activeOpacity={0.9}
       style={{ borderRadius: vw/10, overflow: 'hidden' }}
       onPress={() => showImage(image)}  
     >
