@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { FAB } from 'react-native-paper';
 import styled from 'styled-components';
 
+import AuthContext from '../../context/AuthContext';
 import BasketContext from '../../context/BasketContext';
 import ThemeContext from '../../context/ThemeContext';
 
@@ -16,6 +17,21 @@ import image from '../../../assets/images/home.jpg';
 import Search from './Search';
 
 import { useShuffle } from '../../hooks/useShuffle';
+import { generateExpoPushNotificationToken as registerForPushNotificationsAsync } from '../../services/notifications';
+
+// Notifications setup
+
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: true,
+  })
+});
+
+// Notifications setup
 
 export const Text = styled.Text`
   font-size: 23px;
@@ -24,6 +40,7 @@ export const Text = styled.Text`
 `;
 
 const Home = ({ navigation }) => {
+  const { user } = useContext(AuthContext);
   const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
 
   const [categories, setCategories] = useState([]);
@@ -31,6 +48,39 @@ const Home = ({ navigation }) => {
   const [isSearch, setIsSearch] = useState(false);
 
   const { showBasket, products } = useContext(BasketContext);
+
+  // Notifications setup
+
+  const [expoPushToken, setExpoPushToken] = React.useState('');
+  const [notification, setNotification] = React.useState(false);
+  const notificationListener = React.useRef();
+  const responseListener = React.useRef();
+
+  React.useEffect(() => {
+    const { userId } = user;
+
+    registerForPushNotificationsAsync(userId).then(token => {
+      setExpoPushToken(token)
+    });
+
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      // do something;
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
+    };
+  }, []);
+
+  // Notifications setup
+  
 
   const getProducts = (onEnd = () => {}) => {
     useFetch.get('/p/all/' + useToken(), (response) => {
