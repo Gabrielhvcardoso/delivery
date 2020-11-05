@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Text, ScrollView, StyleSheet, View } from 'react-native';
+import { Icon } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import ThemeContext from '../../../context/ThemeContext';
@@ -9,7 +10,7 @@ import ThemeContext from '../../../context/ThemeContext';
 */
 
 export default function Contact () {
-  const { background, surface, text } = useContext(ThemeContext);
+  const { background, surface, muted, text } = useContext(ThemeContext);
 
   const data = [
     {
@@ -25,19 +26,20 @@ export default function Contact () {
         "+55 47 98888 7777",
         "+55 3300 0088"
       ]
-    }
+    }, 
   ]
 
   return (
-    <ScrollView style={{ ...styles.container, backgroundColor: background.hex() }}>
+    <ScrollView removeClippedSubviews style={{ ...styles.container, backgroundColor: background.hex() }} contentContainerStyle={{ padding: 20 }}>
       {
         data.map(({ title, contacts }) => (
           <View key={title} style={{ ...styles.box, backgroundColor: surface.hex(), }}>
             <Text style={{ ...styles.title, color: text.hex() }}>{ title }</Text>
             {
               contacts.map((contact) => (
-                <TouchableOpacity key={contact} style={{ ...styles.contact, backgroundColor: background.hex() }}>
+                <TouchableOpacity activeOpacity={0.7} key={contact} style={{ ...styles.contact, backgroundColor: background.hex() }}>
                   <Text style={{ color: text.hex() }}>{ contact }</Text>
+                  <Text style={{ color: muted.hex(), fontSize: 11, textTransform: 'uppercase' }}>Copiar</Text>
                 </TouchableOpacity>
               ))
             }
@@ -51,14 +53,16 @@ export default function Contact () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20
   },
 
   contact: {
+    alignItems: 'center',
     borderRadius: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 8,
     paddingHorizontal: 17,
-    paddingVertical: 7
+    paddingVertical: 7,
   },
 
   box: {
