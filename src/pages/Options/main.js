@@ -87,6 +87,16 @@ const Options = ({ navigation }) => {
           )}
         />
         <List.Item
+          title="Contato"
+          titleStyle={{ color: text }}
+          descriptionStyle={{ color: 'grey' }}
+          description="Fale conosco"
+          onPress={() => navigation.navigate('Contact')}
+          left={() => (
+            <List.Icon color={text} icon="message-text-outline" />
+          )}
+        />
+        <List.Item
           title="Termos de uso"
           titleStyle={{ color: text }}
           descriptionStyle={{ color: 'grey' }}

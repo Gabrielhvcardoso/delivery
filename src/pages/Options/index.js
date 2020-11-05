@@ -8,6 +8,7 @@ import Favorites from './Favorites';
 import Help from './Help';
 import Profile from './Profile';
 import Colors from './Colors';
+import Contact from './Contact';
 
 import ThemeContext from '../../context/ThemeContext';
 
@@ -49,6 +50,7 @@ export default function Options ({ navigation, route }) {
       <Stack.Screen name="Help" component={Help} options={{ headerTitle: 'Ajuda' }} />
       <Stack.Screen name="Profile" component={Profile} options={{ headerTitle: 'Editar perfil', headerTransparent: true }} />
       <Stack.Screen name="Colors" component={Colors} options={{ headerTitle: 'Personalizar' }} />
+      <Stack.Screen name="Contact" component={Contact} options={{ headerTitle: 'Contato' }} />
     </Stack.Navigator>
   )
 }
