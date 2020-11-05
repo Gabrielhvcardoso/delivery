@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import ProductContext from '../../context';
 import ThemeContext from '../../../../context/ThemeContext';
 
-export const Option = ({ option }) => {
+export const Option = ({ max, array, option }) => {
   const { mode, main, surface, text } = useContext(ThemeContext);
 
   const [isSelected, setIsSelected] = useState(false);
-  const { increaseOption, decreaseOption } = useContext(ProductContext);
+  const { options, increaseOption, decreaseOption } = useContext(ProductContext);
   const { addValue: price, name } = option;
 
   const OptionContainer = styled.TouchableOpacity`
@@ -25,16 +25,49 @@ export const Option = ({ option }) => {
     color: ${isSelected ? mode === 'light' ? main : main : text};
   `;
 
+  const optionsContextCounter = useMemo(() => {
+    // Verify how much options from this group has inside context options
+    let howMuch = 0;
+
+    array.forEach(element => {
+      if (options.some(item => item.name === element.name)) howMuch++;
+    });
+
+    return howMuch;
+  }, [options, array]);
+
   useEffect(() => {
     if (isSelected) {
-      increaseOption({ name, price });
+      if (max) {
+        if (optionsContextCounter < max) {
+          increaseOption({ name, price });  
+        } else {
+          setIsSelected(false);
+        }
+      } else {
+        increaseOption({ name, price });
+      }
     } else {
       decreaseOption({ name, price });
     }
   }, [isSelected])
 
   return (
-    <OptionContainer isSelected={isSelected} onPress={() => setIsSelected(!isSelected)}>
+    <OptionContainer
+      isSelected={isSelected}
+      onPress={() => {
+        if (isSelected) {
+          setIsSelected(!isSelected);
+        } else {
+          if (!max) {
+            setIsSelected(!isSelected);
+          } else {
+            if (optionsContextCounter < max) {
+              setIsSelected(!isSelected);
+            }
+          }
+        }
+      }}>
       <OptionText>
         { name }
       </OptionText>

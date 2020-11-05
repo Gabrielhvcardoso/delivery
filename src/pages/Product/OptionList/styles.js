@@ -1,11 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components';
 
 import ThemeContext from '../../../context/ThemeContext';
+import ProductContext from '../context';
 
-export const Header = ({ required, unique, title }) => {
-  const { mode, background, main, soft, surface, text } = useContext(ThemeContext);
+export const Header = ({ max, options: array, required, unique, title }) => {
+  const { mode, soft, surface, text } = useContext(ThemeContext);
+  const { options } = useContext(ProductContext);
+
+  const optionsContextCounter = useMemo(() => {
+    // Verify how much options from this group has inside context options
+    let howMuch = 0;
+
+    array.forEach(element => {
+      if (options.some(item => item.name === element.name)) howMuch++;
+    });
+
+    return howMuch;
+  }, [options, array]);
+
 
   return (
     <HeaderContainer style={{ backgroundColor: mode === 'light' ? surface : soft }}>
@@ -13,6 +27,14 @@ export const Header = ({ required, unique, title }) => {
         { title }
       </HeaderText>
       <View style={{ flexDirection: 'row' }}>
+        {
+          max ? (
+            <HeaderBadge style={{ backgroundColor: text, color: text.negate() }}>
+              {optionsContextCounter} / {max}
+            </HeaderBadge>
+          ) : <></>
+        }
+
         {
           unique ? (
           <HeaderBadge style={{ backgroundColor: text, color: text.negate() }}>
