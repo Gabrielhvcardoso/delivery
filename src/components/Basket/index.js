@@ -129,6 +129,7 @@ const Basket = () => {
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity style={{ flex: 1 }} onPress={dismissModal} />
             <ScrollView
+              removeClippedSubviews
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{ padding: 20 }}
               style={{ maxHeight: 500, backgroundColor: background, borderRadius: 8, width: '90%', paddingBottom: 10 }}

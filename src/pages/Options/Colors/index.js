@@ -9,6 +9,7 @@ const Colors = () => {
 
   return (
     <ScrollView
+      removeClippedSubviews
       style={{ flex: 1, backgroundColor: background }}
       contentContainerStyle={{ padding: 20 }}
     >

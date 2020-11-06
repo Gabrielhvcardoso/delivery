@@ -9,6 +9,7 @@ export const CategoryScrollView = ({ categories }) => {
   return (
     <View>
       <ScrollView
+        removeClippedSubviews
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ padding: 15 }}

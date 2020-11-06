@@ -8,7 +8,7 @@ export const Container = ({ children }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1, backgroundColor: background }}>
+      <ScrollView removeClippedSubviews style={{ flex: 1, backgroundColor: background }}>
         { children }
       </ScrollView>
     </SafeAreaView>

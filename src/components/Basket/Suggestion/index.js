@@ -21,6 +21,7 @@ const Suggestion = ({ style }) => {
   
   return (
     <ScrollView
+      removeClippedSubviews
       horizontal
       style={style}
       showsHorizontalScrollIndicator={false}

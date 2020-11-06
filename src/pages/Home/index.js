@@ -103,7 +103,12 @@ const Home = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle="light-content" />
-      {/* <Search visible={isSearch} onDismiss={() => setIsSearch(false)} /> */}
+      <Search
+        visible={isSearch}
+        onDismiss={() => setIsSearch(false)}
+        categories={categories}
+        products={products}
+      />
 
       {
         products[0] ? (
@@ -133,10 +138,10 @@ const Home = ({ navigation }) => {
           zIndex: 1
         }}
       >
-        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 25, marginHorizontal: 25, }}>
-          <Icon name="search" color="#000" type="feather" />
+        <TouchableOpacity activeOpacity={1} onPress={() => setIsSearch(true)} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 25, marginHorizontal: 25, }}>
+          <Icon name="search" color={text} type="feather" />
           <TextInput
-            onFocus={() => setIsSearch(true)}
+            editable={false}
             style={{
               borderRadius: 40,
               color: text,
@@ -149,11 +154,11 @@ const Home = ({ navigation }) => {
             placeholder="Pesquisar produto"
             placeholderTextColor={muted}
           />
-        </View>
+        </TouchableOpacity>
 
 
         <Text style={{ color: text, marginLeft: 25, marginBottom: 15, fontFamily: 'Inter Bold', fontSize: 20 }}>Cardápio</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
+        <ScrollView removeClippedSubviews horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
           {
             categories.map(item => (
               <TouchableOpacity

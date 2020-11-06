@@ -20,6 +20,7 @@ export const Container = ({ data, image }) => {
   return (
     <View style={{ flex: 1 }}>
       <Animated.ScrollView
+        removeClippedSubviews
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue }  }}], { useNativeDriver: false }
         )}
@@ -53,7 +54,7 @@ export const Container = ({ data, image }) => {
 
 
         <Text style={{ marginLeft: 25, marginBottom: 15, fontFamily: 'Inter Bold', fontSize: 20 }}>Veja categorias</Text>
-        <ScrollView horizontal contentContainerStyle={{ paddingHorizontal: 15 }}>
+        <ScrollView removeClippedSubviews horizontal contentContainerStyle={{ paddingHorizontal: 15 }}>
           {
             data.map(item => (
               <TouchableOpacity

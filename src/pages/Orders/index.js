@@ -60,6 +60,7 @@ const Orders = ({ navigation }) => {
 
   return (
     <ScrollView
+      removeClippedSubviews
       refreshControl={
         <RefreshControl refreshing={isRefresh} onRefresh={refresh} />
       }

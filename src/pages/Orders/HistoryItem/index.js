@@ -78,7 +78,7 @@ const HistoryItem = ({ order }) => {
         style={{ backgroundColor: mode === 'light' ? main.lighten(0.9) : main, borderRadius: 10, marginTop: 15, justifyContent: 'center', alignItems: 'center', height: 60 }}
       >
         <Text style={{ color: mode === 'light' ? main : text.negate(), fontFamily: 'Inter Medium', fontSize: 16 }}>
-          Pedir novamente
+          Reportar pedido
         </Text>
       </TouchableOpacity>
     </View>
