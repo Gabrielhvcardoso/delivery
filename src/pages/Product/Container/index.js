@@ -5,7 +5,7 @@ import { BlurView } from 'expo-blur'
 import ThemeContext from '../../../context/ThemeContext';
 
 const Container = ({ children, image }) => {
-  const { background, main, muted, soft, surface, text } = useContext(ThemeContext);
+  const { background } = useContext(ThemeContext);
 
   const screenWidth = Dimensions.get('window').width;
 
@@ -57,7 +57,7 @@ const Container = ({ children, image }) => {
           marginTop: headerHeight,
           flex: 1,
           flexDirection: 'column',
-          backgroundColor: background
+          backgroundColor: background.hex()
         }} 
       > 
         <Animated.View style={{ padding: 20 }}>

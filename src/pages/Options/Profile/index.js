@@ -107,8 +107,8 @@ const Profile = () => {
         <Dialog visible={isDialogActive} onDismiss={() => setIsDialogActive(false)}>
           <Dialog.Content style={{ backgroundColor: surface }}>
             <Text style={{ marginBottom: 10, marginLeft: 10, fontSize: 12, color: muted, textTransform: 'uppercase' }}>Mudar imagem de perfil</Text>
-            <Menu.Item titleStyle={{ color: text }} icon="camera" onPress={handleCamera} title="Câmera" />
-            <Menu.Item titleStyle={{ color: text }} icon="image" onPress={handleLibrary} title="Biblioteca" />
+            <Menu.Item titleStyle={{ color: text.hex() }} icon="camera" onPress={handleCamera} title="Câmera" />
+            <Menu.Item titleStyle={{ color: text.hex() }} icon="image" onPress={handleLibrary} title="Biblioteca" />
           </Dialog.Content>
         </Dialog>
       </Portal>

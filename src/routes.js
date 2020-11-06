@@ -69,7 +69,7 @@ const Routes = () => {
                 containerStyle={{ elevation: 10, marginLeft: 20, backgroundColor: surface, padding: 5, borderRadius: 100 }}
                 name="arrow-left"
                 type="material-community"
-                color={surface.negate()}
+                color={surface.negate().hex()}
               />
             )
           })}

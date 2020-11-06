@@ -22,7 +22,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.dmi.delivery",
-      "buildNumber": "2"
+      "buildNumber": "3"
     },
     "android": {
       "icon": "./assets/icon_android.png",

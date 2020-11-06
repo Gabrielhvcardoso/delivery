@@ -46,7 +46,7 @@ const Product = ({ navigation, route }) => {
             }}
             labelStyle={{ color: main }}
             mode="outlined"
-            icon="basket"
+            // icon="basket"
           >
             ver sacola
           </Button>
@@ -55,11 +55,11 @@ const Product = ({ navigation, route }) => {
             style={{
               marginLeft: 5,
               flex: 1,
-              backgroundColor: isFavorite ? mode === 'light' ? main.lighten(0.9) : main : background,
+              backgroundColor: isFavorite ? main : background,
             }}
-            labelStyle={{ color: isFavorite ? mode === 'light' ? main : text.negate() : main }}
+            labelStyle={{ color: isFavorite ? text.negate() : main }}
             mode={isFavorite ? "contained" : "outlined"}
-            icon={isFavorite ? "heart" : "heart-outline"}
+            // icon={isFavorite ? "heart" : "heart-outline"}
           >
             favoritos
           </Button>
