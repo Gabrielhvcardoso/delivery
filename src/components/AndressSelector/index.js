@@ -26,8 +26,6 @@ const AndressSelector = ({ navigation, route }) => {
   );
   const onChange = (field, value) => field === 'cep' ? setAndress({ ...andress, [field]: cepMask(value) }) : setAndress({ ...andress, [field]: value });
 
-    console.log(andress)
-
   useEffect(() => {
     if (andress?.cep?.length === 10) {
       cep(andress.cep.replace(['.', '-'], ''))

@@ -80,8 +80,8 @@ const Orders = ({ navigation }) => {
                   ? (
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
                       <BasketSvg width={150} height={150} />
-                      <Text style={{ fontSize: 20 }}>Nenhum pedido</Text>
-                      <Text style={{ marginHorizontal: 15, textAlign: 'center' }}>Explore os produtos e promoções ou peça novamente algo do seu histórico.</Text>
+                      <Text style={{ color: text, fontSize: 20 }}>Nenhum pedido</Text>
+                      <Text style={{ color: text, marginHorizontal: 15, textAlign: 'center' }}>Explore os produtos e promoções ou peça novamente algo do seu histórico.</Text>
                     </View>
                   ) : <></>
 

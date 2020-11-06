@@ -69,7 +69,7 @@ const Routes = () => {
                 containerStyle={{ elevation: 10, marginLeft: 20, backgroundColor: surface, padding: 5, borderRadius: 100 }}
                 name="arrow-left"
                 type="material-community"
-                color={surface.negate()}
+                color={surface.negate().hex()}
               />
             )
           })}
@@ -122,11 +122,11 @@ const BottomTabs = () => {
         tabBarIcon: ({ color, size, focused }) => {
           switch (route.name) {
             case 'Home':
-              return <Icon name={'home'} size={size+5} color={color} type="feather" />;
+              return <Icon name={'home'} size={size+5} color={color.hex()} type="feather" />;
             case 'Orders':
-              return <Icon name={'shopping-bag'} size={size+5} color={color} type="feather" />;
+              return <Icon name={'shopping-bag'} size={size+5} color={color.hex()} type="feather" />;
             case 'Options':
-              return <Icon name={'menu'} size={size+5} color={color} type="feather" />;
+              return <Icon name={'menu'} size={size+5} color={color.hex()} type="feather" />;
           }
         }
       })}

@@ -88,7 +88,7 @@ const AndressItem = ({ andress, setAndress, removeItem, item }) => {
 
       <TouchableOpacity onPress={handleEditAndress} onLongPress={() => setIsDeleteActive(true)} activeOpacity={0.8} key={Math.random()} style={{ ...styles.container, backgroundColor: surface }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Icon name="map-marker-outline" type="material-community" color={text} />
+          <Icon name="map-marker-outline" type="material-community" color={text.hex()} />
           <Text numberOfLines={1} style={{ ...styles.title, color: text }}>{ name }</Text>
         </View>
         <Text numberOfLines={1} style={{ color: text, fontSize: 14 }}>{ `${street}, ${number} - ${neighborhood} - ${city} - ${state}` }</Text>

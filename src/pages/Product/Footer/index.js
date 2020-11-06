@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button } from 'react-native-paper';
 import { View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
@@ -124,14 +124,14 @@ const Footer = ({ product }) => {
       <Button
         onPress={addToCart}
         style={{
-          backgroundColor: mode === 'light' ? main.lighten(0.9) : main,
+          backgroundColor: mode === 'light' ? main.lighten(0.9).hex() : main,
           marginTop: 20,
           elevation: 0,
           paddingVertical: 10
         }}
-        labelStyle={{ color: mode === 'light' ? main : text.negate() }}
+        labelStyle={{ color: mode === 'light' ? main.hex() : text.negate().hex() }}
         mode="contained"
-        icon="cart"
+        // icon="cart"
       >
         Adicionar ao carrinho
       </Button>

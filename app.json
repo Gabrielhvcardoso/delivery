@@ -21,7 +21,8 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.dmi.delivery"
+      "bundleIdentifier": "com.dmi.delivery",
+      "buildNumber": "3"
     },
     "android": {
       "icon": "./assets/icon_android.png",

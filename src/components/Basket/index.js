@@ -81,10 +81,6 @@ const Basket = () => {
     return acumulador;
   }, 0), [JSON.stringify(products)]);
 
-  useEffect(() => {
-    console.log(Object.keys(products))
-  }, [])
-
   return (
     <Modal
       visible={isBasketVisible}
@@ -191,7 +187,7 @@ const Basket = () => {
                 }}
                 style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginBottom: 10, padding: 15, borderRadius: 4, backgroundColor: surface }}
               >
-                <Icon name="add" color={muted} />
+                <Icon name="add" color={muted.hex()} />
                 <Text numberOfLines={1} style={{ marginLeft: 10, color: muted, fontSize: 17, fontFamily: 'Inter Medium' }}>Adicionar endereço</Text>
               </TouchableOpacity>
             </ScrollView>
@@ -204,7 +200,7 @@ const Basket = () => {
       <Container style={{ backgroundColor: background }}>
         <StatusBar backgroundColor="#fff" style="dark" />
         <View style={{ flexDirection: 'row' }}>
-          <Icon name="close" type="material-community" color={muted} onPress={dismissBasket} />
+          <Icon name="close" type="material-community" color={muted.hex()} onPress={dismissBasket} />
           <Text style={{ fontSize: 20, fontWeight: 'bold', marginLeft: 10 }}>
             Sua sacola
           </Text>
@@ -279,7 +275,7 @@ const Basket = () => {
                     }}
                   >
                     <Text style={{ color: text, fontSize: 17 }}>{ paymentMethod }</Text>
-                    <Icon name="menu-down" type="material-community" color={text} />
+                    <Icon name="menu-down" type="material-community" color={text.hex()} />
                   </TouchableOpacity>
                 </View>
                 

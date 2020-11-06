@@ -53,7 +53,6 @@ export const useFetch = {
           onEnd(data);
         })
         .catch((e) => {
-          console.log(e)
           onEnd({ code: 'error', ...e })
         });
     });

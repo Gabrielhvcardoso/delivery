@@ -36,7 +36,7 @@ export const Container = ({ data, image }) => {
         }}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 25, marginHorizontal: 25, }}>
-          <Icon name="search" color={text} type="feather" />
+          <Icon name="search" color={text.hex()} type="feather" />
           <TextInput
             style={{
               borderRadius: 40,

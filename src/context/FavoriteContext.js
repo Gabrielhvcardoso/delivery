@@ -10,7 +10,6 @@ const FavoriteContext = createContext({
 
 export const FavoriteContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  console.log(products)
 
   useEffect(() => {
     const getItems = async () => {

@@ -57,33 +57,33 @@ const Options = ({ navigation }) => {
       <View style={{ backgroundColor: surface, margin: 15, borderRadius: 10 }}>
         <List.Item
           style={{ fontFamily: 'Inter Regular' }}
-          titleStyle={{ color: text }}
+          titleStyle={{ color: text.hex() }}
           descriptionStyle={{ color: 'grey' }}
           title="Gerenciar endereços"
           description="Adicione e remova endereços de entrega"
           onPress={() => navigation.navigate('AndressManager')}
           left={() => (
-            <List.Icon color={text} icon="map-marker-outline" />
+            <List.Icon color={text.hex()} icon="map-marker-outline" />
           )}
         />
         <List.Item
           title="Favoritos"
-          titleStyle={{ color: text }}
+          titleStyle={{ color: text.hex() }}
           descriptionStyle={{ color: 'grey' }}
           description="Meus pratos favoritos"
           onPress={() => navigation.navigate('Favorites')}
           left={() => (
-            <List.Icon color={text} icon="heart-multiple-outline" />
+            <List.Icon color={text.hex()} icon="heart-multiple-outline" />
           )}
         />
         <List.Item
           title="Personalizar"
-          titleStyle={{ color: text }}
+          titleStyle={{ color: text.hex() }}
           descriptionStyle={{ color: 'grey' }}
           description="Temas, mudar cores"
           onPress={() => navigation.navigate('Colors')}
           left={() => (
-            <List.Icon color={text} icon="palette-outline" />
+            <List.Icon color={text.hex()} icon="palette-outline" />
           )}
         />
         <List.Item
@@ -98,31 +98,31 @@ const Options = ({ navigation }) => {
         />
         <List.Item
           title="Termos de uso"
-          titleStyle={{ color: text }}
+          titleStyle={{ color: text.hex() }}
           descriptionStyle={{ color: 'grey' }}
           description="Política de privacidade"
           onPress={() => navigation.navigate('Agreement')}
           left={() => (
-            <List.Icon color={text} icon="file-document-outline" />
+            <List.Icon color={text.hex()} icon="file-document-outline" />
           )}
         />
 
         <List.Item
           title="Sair"
-          titleStyle={{ color: text }}
+          titleStyle={{ color: text.hex() }}
           descriptionStyle={{ color: 'grey' }}
           onPress={() => setUserStatus(false)}
           left={() => (
-            <List.Icon color={text} icon="exit-to-app" />
+            <List.Icon color={text.hex()} icon="exit-to-app" />
           )}
         />
         <List.Item
           title="Ajuda"
-          titleStyle={{ color: text }}
+          titleStyle={{ color: text.hex() }}
           descriptionStyle={{ color: 'grey' }}
           onPress={() => navigation.navigate('Help')}
           left={() => (
-            <List.Icon color={text} icon="information-outline" />
+            <List.Icon color={text.hex()} icon="information-outline" />
           )}
         />
       </View>

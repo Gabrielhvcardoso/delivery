@@ -116,7 +116,7 @@ const Login = ({ navigation }) => {
         style={{ backgroundColor: surface, color: text }}
         value={email}
         onChangeText={text => setEmail(text)}
-        placeholder="E-mail"
+        placeholder="E-mail de login"
       />
       <TextInput
         style={{ backgroundColor: surface, color: text }}
