@@ -2,6 +2,7 @@ import React, { createContext, useMemo, useState } from 'react';
 import Color from 'color';
 
 const ThemeContext = createContext({
+  danger: null,
   main: null,
   mode: null,
   background: null,
@@ -26,6 +27,7 @@ export const ThemeContextProvider = ({ children }) => {
     soft:       themeVariant === "light" ? Color("#DDDDDD") : Color("#444444"),
     surface:    themeVariant === "light" ? Color("#FFFFFF") : Color("#222222"),
     text:       themeVariant === "light" ? Color("#222222") : Color("#F2F2F2"),
+    danger: Color("#FF0000"),
 
     setMainColor,
     setThemeVariant,

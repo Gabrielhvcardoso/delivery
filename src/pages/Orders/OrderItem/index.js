@@ -1,23 +1,20 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, ToastAndroid, TouchableOpacity, View, Clipboard } from 'react-native';
 import { format, addHours, formatDistanceToNow } from 'date-fns';
 
-// 
-// Waiting expo support for Async Clipboard API
-// See the link below:
-//    https://expo.canny.io/feature-requests/p/async-clipboard-api
-// 
-// import Clipboard from '@react-native-community/clipboard';
-// 
+import { useFetch } from '../../../hooks/useFetch';
 
 import ThemeContext from '../../../context/ThemeContext';
 import { ptBR } from 'date-fns/locale';
+import { Button, Dialog, Paragraph, Portal } from 'react-native-paper';
 
-const OrderItem = ({ order }) => {
-  const { main, muted, soft, surface, text } = useContext(ThemeContext);
+const OrderItem = ({ refresh, order }) => {
+  const { danger, main, mode, muted, soft, surface, text } = useContext(ThemeContext);
 
-  const { createdAt, paymentMethod, products, status, identifier } = order;
+  const { orderId, createdAt, paymentMethod, products, status, identifier } = order;
   const { street, number } = JSON.parse(order.andress);
+
+  const [isDialogActive, setIsDialogActive] = useState(false);
 
   const onCopyCodeToClipboard = (code) => {
     Clipboard.setString(code);
@@ -29,14 +26,36 @@ const OrderItem = ({ order }) => {
     );
   }
 
+  const handleRemove = () => {
+    setIsDialogActive(false);
+    useFetch.post('/p/delete/order', { orderId }, (response) => {
+      refresh();
+    })
+  }
+
   return (
     <View style={{ backgroundColor: surface, marginTop: 20, borderRadius: 10, overflow: 'hidden' }}>
+      <Portal>
+        <Dialog style={{ backgroundColor: surface.hex()}} visible={isDialogActive} onDismiss={() => setIsDialogActive(false)}>
+          <Dialog.Title style={{ color: text.hex() }}>Remover pedido</Dialog.Title>
+          <Dialog.Content>
+            <Paragraph style={{ color: text.hex() }}>
+              Esta ação é irreversível. Seu pedido ainda se encontrará no histórico de pedidos.
+            </Paragraph>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button color={muted.hex()} onPress={() => setIsDialogActive(false)}>Cancelar</Button>
+            <Button color={danger.hex()} onPress={handleRemove}>Confirmar</Button>
+          </Dialog.Actions>
+        </Dialog>
+      </Portal>
+
       {/* <View style={{ backgroundColor: soft, height: 100 }} /> */}
 
       {/* Details */}
 
       <View style={{ padding: 20 }}>
-        <Text style={{ fontSize: 20, fontFamily: 'Inter Bold', color: text }}>Detalhes do pedido</Text>
+        <Text style={{ fontSize: 20, fontFamily: 'Inter Bold', color: text }}>Detalhes do pedido ({ orderId })</Text>
         <Text style={{ fontSize: 17, color: text, fontFamily: 'Inter Regular' }}>
           { format(parseInt(createdAt), 'HH:mm') } ~ { format(addHours(parseInt(createdAt), 1), 'HH:mm') }
         </Text>
@@ -138,6 +157,22 @@ const OrderItem = ({ order }) => {
               { identifier }
             </Text>
           </TouchableOpacity>
+
+          {
+            status === 1 ? (
+              <TouchableOpacity
+                onPress={() => setIsDialogActive(true)}
+                activeOpacity={0.6}
+                style={{ backgroundColor: mode === 'light' ? danger.lighten(0.9) : danger.lighten(0.5), borderRadius: 8, marginTop: 15, justifyContent: 'center', alignItems: 'center', height: 60 }}
+              >
+                <Text style={{ color: mode === 'light' ? danger : text.negate(), fontFamily: 'Inter Medium', fontSize: 16 }}>
+                  Remover pedido
+                </Text>
+              </TouchableOpacity>
+            ) : <></>
+          }
+
+          
         </View>
       </View>
     </View>

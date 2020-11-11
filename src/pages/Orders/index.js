@@ -89,9 +89,9 @@ const Orders = ({ navigation }) => {
 
               {
                 orders
-                  .filter(item => item.status !== 0)
+                  .filter(item => item.status !== 0 && item.status !== 4 && item.status !== 5)
                   .sort((a, b) => parseInt(a.createdAt) > parseInt(b.createdAt) ? -1 : 1)
-                  .map(order => <OrderItem key={order.identifier} order={order} />)
+                  .map(order => <OrderItem refresh={refresh} key={order.identifier} order={order} />)
               }
               
               {
@@ -106,7 +106,7 @@ const Orders = ({ navigation }) => {
 
               {
                 orders
-                  .filter(item => item.status === 0)
+                  .filter(item => item.status === 0 || item.status === 4 || item.status === 5)
                   .sort((a, b) => parseInt(a.createdAt) > parseInt(b.createdAt) ? -1 : 1)
                   .map(history => <HistoryItem key={history.identifier} order={history} />)
               }
