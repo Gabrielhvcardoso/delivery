@@ -76,7 +76,7 @@ const Orders = ({ navigation }) => {
           orders[0] ? (
             <View>
               {
-                !orders.filter(item => item.status !== 0)[0] && orders.filter(item => item.status === 0)[0]
+                !orders.filter(item => [1, 2, 3].some(status => status === item.status))[0] && orders.filter(item => [0, 4, 5].some(status => status === item.status))[0]
                   ? (
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
                       <BasketSvg width={150} height={150} />
