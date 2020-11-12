@@ -11,7 +11,7 @@ const capitalizeFirstLetter = (str) => {
 }
 
 const HistoryItem = ({ order }) => {
-  const { mode, main, muted, soft, surface, text } = useContext(ThemeContext);
+  const { mode, main, muted, soft, surface, text, danger } = useContext(ThemeContext);
   
   const { createdAt, paymentMethod, products } = order;
   const { street, number } = JSON.parse(order.andress);
@@ -23,6 +23,14 @@ const HistoryItem = ({ order }) => {
         { capitalizeFirstLetter( formatRelative(parseInt(createdAt), new Date(), { locale: ptBR }) ) }
       </Text>
       
+      {
+        [4, 5].some(status => status === order.status) ? (
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{ marginTop: 10, paddingHorizontal: 10, borderRadius: 20, backgroundColor: mode === 'light' ? danger.lighten(0.8) : danger.hex(), color: mode === 'light' ? danger.hex() : 'white' }}>{ order.status === 4 ? 'Recusado' : 'Cancelado' }</Text>
+          </View>
+        ) : <></>
+      }
+
       <View style={{ marginVertical: 10 }}>
         <Text style={{ fontFamily: 'Inter Regular',  fontSize: 12, color: muted }}>{ `${street} - ${number}` }</Text>
         <Text style={{ fontFamily: 'Inter Regular', fontSize: 12, color: muted }}>{ paymentMethod }</Text>
