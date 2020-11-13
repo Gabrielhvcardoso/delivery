@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { Text, ScrollView, StyleSheet, View } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Clipboard, Text, ScrollView, StyleSheet, View, ToastAndroid } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import ClientContext from '../../../context/ClientContext';
 import ThemeContext from '../../../context/ThemeContext';
 
 /*
@@ -10,34 +10,28 @@ import ThemeContext from '../../../context/ThemeContext';
 */
 
 export default function Contact () {
+  const { andresses } = useContext(ClientContext);
   const { background, surface, muted, text } = useContext(ThemeContext);
 
-  const data = [
-    {
-      title: "Sede Jaraguá do Sul",
-      contacts: [
-        "example@example.com.br",
-        "+55 47 99999 8888"
-      ]
-    }, {
-      title: "Sede Guaramirim",
-      contacts: [
-        "example2@example.com.br",
-        "+55 47 98888 7777",
-        "+55 3300 0088"
-      ]
-    }, 
-  ]
+  const onCopyCodeToClipboard = (code) => {
+    Clipboard.setString(code);
 
+    ToastAndroid.showWithGravity(
+      "Copiado para área de transferência",
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER
+    );
+  }
+  
   return (
     <ScrollView removeClippedSubviews style={{ ...styles.container, backgroundColor: background.hex() }} contentContainerStyle={{ padding: 20 }}>
       {
-        data.map(({ title, contacts }) => (
+        JSON.parse(andresses).map(({ title, contacts }) => (
           <View key={title} style={{ ...styles.box, backgroundColor: surface.hex(), }}>
             <Text style={{ ...styles.title, color: text.hex() }}>{ title }</Text>
             {
               contacts.map((contact) => (
-                <TouchableOpacity activeOpacity={0.7} key={contact} style={{ ...styles.contact, backgroundColor: background.hex() }}>
+                <TouchableOpacity onPress={() => onCopyCodeToClipboard(contact)} activeOpacity={0.7} key={contact} style={{ ...styles.contact, backgroundColor: background.hex() }}>
                   <Text style={{ color: text.hex() }}>{ contact }</Text>
                   <Text style={{ color: muted.hex(), fontSize: 11, textTransform: 'uppercase' }}>Copiar</Text>
                 </TouchableOpacity>
