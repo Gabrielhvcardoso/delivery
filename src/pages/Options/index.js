@@ -9,6 +9,7 @@ import Help from './Help';
 import Profile from './Profile';
 import Colors from './Colors';
 import Contact from './Contact';
+import Password from './Password';
 
 import ThemeContext from '../../context/ThemeContext';
 
@@ -51,6 +52,7 @@ export default function Options ({ navigation, route }) {
       <Stack.Screen name="Profile" component={Profile} options={{ headerTitle: 'Editar perfil', headerTransparent: true }} />
       <Stack.Screen name="Colors" component={Colors} options={{ headerTitle: 'Personalizar' }} />
       <Stack.Screen name="Contact" component={Contact} options={{ headerTitle: 'Contato' }} />
+      <Stack.Screen name="Password" component={Password} options={({ route }) => ({ headerTitle: route.params.doesUserHasPassword ? 'Redefinir senha' : 'Criar senha' })} />
     </Stack.Navigator>
   )
 }

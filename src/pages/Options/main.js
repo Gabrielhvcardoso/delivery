@@ -13,23 +13,14 @@ const Text = styled.Text`
 `;
 
 function getFirstLetters (str) {
-  if (!str) {
-    return 'AB'
-  }
-
-  let words = str.trim().split(' ').length;
-
-  if (words > 1) {
-    let matches = str.match(/\b(\w)/g);
-    return matches.slice(0, 2).join('').toUpperCase();
-  } else {
-    return str.slice(0, 2).toUpperCase();
-  }
+  return !str ? 'AB' : str.trim().split(' ').length > 1 ? str.match(/\b(\w)/g).slice(0, 2).join('').toUpperCase() : str.slice(0, 2).toUpperCase();
 }
 
 const Options = ({ navigation }) => {
   const { setUserStatus, user } = useContext(AuthContext);
   const { mode, background, surface, text } = useContext(ThemeContext);
+
+  const doesUserHasPassword = !["", null, undefined].some(item => item === user.password);
 
   return (
     <Container style={{ backgroundColor: background }}>
@@ -84,6 +75,15 @@ const Options = ({ navigation }) => {
           onPress={() => navigation.navigate('Colors')}
           left={() => (
             <List.Icon color={text.hex()} icon="palette-outline" />
+          )}
+        />
+        <List.Item
+          title={doesUserHasPassword ? "Redefinir senha" : "Criar senha"}
+          titleStyle={{ color: text.hex() }}
+          descriptionStyle={{ color: 'grey' }}
+          onPress={() => navigation.navigate('Password', { doesUserHasPassword })}
+          left={() => (
+            <List.Icon color={text.hex()} icon="textbox-password" />
           )}
         />
         <List.Item
