@@ -4,15 +4,18 @@ import { View, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
 import { Title } from '../styles';
 
+import ClientContext from '../../../context/ClientContext';
 import ThemeContext from '../../../context/ThemeContext';
 import ProductContext from '../context';
+import { Icon } from 'react-native-elements';
 
 const Text = styled.Text`
   font-family: Inter Regular;
 `;
 
 const Footer = ({ product }) => {
-  const { mode, background, main, muted, soft, surface, text } = useContext(ThemeContext);
+  const { isOpen } = useContext(ClientContext);
+  const { mode, main, soft, surface, text } = useContext(ThemeContext);
   const { price, options, setProduct, addToCart, quantity, setQuantity } = useContext(ProductContext);
 
   useEffect(() => setProduct({
@@ -121,7 +124,16 @@ const Footer = ({ product }) => {
         </TouchableOpacity>
       </View>
 
+      {
+        !isOpen ? (
+          <View style={{ alignItems: 'center', borderRadius: 10, flexDirection: 'row', backgroundColor: mode === 'light' ? '#FFF3CD' : '#F5B83D', marginTop: 20, padding: 20 }}>
+            <Icon name="alert-circle-outline" type="material-community" color={mode === 'light' ? '#93751B' : '#282C34'} />
+            <Text style={{ marginLeft: 10, color: mode === 'light' ? '#93751B' : '#282C34' }}>A loja está atualmente fechada</Text>
+          </View>
+        ) : <></>
+      }
       <Button
+        disabled={!isOpen}
         onPress={addToCart}
         style={{
           backgroundColor: mode === 'light' ? main.lighten(0.9).hex() : main,

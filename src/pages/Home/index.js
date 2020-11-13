@@ -6,6 +6,8 @@ import AuthContext from '../../context/AuthContext';
 import BasketContext from '../../context/BasketContext';
 import ThemeContext from '../../context/ThemeContext';
 
+import Opened from './Opened';
+
 import { useFetch } from '../../hooks/useFetch';
 import { useToken } from '../../hooks/useToken';
 import { Animated, Dimensions, Image, TextInput, ScrollView, TouchableOpacity, StatusBar, View } from 'react-native';
@@ -156,6 +158,7 @@ const Home = ({ navigation }) => {
           />
         </TouchableOpacity>
 
+        <Opened />
 
         <Text style={{ color: text, marginLeft: 25, marginBottom: 15, fontFamily: 'Inter Bold', fontSize: 20 }}>Cardápio</Text>
         <ScrollView removeClippedSubviews horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 15 }}>
