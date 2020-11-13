@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import Report from './Report';
 
 import { formatRelative } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -12,12 +13,15 @@ const capitalizeFirstLetter = (str) => {
 
 const HistoryItem = ({ order }) => {
   const { mode, main, muted, soft, surface, text, danger } = useContext(ThemeContext);
+  const [report, setReport] = useState(false);
   
   const { createdAt, paymentMethod, products } = order;
   const { street, number } = JSON.parse(order.andress);
 
   return (
     <View style={{ backgroundColor: surface, marginTop: 20, borderRadius: 10, padding: 20 }}>
+      <Report orderId={order.orderId} visible={report} onDismiss={() => setReport(false)} />
+
       <Text style={{ fontFamily: 'Inter Bold', fontSize: 20, color: text }}>Detalhes do pedido</Text>
       <Text style={{ fontFamily: 'Inter Regular', fontSize: 16, color: muted }}>
         { capitalizeFirstLetter( formatRelative(parseInt(createdAt), new Date(), { locale: ptBR }) ) }
@@ -82,6 +86,7 @@ const HistoryItem = ({ order }) => {
 
         
       <TouchableOpacity
+        onPress={() => setReport(true)}
         activeOpacity={0.6}
         style={{ backgroundColor: mode === 'light' ? main.lighten(0.9) : main, borderRadius: 10, marginTop: 15, justifyContent: 'center', alignItems: 'center', height: 60 }}
       >
