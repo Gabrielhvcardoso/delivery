@@ -1,7 +1,7 @@
 import * as Facebook from 'expo-facebook';
 // See: https://docs.expo.io/versions/v39.0.0/sdk/facebook/#registering-your-app-with-facebook
 
-export function loginWithFacebookAsync () {
+export async function loginWithFacebookAsync () {
 
   const options = {
     permissions: [
@@ -15,23 +15,33 @@ export function loginWithFacebookAsync () {
   try {
     // don't forgot to initialize the sdk before calling any facebook method
     // See: https://docs.expo.io/versions/v39.0.0/sdk/facebook/#facebookinitializeasyncoptions-facebookinitializationoptions-promisevoid
-
-    await Facebook.initializeAsync({
-      appId: '<APP_ID>',
-    });
+    Facebook.initializeAsync({
+      appId: '1188603768207844',
+      appName: 'Delivery Client Desenvolvimento',
+      version: 'v2.7',
+      autoLogAppEvents: false,
+      domain: 'connect.facebook.net'
+    }).then(() => {
+      
+      // this method returns { type: 'cancel' } or { type: 'success' } & [FacebookAuthenticationCredential]
+      Facebook.logInWithReadPermissionsAsync(options).then((loginResult) => {
+        const { type, token, expirationDate, permissions, declinedPermissions } = loginResult;
     
-    // this method returns { type: 'cancel' } or { type: 'success' } & [FacebookAuthenticationCredential]
-    const { type, token, expirationDate, permissions, declinedPermissions } = await Facebook.logInWithReadPermissionsAsync(options);
-   
-    if (type === 'success') {
-      const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-      console.log("User logged: " + (await response.json()).name );
-    }
-    
-    else {
-      // Handle failed login here
-      // See: https://docs.expo.io/versions/v39.0.0/sdk/facebook/#error-codes
-    }
+        if (type === 'success') {
+          fetch(`https://graph.facebook.com/me?access_token=${token}`).then((response) => {
+            response.json().then((data) => {
+              console.log(data);
+            })
+          });
+        }
+        
+        else {
+          console.log("Error")
+          // Handle failed login here
+          // See: https://docs.expo.io/versions/v39.0.0/sdk/facebook/#error-codes
+        }
+      })
+    })
 
   } catch ({ message }) {
     
@@ -45,7 +55,9 @@ export function facebookLogOutAsync () {
 }
 
 export function getFacebookCredentials () {
-  const auth = await Facebook.getAuthenticationCredentialAsync();
+  Facebook.getAuthenticationCredentialAsync().then((auth) => {
+
+  });
 
   // auth : {
   //   Access token for the authenticated session. This token provides access to the Facebook Graph API.

@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "dmidelivery",
     "name": "Dinâmica Delivery",
     "slug": "dinamica-delivery-client",
     "version": "1.0.0",

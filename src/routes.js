@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Navigation
 import { NavigationContainer } from '@react-navigation/native';
@@ -29,7 +28,12 @@ import AndressSelector from './components/AndressSelector';
 import { navigationRef } from './RootNavigation';
 import AuthContext from './context/AuthContext';
 
-const horizontalLogo = require('../assets/client/logo.png');
+// Deep Link with Expo
+
+import * as Linking from 'expo-linking';
+
+
+const prefix = Linking.makeUrl('/');
 
 const Stack = createStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -39,62 +43,63 @@ const Routes = () => {
   const { background, surface, text } = useContext(ThemeContext);
   const { isUserLogged } = useContext(AuthContext);
 
-  if (!isUserLogged) {
-    return (
-      <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator screenOptions={{ headerTintColor: text, headerStyle: { backgroundColor: surface } }}>
-          <Stack.Screen name="Apresentation" component={Apresentation} options={{ headerShown: false }} />
-          <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-          <Stack.Screen name="Register" component={Register} options={{ title: 'Cadastro' }} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    )
+  const linking = {
+    prefixes: [prefix],
   }
 
   return (
-    <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: background, elevation: 0 } }}>
+    <NavigationContainer ref={navigationRef} linking={linking} fallback={<Text>Loading...</Text>}>
+      {
+        !isUserLogged ? (
+          <Stack.Navigator screenOptions={{ headerTintColor: text, headerStyle: { backgroundColor: surface } }}>
+            <Stack.Screen name="Apresentation" component={Apresentation} options={{ headerShown: false }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name="Register" component={Register} options={{ title: 'Cadastro' }} />
+          </Stack.Navigator>
+        ) : (
+          <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: background, elevation: 0 } }}>
+            <Stack.Screen name="Home" component={BottomTabs} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="Category"
+              component={Category}
+              options={({ navigation }) => ({
+                title: '',
+                headerTransparent: true,
+                headerLeft: () => (
+                  <Icon
+                    onPress={() => navigation.goBack()}
+                    containerStyle={{ elevation: 10, marginLeft: 20, backgroundColor: surface, padding: 5, borderRadius: 100 }}
+                    name="arrow-left"
+                    type="material-community"
+                    color={surface.negate().hex()}
+                  />
+                )
+              })}
+            />
 
-        <Stack.Screen name="Home" component={BottomTabs} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="Product"
+              component={Product}
+              options={{
+                headerTintColor: surface,
+                headerTitle: '',
+                headerTransparent: true
+              }}
+            />
 
-        <Stack.Screen
-          name="Category"
-          component={Category}
-          options={({ navigation }) => ({
-            title: '',
-            headerTransparent: true,
-            headerLeft: () => (
-              <Icon
-                onPress={() => navigation.goBack()}
-                containerStyle={{ elevation: 10, marginLeft: 20, backgroundColor: surface, padding: 5, borderRadius: 100 }}
-                name="arrow-left"
-                type="material-community"
-                color={surface.negate().hex()}
-              />
-            )
-          })}
-        />
+            <Stack.Screen
+              name="AndressSelector"
+              component={AndressSelector}
+              options={{
+                headerTintColor: surface.negate(),
+                headerTitle: '',
+              }}
+            />
 
-        <Stack.Screen
-          name="Product"
-          component={Product}
-          options={{
-            headerTintColor: surface,
-            headerTitle: '',
-            headerTransparent: true
-          }}
-        />
-
-        <Stack.Screen
-          name="AndressSelector"
-          component={AndressSelector}
-          options={{
-            headerTintColor: surface.negate(),
-            headerTitle: '',
-          }}
-        />
-
-      </Stack.Navigator>
+          </Stack.Navigator>
+        )
+      }
+      
     </NavigationContainer>
   );
 }

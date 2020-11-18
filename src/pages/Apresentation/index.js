@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Dimensions, ImageBackground, StatusBar, Text, View, TouchableOpacity } from 'react-native';
 
+import AuthContext from '../../context/AuthContext';
+
+import { loginWithGoogleAsync } from '../../auth/googleAuth';
+import { loginWithFacebookAsync } from '../../auth/facebookAuth';
 import { Container, Button } from './styles';
 
 const Apresentation = ({ navigation }) => {
+  const { setUserStatus } = useContext(AuthContext);
   const image = { uri : 'https://images.unsplash.com/photo-1526367790999-0150786686a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80' }
 
   return (
@@ -13,8 +18,8 @@ const Apresentation = ({ navigation }) => {
         <View style={{ flex: 1 }} />
 
         <Button iconColor="red" onPress={() => navigation.navigate('Login')} icon="email" color="white" mode="dark">Entrar com o E-mail</Button>
-        <Button disabled icon="google" color="white" mode="dark">Entrar com o Google</Button>
-        <Button disabled icon="facebook" mode="light">Entrar com o Facebook</Button>
+        <Button icon="google" onPress={() => loginWithGoogleAsync(setUserStatus)} color="white" mode="dark">Entrar com o Google</Button>
+        {/* <Button disabled icon="facebook" onPress={loginWithFacebookAsync} mode="light">Entrar com o Facebook</Button> */}
 
         <TouchableOpacity 
           activeOpacity={0.9}

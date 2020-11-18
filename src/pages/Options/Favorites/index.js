@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 
 import { useFetch } from '../../../hooks/useFetch';
 import { useToken } from '../../../hooks/useToken';
@@ -30,8 +30,18 @@ const Favorites = ({ navigation }) => {
 
       setProducts(reduce)
     });
-  }, []);
-    
+  });
+
+  if (!products[0]) {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text
+          style={{ fontFamily: 'Inter Regular', maxWidth: '70%', textAlign: 'center' }}
+        >Quando você favoritar algum produto, ele aparecerá aqui.</Text>
+      </View>
+    )
+  }
+
   return (
     <FlatList
       data={products}
